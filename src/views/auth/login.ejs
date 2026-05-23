@@ -1,366 +1,350 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SoundMind Admin Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>
+        SoundMind Admin
+    </title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
 
     <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left,
+                    #dbeafe,
+                    transparent 35%),
+                radial-gradient(circle at bottom right,
+                    #e9d5ff,
+                    transparent 35%),
+                #f8fafc;
+            overflow: hidden;
         }
 
-        body{
-            font-family:Inter, Arial, sans-serif;
-            background:#f8fafc;
-            color:#0f172a;
+        .left-side {
+            position: relative;
+            overflow: hidden;
+            padding: 70px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        .container{
-            min-height:100vh;
-            display:grid;
-            grid-template-columns:1fr 1fr;
+        .brand-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, .7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,
+                    255,
+                    255,
+                    .7);
+            padding: 10px 16px;
+            border-radius: 999px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #475569;
         }
 
-        .left{
-            display:flex;
-            flex-direction:column;
-            justify-content:space-between;
-            padding:48px;
-            position:relative;
-            overflow:hidden;
-            background:#f8fafc;
+        .hero-title {
+            font-size: 58px;
+            line-height: 1.1;
+            font-weight: 700;
+            margin-top: 28px;
+            margin-bottom: 24px;
         }
 
-        .blur1,
-        .blur2{
-            position:absolute;
-            border-radius:999px;
-            background:#e5e7eb;
-            filter:blur(60px);
-            opacity:.6;
+        .hero-gradient {
+            background:
+                linear-gradient(to right,
+                    #0f172a,
+                    #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .blur1{
-            width:260px;
-            height:260px;
-            top:-80px;
-            left:-40px;
+        .hero-desc {
+            color: #64748b;
+            font-size: 16px;
+            line-height: 1.9;
+            max-width: 520px;
         }
 
-        .blur2{
-            width:300px;
-            height:300px;
-            bottom:-80px;
-            right:-40px;
+        .feature-card {
+            background: rgba(255,
+                    255,
+                    255,
+                    .65);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,
+                    255,
+                    255,
+                    .7);
+            border-radius: 24px;
+            padding: 18px;
+            margin-bottom: 18px;
+            box-shadow:
+                0 10px 30px rgba(15,
+                    23,
+                    42,
+                    .05);
         }
 
-        .content{
-            position:relative;
-            z-index:2;
-            max-width:500px;
+        .feature-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eef2ff;
+            color: #4f46e5;
+            font-size: 20px;
         }
 
-        .badge{
-            display:inline-flex;
-            align-items:center;
-            gap:8px;
-            padding:8px 14px;
-            border-radius:999px;
-            background:white;
-            border:1px solid #e5e7eb;
-            font-size:11px;
-            letter-spacing:2px;
-            text-transform:uppercase;
-            color:#6b7280;
-            margin-bottom:24px;
+        .login-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 32px;
         }
 
-        h1{
-            font-size:46px;
-            line-height:1.15;
-            margin-bottom:22px;
-            font-weight:600;
+        .login-card {
+            width: 100%;
+            max-width: 440px;
+            border: none;
+            border-radius: 32px;
+            background: rgba(255,
+                    255,
+                    255,
+                    .78);
+            backdrop-filter: blur(20px);
+            box-shadow:
+                0 25px 60px rgba(15,
+                    23,
+                    42,
+                    .12);
         }
 
-        .gradient{
-            background:linear-gradient(to right,#000,#9ca3af);
-            -webkit-background-clip:text;
-            -webkit-text-fill-color:transparent;
+        .login-title {
+            font-size: 34px;
+            font-weight: 700;
         }
 
-        .desc{
-            color:#6b7280;
-            font-size:15px;
-            line-height:1.8;
-            margin-bottom:40px;
+        .input-group-text {
+            background: white;
+            border-right: none;
+            border-radius: 16px 0 0 16px;
         }
 
-        .card{
-            display:flex;
-            gap:16px;
-            padding:18px;
-            background:white;
-            border:1px solid #e5e7eb;
-            border-radius:18px;
-            margin-bottom:16px;
-            transition:.25s;
+        .form-control {
+            border-left: none;
+            border-radius: 0 16px 16px 0;
+            padding: 14px;
         }
 
-        .card:hover{
-            transform:translateY(-2px);
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #ced4da;
         }
 
-        .icon{
-            width:40px;
-            height:40px;
-            border-radius:12px;
-            background:#f8fafc;
-            border:1px solid #e5e7eb;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            font-size:18px;
+        .btn-login {
+            border: none;
+            border-radius: 16px;
+            padding: 14px;
+            font-weight: 600;
+            background:
+                linear-gradient(to right,
+                    #111827,
+                    #4f46e5);
+            transition: .25s;
         }
 
-        .card-title{
-            font-size:14px;
-            font-weight:600;
-            margin-bottom:6px;
+        .btn-login:hover {
+            transform: translateY(-1px);
+            opacity: .96;
         }
 
-        .card-desc{
-            color:#6b7280;
-            font-size:13px;
-            line-height:1.5;
+        .footer-note {
+            color: #94a3b8;
+            font-size: 13px;
         }
 
-        .footer{
-            color:#9ca3af;
-            font-size:12px;
-            position:relative;
-            z-index:2;
-        }
-
-        .right{
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            padding:40px;
-            background:white;
-        }
-
-        .login-box{
-            width:100%;
-            max-width:460px;
-        }
-
-        .login-title{
-            margin-bottom:40px;
-        }
-
-        .login-title h2{
-            font-size:32px;
-            margin-bottom:10px;
-        }
-
-        .login-title p{
-            color:#6b7280;
-            font-size:14px;
-        }
-
-        .form-group{
-            margin-bottom:20px;
-        }
-
-        label{
-            display:block;
-            font-size:12px;
-            color:#6b7280;
-            margin-bottom:8px;
-        }
-
-        .input-wrap{
-            display:flex;
-            align-items:center;
-            gap:10px;
-            padding:14px 16px;
-            border:1px solid #e5e7eb;
-            border-radius:14px;
-            transition:.2s;
-        }
-
-        .input-wrap:focus-within{
-            border-color:#0f172a;
-        }
-
-        input{
-            border:none;
-            outline:none;
-            width:100%;
-            font-size:14px;
-            background:transparent;
-        }
-
-        button{
-            width:100%;
-            border:none;
-            padding:14px;
-            border-radius:14px;
-            background:linear-gradient(
-                to right,
-                #0f172a,
-                #1e293b,
-                #334155
-            );
-            color:white;
-            font-size:14px;
-            font-weight:600;
-            cursor:pointer;
-            transition:.2s;
-        }
-
-        button:hover{
-            opacity:.95;
-        }
-
-        @media(max-width:900px){
-            .container{
-                grid-template-columns:1fr;
+        @media(max-width:992px) {
+            .left-side {
+                display: none;
             }
 
-            .left{
-                display:none;
+            body {
+                overflow: auto;
             }
         }
     </style>
 </head>
+
 <body>
 
-<div class="container">
+    <div class="container-fluid min-vh-100">
 
-    <!-- LEFT -->
-    <div class="left">
+        <div class="row min-vh-100">
 
-        <div class="blur1"></div>
-        <div class="blur2"></div>
+            <!-- LEFT -->
+            <div class="col-lg-6 left-side">
 
-        <div class="content">
+                <div>
 
-            <div class="badge">
-                ✦ SOUNDMIND ADMIN
+                    <div class="brand-badge">
+                        <i class="bi bi-soundwave"></i>
+                        SOUNDMIND ADMIN
+                    </div>
+
+                    <h1 class="hero-title">
+                        Quản trị nội dung
+                        <br>
+                        <span class="hero-gradient">
+                            tinh gọn & hiện đại
+                        </span>
+                    </h1>
+
+                    <p class="hero-desc">
+                        Theo dõi audiobook, quản lý nội dung và vận hành nền tảng SoundMind với trải nghiệm quản trị
+                        trực quan.
+                    </p>
+                </div>
+
+                <div>
+
+                    <div class="feature-card d-flex gap-3 align-items-center">
+                        <div class="feature-icon">
+                            <i class="bi bi-headphones"></i>
+                        </div>
+
+                        <div>
+                            <div class="fw-semibold">
+                                Quản lý Audiobook
+                            </div>
+
+                            <div class="text-secondary small">
+                                Kiểm soát thư viện và nội dung dễ dàng
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-card d-flex gap-3 align-items-center">
+                        <div class="feature-icon">
+                            <i class="bi bi-graph-up-arrow"></i>
+                        </div>
+
+                        <div>
+                            <div class="fw-semibold">
+                                Theo dõi tăng trưởng
+                            </div>
+
+                            <div class="text-secondary small">
+                                Dữ liệu vận hành theo thời gian thực
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="footer-note mt-4">
+                        © 2026 SoundMind Admin
+                    </div>
+
+                </div>
+
             </div>
 
-            <h1>
-                Quản trị hệ thống
-                <br>
-                một cách
-                <span class="gradient">
-                    tinh gọn
-                </span>
-            </h1>
+            <!-- RIGHT -->
+            <div class="col-lg-6 login-wrapper">
 
-            <p class="desc">
-                Theo dõi nội dung, quản lý người dùng và vận hành
-                nền tảng SoundMind với trải nghiệm quản trị hiện đại.
-            </p>
+                <div class="card login-card p-4 p-lg-5">
 
-            <div class="card">
-                <div class="icon">🎧</div>
-                <div>
-                    <div class="card-title">
-                        Quản lý audiobook
+                    <div class="card-body">
+
+                        <div class="text-center mb-4">
+
+                            <div class="mx-auto mb-3 d-flex align-items-center justify-content-center rounded-circle"
+                                style="
+                                width:70px;
+                                height:70px;
+                                background:#eef2ff;
+                                color:#4f46e5;
+                                font-size:28px;
+                            ">
+                                <i class="bi bi-shield-lock"></i>
+                            </div>
+
+                            <div class="login-title">
+                                Đăng nhập Admin
+                            </div>
+
+                            <div class="text-secondary mt-2">
+                                Chào mừng quay trở lại
+                            </div>
+
+                        </div>
+
+                        <form id="loginForm">
+
+                            <div class="mb-3">
+                                <label class="small text-muted mb-2">
+                                    Username
+                                </label>
+
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-person"></i>
+                                    </span>
+
+                                    <input id="username" type="text" class="form-control" placeholder="Nhập username"
+                                        required />
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="small text-muted mb-2">
+                                    Password
+                                </label>
+
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-lock"></i>
+                                    </span>
+
+                                    <input id="password" type="password" class="form-control" placeholder="••••••••"
+                                        required />
+                                </div>
+                            </div>
+
+                            <div id="error" class="alert alert-danger d-none py-2 small"></div>
+
+                            <button id="loginBtn" type="submit" class="btn btn-login text-white w-100 mt-2">
+                                Đăng nhập
+                            </button>
+
+                        </form>
+
                     </div>
-                    <div class="card-desc">
-                        Kiểm soát nội dung và thư viện dễ dàng
-                    </div>
+
                 </div>
-            </div>
 
-            <div class="card">
-                <div class="icon">✨</div>
-                <div>
-                    <div class="card-title">
-                        Quản trị thông minh
-                    </div>
-                    <div class="card-desc">
-                        Giao diện tối giản và trực quan
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="icon">📈</div>
-                <div>
-                    <div class="card-title">
-                        Theo dõi tăng trưởng
-                    </div>
-                    <div class="card-desc">
-                        Phân tích hoạt động hệ thống theo thời gian thực
-                    </div>
-                </div>
             </div>
 
         </div>
 
-        <div class="footer">
-            © 2026 SoundMind Admin
-        </div>
     </div>
 
-    <!-- RIGHT -->
-    <div class="right">
-
-        <div class="login-box">
-
-            <div class="login-title">
-                <h2>Đăng nhập Admin</h2>
-                <p>
-                    Nhập thông tin để tiếp tục
-                </p>
-            </div>
-
-            <form method="POST" action="/login">
-
-                <div class="form-group">
-                    <label>Email</label>
-                    <div class="input-wrap">
-                        ✉️
-                        <input
-                            type="email"
-                            name="email"
-                            placeholder="admin@soundmind.vn"
-                            required
-                        />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Mật khẩu</label>
-                    <div class="input-wrap">
-                        🔒
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder="••••••••"
-                            required
-                        />
-                    </div>
-                </div>
-
-                <button type="submit">
-                    Đăng nhập
-                </button>
-
-            </form>
-
-        </div>
-
-    </div>
-
-</div>
-
+    <script src="/js/config.js"></script>
+    <script src="/js/login.js"></script>
 </body>
+
 </html>

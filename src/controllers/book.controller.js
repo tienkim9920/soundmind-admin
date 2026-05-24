@@ -44,10 +44,6 @@ function getAuthorId(author) {
     return author.id ?? author._id ?? author.authorId;
 }
 
-function getAuthorName(author) {
-    return author.name ?? author.fullName ?? author.authorName ?? `#${getAuthorId(author)}`;
-}
-
 function getApiUrl() {
     return process.env.API_URL || 'http://localhost:8080';
 }

@@ -1,0 +1,120 @@
+<% const selectedCategoryId = book.categoryId ?? ''; %>
+<% const authorId = book.authorId ?? book.author?.id ?? book.author?._id ?? ''; %>
+<% const premiumChecked = book.isPremium === true || String(book.isPremium || '') === 'true' || book.isPremium === 'on'; %>
+<% const placeholderCover = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22360%22 height=%22500%22 viewBox=%220 0 360 500%22%3E%3Crect width=%22360%22 height=%22500%22 fill=%22%23f1f5f9%22/%3E%3Ctext x=%22180%22 y=%22250%22 text-anchor=%22middle%22 fill=%22%2364748b%22 font-family=%22Arial%22 font-size=%2222%22%3EBook Cover%3C/text%3E%3C/svg%3E'; %>
+
+<form method="POST" action="<%= action %>" class="book-form">
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="form-section">
+                <div class="section-title">
+                    <i class="bi bi-book"></i>
+                    Thông tin sách
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-8">
+                        <label class="form-label">Tên sách</label>
+                        <input name="title" value="<%= book.title || '' %>" class="form-control form-field"
+                            placeholder="Nhập tên sách" required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Thời lượng</label>
+                        <input name="totalDuration" type="number" min="0" value="<%= book.totalDuration || '' %>"
+                            class="form-control form-field" placeholder="Phút">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Tác giả</label>
+                        <select name="authorId" class="form-select form-field" required>
+                            <option value="">Chọn tác giả</option>
+
+                            <% authors.forEach(author=> { %>
+                                <% const id = author.id ?? author._id ?? author.authorId; %>
+                                <% const name = author.name ?? author.fullName ?? author.authorName ?? `#${id}`; %>
+
+                                <option value="<%= id %>" <%= String(authorId) === String(id) ? 'selected' : '' %>>
+                                    <%= name %>
+                                </option>
+                            <% }) %>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Thể loại</label>
+                        <select name="categoryId" class="form-select form-field" required>
+                            <option value="">Chọn thể loại</option>
+
+                            <% categories.forEach(category=> { %>
+                                <% const id = category.id ?? category._id ?? category.categoryId; %>
+                                <% const name = category.name ?? category.title ?? category.categoryName ?? category.slug ?? `#${id}`; %>
+
+                                <option value="<%= id %>" <%= String(selectedCategoryId) === String(id) ? 'selected' : '' %>>
+                                    <%= name %>
+                                </option>
+                            <% }) %>
+                        </select>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Ảnh bìa</label>
+                        <input id="coverImageInput" name="coverImage" value="<%= book.coverImage || '' %>"
+                            class="form-control form-field" placeholder="https://example.com/cover.jpg">
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Mô tả</label>
+                        <textarea name="description" class="form-control form-field textarea-field"
+                            placeholder="Nhập mô tả ngắn"><%= book.description || '' %></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="form-section side-section">
+                <div class="section-title">
+                    <i class="bi bi-sliders"></i>
+                    Hiển thị
+                </div>
+
+                <div class="cover-preview">
+                    <img id="coverPreview" src="<%= book.coverImage || placeholderCover %>"
+                        alt="Ảnh bìa sách">
+                </div>
+
+                <input type="hidden" name="isPremium" value="false">
+
+                <label class="premium-toggle">
+                    <input type="checkbox" name="isPremium" value="true" <%= premiumChecked ? 'checked' : '' %>>
+                    <span>
+                        <strong>Premium</strong>
+                        <small>Người dùng cần quyền premium để nghe sách này</small>
+                    </span>
+                </label>
+
+                <div class="d-flex gap-3 mt-4">
+                    <a href="/books" class="btn-soft text-decoration-none">
+                        <i class="bi bi-arrow-left"></i>
+                        Quay lại
+                    </a>
+
+                    <button type="submit" class="btn-gradient flex-fill">
+                        <i class="bi <%= submitIcon %>"></i>
+                        <%= submitText %>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    const coverImageInput = document.getElementById('coverImageInput');
+    const coverPreview = document.getElementById('coverPreview');
+
+    coverImageInput.addEventListener('input', function () {
+        coverPreview.src = this.value || '<%= placeholderCover %>';
+    });
+</script>

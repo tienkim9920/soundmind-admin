@@ -74,6 +74,9 @@ document.addEventListener(
                         data.data.token
                     );
 
+                    document.cookie =
+                        `token=${encodeURIComponent(data.data.token)}; path=/; max-age=86400; SameSite=Lax`;
+
                     localStorage.setItem(
                         "user",
                         JSON.stringify(

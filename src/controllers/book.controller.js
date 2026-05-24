@@ -24,12 +24,101 @@ function getListFromResponse(payload) {
     return [];
 }
 
+function getItemFromResponse(payload) {
+    if (payload?.data && !Array.isArray(payload.data)) {
+        return payload.data;
+    }
+
+    return payload || {};
+}
+
 function getCategoryId(category) {
     return category.id ?? category._id ?? category.categoryId;
 }
 
 function getCategoryName(category) {
     return category.name ?? category.title ?? category.categoryName ?? category.slug ?? `#${getCategoryId(category)}`;
+}
+
+function getAuthorId(author) {
+    return author.id ?? author._id ?? author.authorId;
+}
+
+function getAuthorName(author) {
+    return author.name ?? author.fullName ?? author.authorName ?? `#${getAuthorId(author)}`;
+}
+
+function getApiUrl() {
+    return process.env.API_URL || 'http://localhost:8080';
+}
+
+function getCookieValue(req, name) {
+    const cookies = req.headers.cookie || '';
+    const cookie = cookies
+        .split(';')
+        .map((item) => item.trim())
+        .find((item) => item.startsWith(`${name}=`));
+
+    if (!cookie) {
+        return '';
+    }
+
+    return decodeURIComponent(cookie.slice(name.length + 1));
+}
+
+function getAuthConfig(req, config = {}) {
+    const token =
+        req.session?.token ||
+        getCookieValue(req, 'token');
+
+    if (!token) {
+        return config;
+    }
+
+    return {
+        ...config,
+        headers: {
+            ...config.headers,
+            Authorization: `Bearer ${token}`
+        }
+    };
+}
+
+async function getCategories(req) {
+    const response = await axios.get(
+        `${getApiUrl()}/api/categories`,
+        getAuthConfig(req)
+    );
+
+    return getListFromResponse(response.data);
+}
+
+async function getAuthors(req) {
+    const response = await axios.get(
+        `${getApiUrl()}/api/authors`,
+        getAuthConfig(req)
+    );
+
+    return getListFromResponse(response.data);
+}
+
+function getBookPayload(body) {
+    const premiumValue =
+        Array.isArray(body.isPremium)
+            ? body.isPremium.at(-1)
+            : body.isPremium;
+
+    return {
+        title: body.title,
+        authorId: body.authorId,
+        categoryId: body.categoryId,
+        coverImage: body.coverImage,
+        totalDuration: body.totalDuration,
+        description: body.description,
+        isPremium:
+            premiumValue === 'true' ||
+            premiumValue === 'on'
+    };
 }
 
 class BookController {
@@ -46,26 +135,26 @@ class BookController {
                 categoryId = ''
             } = req.query;
 
-            const API_URL =
-                process.env.API_URL || 'http://localhost:8080';
+            const API_URL = getApiUrl();
 
             const [booksResponse, categoriesResponse] =
                 await Promise.all([
 
                     axios.get(
                         `${API_URL}/api/books`,
-                        {
+                        getAuthConfig(req, {
                             params: {
                                 page,
                                 size,
                                 search,
                                 categoryId
                             }
-                        }
+                        })
                     ),
 
                     axios.get(
-                        `${API_URL}/api/categories`
+                        `${API_URL}/api/categories`,
+                        getAuthConfig(req)
                     )
                 ]);
 
@@ -170,20 +259,64 @@ class BookController {
     }
 
     // GET /books/create
-    create(req, res) {
-        res.render('books/create', {
-            title: 'Thêm sách'
-        });
+    async create(req, res) {
+        try {
+            const [categories, authors] =
+                await Promise.all([
+                    getCategories(req),
+                    getAuthors(req)
+                ]);
+
+            return res.render('books/create', {
+                title: 'Thêm sách',
+                book: {},
+                categories,
+                authors
+            });
+        } catch (error) {
+            console.error(
+                'Get create book form error:',
+                error.response?.data ||
+                error.message
+            );
+
+            return res.render('books/create', {
+                title: 'Thêm sách',
+                book: {},
+                categories: [],
+                authors: [],
+                error:
+                    'Không tải được dữ liệu form'
+            });
+        }
     }
 
     // POST /books
-    store(req, res) {
+    async store(req, res) {
 
-        const data = req.body;
+        try {
+            await axios.post(
+                `${getApiUrl()}/api/books`,
+                getBookPayload(req.body),
+                getAuthConfig(req)
+            );
+            return res.redirect('/books');
+        } catch (error) {
+            console.error(
+                'Create book error:',
+                error.response?.data ||
+                error.message
+            );
 
-        console.log('Book create:', data);
-
-        return res.redirect('/books');
+            return res.render('books/create', {
+                title: 'Thêm sách',
+                book: req.body,
+                categories: await getCategories(req).catch(() => []),
+                authors: await getAuthors(req).catch(() => []),
+                error:
+                    'Không tạo được sách'
+            });
+        }
     }
 
     // GET /books/:id
@@ -195,24 +328,73 @@ class BookController {
     }
 
     // GET /books/:id/edit
-    edit(req, res) {
+    async edit(req, res) {
 
         const { id } = req.params;
 
-        res.render('books/edit', {
-            title: 'Chỉnh sửa sách',
-            id
-        });
+        try {
+            const [bookResponse, categories, authors] =
+                await Promise.all([
+                    axios.get(
+                        `${getApiUrl()}/api/books/${id}`,
+                        getAuthConfig(req)
+                    ),
+                    getCategories(req),
+                    getAuthors(req)
+                ]);
+
+            const book =
+                getItemFromResponse(bookResponse.data);
+
+            return res.render('books/edit', {
+                title: 'Chỉnh sửa sách',
+                book,
+                categories,
+                authors
+            });
+        } catch (error) {
+            console.error(
+                'Get edit book form error:',
+                error.response?.data ||
+                error.message
+            );
+
+            return res.redirect('/books');
+        }
     }
 
     // POST /books/:id
-    update(req, res) {
+    async update(req, res) {
 
         const { id } = req.params;
 
-        console.log('Update book', id);
+        try {
+            await axios.put(
+                `${getApiUrl()}/api/books/${id}`,
+                getBookPayload(req.body),
+                getAuthConfig(req)
+            );
 
-        return res.redirect('/books');
+            return res.redirect('/books');
+        } catch (error) {
+            console.error(
+                'Update book error:',
+                error.response?.data ||
+                error.message
+            );
+
+            return res.render('books/edit', {
+                title: 'Chỉnh sửa sách',
+                book: {
+                    ...req.body,
+                    id
+                },
+                categories: await getCategories(req).catch(() => []),
+                authors: await getAuthors(req).catch(() => []),
+                error:
+                    'Không cập nhật được sách'
+            });
+        }
     }
 
     // POST /books/:id/delete

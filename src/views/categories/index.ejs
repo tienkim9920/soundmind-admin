@@ -8,24 +8,148 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <style>
-        body { min-height: 100vh; background: radial-gradient(circle at top left, #dbeafe, transparent 35%), radial-gradient(circle at bottom right, #e9d5ff, transparent 35%), #f8fafc; font-family: Inter, sans-serif; color: #0f172a; }
-        .sidebar { width: 280px; min-height: 100vh; background: rgba(255,255,255,.72); backdrop-filter: blur(18px); border-right: 1px solid rgba(255,255,255,.7); padding: 28px; position: fixed; left: 0; top: 0; }
-        .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 35px; }
-        .brand-icon { width: 48px; height: 48px; border-radius: 16px; background: #eef2ff; color: #4f46e5; display: flex; align-items: center; justify-content: center; font-size: 22px; }
-        .brand-title { font-weight: 700; font-size: 20px; }
-        .menu-item { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-radius: 18px; color: #64748b; text-decoration: none; margin-bottom: 10px; transition: .25s; }
-        .menu-item:hover { background: rgba(79,70,229,.08); color: #4f46e5; }
-        .menu-item.active { background: linear-gradient(to right, #111827, #4f46e5); color: white; box-shadow: 0 10px 25px rgba(79,70,229,.22); }
-        .content { margin-left: 280px; padding: 32px; }
-        .glass-card { background: rgba(255,255,255,.72); backdrop-filter: blur(16px); border-radius: 28px; border: 1px solid rgba(255,255,255,.8); box-shadow: 0 15px 35px rgba(15,23,42,.06); }
-        .topbar { padding: 22px 28px; margin-bottom: 28px; }
-        .table-card { padding: 28px; border-radius: 30px; }
-        .table>:not(caption)>*>* { background: transparent; border-bottom-color: #eef2f7; vertical-align: middle; }
-        .category-icon { width: 48px; height: 48px; border-radius: 16px; background: #eef2ff; color: #4f46e5; display: flex; align-items: center; justify-content: center; font-size: 20px; }
-        .btn-gradient { border: none; border-radius: 18px; padding: 12px 20px; color: white; font-weight: 600; background: linear-gradient(to right, #111827, #4f46e5); }
-        .action-btn { width: 38px; height: 38px; border-radius: 14px; border: none; background: #f8fafc; display: inline-flex; align-items: center; justify-content: center; color: #0f172a; text-decoration: none; }
-        .delete-form { display: inline; }
-        @media(max-width:992px) { .sidebar { display: none; } .content { margin-left: 0; } }
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at top left, #dbeafe, transparent 35%), radial-gradient(circle at bottom right, #e9d5ff, transparent 35%), #f8fafc;
+            font-family: Inter, sans-serif;
+            color: #0f172a;
+        }
+
+        .sidebar {
+            width: 280px;
+            min-height: 100vh;
+            background: rgba(255, 255, 255, .72);
+            backdrop-filter: blur(18px);
+            border-right: 1px solid rgba(255, 255, 255, .7);
+            padding: 28px;
+            position: fixed;
+            left: 0;
+            top: 0;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 35px;
+        }
+
+        .brand-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            background: #eef2ff;
+            color: #4f46e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .brand-title {
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            border-radius: 18px;
+            color: #64748b;
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: .25s;
+        }
+
+        .menu-item:hover {
+            background: rgba(79, 70, 229, .08);
+            color: #4f46e5;
+        }
+
+        .menu-item.active {
+            background: linear-gradient(to right, #111827, #4f46e5);
+            color: white;
+            box-shadow: 0 10px 25px rgba(79, 70, 229, .22);
+        }
+
+        .content {
+            margin-left: 280px;
+            padding: 32px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, .72);
+            backdrop-filter: blur(16px);
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, .8);
+            box-shadow: 0 15px 35px rgba(15, 23, 42, .06);
+        }
+
+        .topbar {
+            padding: 22px 28px;
+            margin-bottom: 28px;
+        }
+
+        .table-card {
+            padding: 28px;
+            border-radius: 30px;
+        }
+
+        .table>:not(caption)>*>* {
+            background: transparent;
+            border-bottom-color: #eef2f7;
+            vertical-align: middle;
+        }
+
+        .category-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            background: #eef2ff;
+            color: #4f46e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .btn-gradient {
+            border: none;
+            border-radius: 18px;
+            padding: 12px 20px;
+            color: white;
+            font-weight: 600;
+            background: linear-gradient(to right, #111827, #4f46e5);
+        }
+
+        .action-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 14px;
+            border: none;
+            background: #f8fafc;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #0f172a;
+            text-decoration: none;
+        }
+
+        .delete-form {
+            display: inline;
+        }
+
+        @media(max-width:992px) {
+            .sidebar {
+                display: none;
+            }
+
+            .content {
+                margin-left: 0;
+            }
+        }
     </style>
 </head>
 
@@ -39,99 +163,102 @@
             </div>
         </div>
 
-        <a href="/books" class="menu-item"><i class="bi bi-book"></i> Quan ly sach</a>
-        <a href="/categories" class="menu-item active"><i class="bi bi-tags"></i> The loai</a>
-        <a href="#" class="menu-item"><i class="bi bi-people"></i> Nguoi dung</a>
-        <a href="#" class="menu-item"><i class="bi bi-gear"></i> Cai dat</a>
-        <a href="/authors" class="menu-item"><i class="bi bi-person-lines-fill"></i> Tac gia</a>
-        <a href="/users" class="menu-item"><i class="bi bi-people"></i> Nguoi dung</a>
-        <a href="/chapters" class="menu-item"><i class="bi bi-music-note-list"></i> Chuong sach</a>
+        <a href="/books" class="menu-item"><i class="bi bi-book"></i> Sách</a>
+        <a href="/categories" class="menu-item active"><i class="bi bi-tags"></i> Thể loại</a>
+        <a href="/authors" class="menu-item"><i class="bi bi-person-lines-fill"></i> Tác giả</a>
+        <a href="/users" class="menu-item"><i class="bi bi-people"></i> Người dùng</a>
+        <a href="/chapters" class="menu-item"><i class="bi bi-music-note-list"></i> Chương sách</a>
     </div>
 
     <div class="content">
         <div class="glass-card topbar d-flex justify-content-between align-items-center">
             <div>
-                <h3 class="fw-bold mb-1">Quan ly the loai</h3>
+                <h3 class="fw-bold mb-1">Quản lý thể loại</h3>
                 <div class="text-secondary">Dashboard / Categories</div>
             </div>
 
             <a href="/categories/create" class="btn-gradient text-decoration-none">
                 <i class="bi bi-plus-lg"></i>
-                Them the loai
+                Thêm thể loại
             </a>
         </div>
 
-        <% if (typeof error !== 'undefined' && error) { %>
-            <div class="alert alert-danger rounded-4 border-0"><%= error %></div>
-        <% } %>
-
-        <div class="glass-card table-card">
-            <div class="table-responsive">
-                <table class="table align-middle">
-                    <thead>
-                        <tr class="text-secondary">
-                            <th>The loai</th>
-                            <th>Mo ta</th>
-                            <th>Ngay tao</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <% if (categories && categories.length > 0) { %>
-                            <% categories.forEach(category => { %>
-                                <% const id = category.id ?? category._id ?? category.categoryId; %>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex gap-3 align-items-center">
-                                            <div class="category-icon"><i class="bi bi-tag"></i></div>
-                                            <div>
-                                                <div class="fw-semibold"><%= category.name || category.title || category.categoryName || `#${id}` %></div>
-                                                <small class="text-secondary">ID: <%= id %></small>
-                                            </div>
-                                        </div>
-                                    </td>
-
-                                    <td><%= category.description || '-' %></td>
-
-                                    <td>
-                                        <% if (category.createdAt) { %>
-                                            <%= new Date(category.createdAt).toLocaleDateString('vi-VN') %>
-                                        <% } else { %>
-                                            -
-                                        <% } %>
-                                    </td>
-
-                                    <td>
-                                        <div class="d-flex gap-2 justify-content-end">
-                                            <a href="/categories/<%= id %>" class="action-btn">
-                                                <i class="bi bi-eye"></i>
-                                            </a>
-
-                                            <a href="/categories/<%= id %>/edit" class="action-btn">
-                                                <i class="bi bi-pencil"></i>
-                                            </a>
-
-                                            <form method="POST" action="/categories/<%= id %>/delete" class="delete-form" onsubmit="return confirm('Xoa the loai nay?')">
-                                                <button type="submit" class="action-btn">
-                                                    <i class="bi bi-trash"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <% }) %>
-                        <% } else { %>
-                            <tr>
-                                <td colspan="4" class="text-center py-5 text-secondary">
-                                    Khong co du lieu the loai
-                                </td>
-                            </tr>
-                        <% } %>
-                    </tbody>
-                </table>
+        <% if (typeof error !=='undefined' && error) { %>
+            <div class="alert alert-danger rounded-4 border-0">
+                <%= error %>
             </div>
-        </div>
+            <% } %>
+
+                <div class="glass-card table-card">
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead>
+                                <tr class="text-secondary">
+                                    <th>The loai</th>
+                                    <th>Mo ta</th>
+                                    <th>Ngay tao</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <% if (categories && categories.length> 0) { %>
+                                    <% categories.forEach(category=> { %>
+                                        <% const id=category.id ?? category._id ?? category.categoryId; %>
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex gap-3 align-items-center">
+                                                        <div class="category-icon"><i class="bi bi-tag"></i></div>
+                                                        <div>
+                                                            <div class="fw-semibold">
+                                                                <%= category.name || category.title ||
+                                                                    category.categoryName || `#${id}` %>
+                                                            </div>
+                                                            <small class="text-secondary">ID: <%= id %></small>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <%= category.description || '-' %>
+                                                </td>
+
+                                                <td>
+                                                    <% if (category.createdAt) { %>
+                                                        <%= new Date(category.createdAt).toLocaleDateString('vi-VN') %>
+                                                            <% } else { %>
+                                                                -
+                                                                <% } %>
+                                                </td>
+
+                                                <td>
+                                                    <div class="d-flex gap-2 justify-content-end">
+                                                        <a href="/categories/<%= id %>/edit" class="action-btn">
+                                                            <i class="bi bi-pencil"></i>
+                                                        </a>
+
+                                                        <form method="POST" action="/categories/<%= id %>/delete"
+                                                            class="delete-form"
+                                                            onsubmit="return confirm('Xoa the loai nay?')">
+                                                            <button type="submit" class="action-btn">
+                                                                <i class="bi bi-trash"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <% }) %>
+                                                <% } else { %>
+                                                    <tr>
+                                                        <td colspan="4" class="text-center py-5 text-secondary">
+                                                            Khong co du lieu the loai
+                                                        </td>
+                                                    </tr>
+                                                    <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
     </div>
 </body>
 

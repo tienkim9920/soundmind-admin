@@ -272,7 +272,7 @@
 
         <a href="#" class="menu-item active">
             <i class="bi bi-book"></i>
-            Quản lý sách
+            Sách
         </a>
 
         <a href="/categories" class="menu-item">
@@ -298,19 +298,14 @@
         <div class="glass-card topbar d-flex justify-content-between align-items-center">
 
             <div>
-                <h3 class="fw-bold mb-1">Quản lý thư viện sách</h3>
+                <h3 class="fw-bold mb-1">Quản lý sách</h3>
                 <div class="text-secondary">Dashboard / Books</div>
             </div>
 
-            <div class="d-flex gap-3 align-items-center">
-                <div class="rounded-circle bg-light d-flex align-items-center justify-content-center"
-                    style="width:48px;height:48px;">
-                    <i class="bi bi-bell"></i>
-                </div>
-
-                <img src="https://i.pravatar.cc/100" width="48" height="48" class="rounded-circle">
-            </div>
-
+            <a href="/books/create" class="btn-gradient text-decoration-none">
+                <i class="bi bi-plus-lg"></i>
+                Thêm sách
+            </a>
         </div>
 
         <div class="glass-card table-card">
@@ -347,12 +342,6 @@
                     </form>
 
                 </div>
-
-                <a href="/books/create" class="btn-gradient text-decoration-none">
-                    <i class="bi bi-plus-lg"></i>
-                    Thêm sách
-                </a>
-
             </div>
 
             <div class="table-responsive">
@@ -431,12 +420,6 @@
                                     <td>
 
                                         <div class="d-flex gap-2">
-
-                                            <a href="/books/<%= book.id %>"
-                                                class="action-btn d-flex align-items-center justify-content-center text-dark text-decoration-none">
-                                                <i class="bi bi-eye"></i>
-                                            </a>
-
                                             <a href="/books/<%= book.id %>/edit"
                                                 class="action-btn d-flex align-items-center justify-content-center text-dark text-decoration-none">
                                                 <i class="bi bi-pencil"></i>

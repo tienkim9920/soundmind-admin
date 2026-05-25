@@ -1,0 +1,108 @@
+<% const placeholderAvatar = 'https://ui-avatars.com/api/?name=User&background=eef2ff&color=4f46e5'; %>
+<% const selectedRole = user.role || 'USER'; %>
+
+<form method="POST" action="<%= action %>" class="user-form">
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="form-section">
+                <div class="section-title">
+                    <i class="bi bi-person"></i>
+                    Thong tin nguoi dung
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Ten dang nhap</label>
+                        <input name="username" value="<%= user.username || '' %>" class="form-control form-field"
+                            placeholder="username" <%= isEdit ? 'readonly' : 'required' %>>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Mat khau</label>
+                        <input name="password" type="password" class="form-control form-field"
+                            placeholder="<%= isEdit ? 'Bo trong neu khong doi' : 'Nhap mat khau' %>"
+                            <%= isEdit ? '' : 'required' %>>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Ho ten</label>
+                        <input name="name" value="<%= user.name || '' %>" class="form-control form-field"
+                            placeholder="Ho ten" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Email</label>
+                        <input name="email" type="email" value="<%= user.email || '' %>" class="form-control form-field"
+                            placeholder="email@example.com" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">So dien thoai</label>
+                        <input name="phone" value="<%= user.phone || '' %>" class="form-control form-field"
+                            placeholder="So dien thoai">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">CCCD</label>
+                        <input name="cccd" value="<%= user.cccd || '' %>" class="form-control form-field"
+                            placeholder="Can cuoc cong dan">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Vai tro</label>
+                        <select name="role" class="form-select form-field">
+                            <option value="USER" <%= selectedRole === 'USER' ? 'selected' : '' %>>USER</option>
+                            <option value="ADMIN" <%= selectedRole === 'ADMIN' ? 'selected' : '' %>>ADMIN</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Anh dai dien</label>
+                        <input id="avatarInput" name="avatar" value="<%= user.avatar || '' %>"
+                            class="form-control form-field" placeholder="https://example.com/avatar.jpg">
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Dia chi</label>
+                        <textarea name="address" class="form-control form-field textarea-field"
+                            placeholder="Dia chi"><%= user.address || '' %></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="form-section side-section">
+                <div class="section-title">
+                    <i class="bi bi-image"></i>
+                    Hien thi
+                </div>
+
+                <div class="avatar-preview">
+                    <img id="avatarPreview" src="<%= user.avatar || placeholderAvatar %>" alt="Avatar nguoi dung">
+                </div>
+
+                <div class="d-flex gap-3 mt-4">
+                    <a href="/users" class="btn-soft text-decoration-none">
+                        <i class="bi bi-arrow-left"></i>
+                        Quay lai
+                    </a>
+
+                    <button type="submit" class="btn-gradient flex-fill">
+                        <i class="bi <%= submitIcon %>"></i>
+                        <%= submitText %>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    const avatarInput = document.getElementById('avatarInput');
+    const avatarPreview = document.getElementById('avatarPreview');
+
+    avatarInput.addEventListener('input', function () {
+        avatarPreview.src = this.value || '<%= placeholderAvatar %>';
+    });
+</script>

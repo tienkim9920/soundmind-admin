@@ -398,9 +398,22 @@ class BookController {
 
         const { id } = req.params;
 
-        console.log('Delete book', id);
+        try {
+            await axios.delete(
+                `${getApiUrl()}/api/books/${id}`,
+                getAuthConfig(req)
+            );
 
-        return res.redirect('/books');
+            return res.redirect('/books');
+        } catch (error) {
+            console.error(
+                'Delete book error:',
+                error.response?.data ||
+                error.message
+            );
+
+            return res.redirect('/books');
+        }
     }
 }
 

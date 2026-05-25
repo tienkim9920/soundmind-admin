@@ -394,7 +394,7 @@ class BookController {
     }
 
     // POST /books/:id/delete
-    destroy(req, res) {
+    async destroy(req, res) {
 
         const { id } = req.params;
 

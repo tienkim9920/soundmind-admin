@@ -11,9 +11,6 @@ const cors = require('cors');
 const morgan = require('morgan');
 const app = express();
 
-const API_URL = process.env.API_URL || 'http://localhost:8080';
-const UPLOAD_URL = process.env.UPLOAD_URL || 'http://localhost:8080/uploads';
-
 app.use(
     helmet({
         contentSecurityPolicy: {

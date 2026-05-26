@@ -51,14 +51,9 @@ function getAuthConfig(req, config = {}) {
 
 function getSubscriptionPayload(body) {
     return {
-        userId: body.userId,
-        bookId: body.bookId,
+        email: body.email,
         plan: body.plan,
         status: body.status,
-        startDate: body.startDate,
-        endDate: body.endDate,
-        price: body.price,
-        note: body.note
     };
 }
 
@@ -82,6 +77,11 @@ class SubscriptionController {
                         search
                     }
                 })
+            );
+
+            console.log(
+                'Get subscriptions response:',
+                response.data
             );
 
             const result = response.data || {};
@@ -155,6 +155,7 @@ class SubscriptionController {
     // POST /subscriptions
     async store(req, res) {
         try {
+            console.log("Subscription payload: ", getSubscriptionPayload(req.body));
             await axios.post(
                 `${getApiUrl()}/api/subscriptions/admin`,
                 getSubscriptionPayload(req.body),

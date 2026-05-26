@@ -6,6 +6,7 @@ const categoryRoute = require('./category.route');
 const authorRoute = require('./author.route');
 const userRoute = require('./user.route');
 const chapterRoute = require('./chapter.route');
+const subscriptionRoute = require('./subscription.route');
 const authRoute = require('./auth.route');
 
 router.use('/', authRoute);
@@ -14,5 +15,6 @@ router.use('/categories', categoryRoute);
 router.use('/authors', authorRoute);
 router.use('/users', userRoute);
 router.use('/chapters', chapterRoute);
+router.use('/subscriptions', subscriptionRoute);
 
 module.exports = router;

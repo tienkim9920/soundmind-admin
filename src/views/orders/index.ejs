@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quan ly orders - SoundMind Admin</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+  <style>
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, #dbeafe, transparent 35%),
+        radial-gradient(circle at bottom right, #e9d5ff, transparent 35%),
+        #f8fafc;
+      font-family: Inter, sans-serif;
+      color: #0f172a;
+    }
+
+    .sidebar {
+      width: 280px;
+      min-height: 100vh;
+      background: rgba(255, 255, 255, .72);
+      backdrop-filter: blur(18px);
+      border-right: 1px solid rgba(255, 255, 255, .7);
+      padding: 28px;
+      position: fixed;
+      left: 0;
+      top: 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 35px;
+    }
+
+    .brand-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: #eef2ff;
+      color: #4f46e5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .brand-title {
+      font-weight: 700;
+      font-size: 20px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      border-radius: 18px;
+      color: #64748b;
+      text-decoration: none;
+      margin-bottom: 10px;
+    }
+
+    .menu-item.active {
+      background: linear-gradient(to right, #111827, #4f46e5);
+      color: white;
+    }
+
+    .content {
+      margin-left: 280px;
+      padding: 32px;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, .72);
+      backdrop-filter: blur(16px);
+      border-radius: 28px;
+      border: 1px solid rgba(255, 255, 255, .8);
+      box-shadow: 0 15px 35px rgba(15, 23, 42, .06);
+    }
+
+    .topbar {
+      padding: 22px 28px;
+      margin-bottom: 28px;
+    }
+
+    .table-card {
+      padding: 28px;
+    }
+
+    .btn-gradient {
+      border: none;
+      border-radius: 18px;
+      padding: 12px 20px;
+      color: white;
+      font-weight: 600;
+      background: linear-gradient(to right, #111827, #4f46e5);
+    }
+
+    .search-box {
+      border: none;
+      border-radius: 18px;
+      padding: 14px 18px;
+      background: #f8fafc;
+    }
+
+    .badge-status {
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .active-status {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .pending-status {
+      background: #fde68a;
+      color: #92400e;
+    }
+
+    .pagination-glass .page-link {
+      border: none;
+      border-radius: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sidebar">
+    <div class="brand">
+      <div class="brand-icon"><i class="bi bi-soundwave"></i></div>
+      <div>
+        <div class="brand-title">SoundMind</div>
+        <small class="text-secondary">Admin Panel</small>
+      </div>
+    </div>
+
+    <a href="/books" class="menu-item"><i class="bi bi-book"></i> Sách</a>
+    <a href="/categories" class="menu-item"><i class="bi bi-tags"></i> Thể loại</a>
+    <a href="/authors" class="menu-item"><i class="bi bi-person-lines-fill"></i> Tác giả</a>
+    <a href="/users" class="menu-item"><i class="bi bi-people"></i> Người dùng</a>
+    <a href="/chapters" class="menu-item"><i class="bi bi-music-note-list"></i> Chương sách</a>
+    <a href="/subscriptions" class="menu-item"><i class="bi bi-credit-card"></i> Hội viên</a>
+    <a href="/orders" class="menu-item active"><i class="bi bi-bag-check"></i> Orders</a>
+  </div>
+
+  <div class="content">
+    <div class="glass-card topbar">
+      <div>
+        <h3 class="fw-bold mb-1">Quản lý orders</h3>
+        <div class="text-secondary">Dashboard / Orders</div>
+      </div>
+    </div>
+
+    <% if (typeof error !=='undefined' && error) { %>
+      <div class="alert alert-danger rounded-4 border-0">
+        <%= error %>
+      </div>
+      <% } %>
+
+        <div class="glass-card table-card">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <form method="GET" action="/orders" class="d-flex gap-3 w-100">
+              <input type="hidden" name="page" value="0">
+              <input type="hidden" name="size" value="<%= filters.size || 10 %>">
+              <input name="search" value="<%= filters.search || '' %>" class="form-control search-box"
+                placeholder="Tìm orders...">
+              <button class="btn-gradient"><i class="bi bi-search"></i></button>
+            </form>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table align-middle">
+              <thead>
+                <tr class="text-secondary">
+                  <th>Order ID</th>
+                  <th>Invoice</th>
+                  <th>Khách hàng</th>
+                  <th>Số tiền</th>
+                  <th>Trạng thái</th>
+                  <th>Ngày tạo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if (orders && orders.length> 0) { %>
+                  <% orders.forEach(order=> { %>
+                    <tr>
+                      <td>
+                        <%= order.orderId || order.id || '-' %>
+                      </td>
+                      <td>
+                        <%= order.invoiceNumber || '-' %>
+                      </td>
+                      <td>
+                        <div class="fw-semibold">
+                          <%= order.user?.name || '-' %>
+                        </div>
+                        <small class="text-secondary d-block">
+                          <%= order.user?.email || '-' %>
+                        </small>
+                      </td>
+                      <td>
+                        <%= order.amount !=null ? `${order.amount} ${order.currency || 'VND' }` : '-' %>
+                      </td>
+                      <td>
+                        <span
+                          class="badge-status <%= ['ACTIVE','COMPLETED','active','completed'].includes((order.status || '').toString().toUpperCase()) ? 'active-status' : 'pending-status' %>">
+                          <%= order.status || '-' %>
+                        </span>
+                      </td>
+                      <td>
+                        <%= order.createdAt || order.createdDate || '-' %>
+                      </td>
+                    </tr>
+                    <% }) %>
+                      <% } else { %>
+                        <tr>
+                          <td colspan="6" class="text-center py-5 text-secondary">Không có dữ liệu orders</td>
+                        </tr>
+                        <% } %>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mt-4">
+            <div class="text-secondary">Tổng: <%= pagination.totalElements %> đơn</div>
+            <nav>
+              <ul class="pagination pagination-glass mb-0">
+                <li class="page-item <%= pagination.hasPrevious ? '' : 'disabled' %>"><a class="page-link"
+                    href="/orders?page=<%= Math.max(pagination.page - 1, 0) %>&size=<%= pagination.size %>&search=<%= filters.search %>">Trước</a>
+                </li>
+                <li class="page-item disabled"><span class="page-link">
+                    <%= pagination.page + 1 %> / <%= pagination.totalPages %>
+                  </span></li>
+                <li class="page-item <%= pagination.hasNext ? '' : 'disabled' %>"><a class="page-link"
+                    href="/orders?page=<%= pagination.page + 1 %>&size=<%= pagination.size %>&search=<%= filters.search %>">Tiếp</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+  </div>
+</body>
+
+</html>

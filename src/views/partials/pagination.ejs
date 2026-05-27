@@ -1,0 +1,30 @@
+<% const currentPage=pagination.page || 0; // Fallback checks in case hasPrevious/hasNext aren't explicitly passed const
+    hasPrev=typeof pagination.hasPrevious !=='undefined' ? pagination.hasPrevious : currentPage> 0;
+    const hasNext = typeof pagination.hasNext !== 'undefined' ? pagination.hasNext : (pagination.totalPages ?
+    currentPage < pagination.totalPages - 1 : false); const size=typeof filters !=='undefined' && filters.size ?
+        filters.size : (pagination.size || 10); const search=typeof filters !=='undefined' && filters.search ?
+        filters.search : '' ; %>
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <div class="text-secondary small">
+                Tổng: <strong>
+                    <%= pagination.totalElements || 0 %>
+                </strong>
+                <%= locals.totalLabel || 'mục' %>
+            </div>
+            <nav>
+                <ul class="pagination pagination-glass mb-0" style="gap: 10px;">
+                    <li class="page-item <%= !hasPrev ? 'disabled' : '' %>">
+                        <a class="page-link"
+                            href="<%= baseUrl %>?page=<%= Math.max(currentPage - 1, 0) %>&size=<%= size %>&search=<%= search %>">
+                            Prev
+                        </a>
+                    </li>
+                    <li class="page-item <%= !hasNext ? 'disabled' : '' %>">
+                        <a class="page-link"
+                            href="<%= baseUrl %>?page=<%= currentPage + 1 %>&size=<%= size %>&search=<%= search %>">
+                            Next
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>

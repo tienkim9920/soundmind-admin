@@ -140,172 +140,178 @@
         }
 
         .pagination-glass .page-link {
+            min-width: 42px;
+            height: 42px;
             border: none;
             border-radius: 14px;
+            background: rgba(255, 255, 255, .72);
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            padding: 0 16px;
+        }
+
+        .pagination-glass .page-item.active .page-link {
+            background: linear-gradient(to right, #111827, #4f46e5);
+            color: white;
+        }
+
+        .pagination-glass .page-item.disabled .page-link {
+            opacity: .45;
+            pointer-events: none;
         }
     </style>
 </head>
 
 <body>
-    <div class="sidebar">
-        <div class="brand">
-            <div class="brand-icon"><i class="bi bi-soundwave"></i></div>
-            <div>
-                <div class="brand-title">SoundMind</div>
-                <small class="text-secondary">Admin Panel</small>
-            </div>
-        </div>
+    <%- include('../partials/sidebar', { active: 'subscriptions' }) %>
 
-        <a href="/books" class="menu-item"><i class="bi bi-book"></i> Sách</a>
-        <a href="/categories" class="menu-item"><i class="bi bi-tags"></i> Thể loại</a>
-        <a href="/authors" class="menu-item"><i class="bi bi-person-lines-fill"></i> Tác giả</a>
-        <a href="/users" class="menu-item"><i class="bi bi-people"></i> Người dùng</a>
-        <a href="/chapters" class="menu-item"><i class="bi bi-music-note-list"></i> Chương sách</a>
-        <a href="/subscriptions" class="menu-item active"><i class="bi bi-credit-card"></i> Hội viên</a>
-        <a href="/playlists" class="menu-item"><i class="bi bi-list-task"></i> Playlists</a>
-    </div>
+        <div class="content">
 
-    <div class="content">
+            <div class="glass-card topbar d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="fw-bold mb-1">
+                        Quản lý subscriptions
+                    </h3>
 
-        <div class="glass-card topbar d-flex justify-content-between align-items-center">
-            <div>
-                <h3 class="fw-bold mb-1">
-                    Quản lý subscriptions
-                </h3>
-
-                <div class="text-secondary">
-                    Dashboard / Subscriptions
-                </div>
-            </div>
-
-            <a href="/subscriptions/create" class="btn-gradient text-decoration-none">
-                <i class="bi bi-plus-lg"></i>
-                Thêm subscription
-            </a>
-        </div>
-
-        <% if(typeof error !=='undefined' && error){ %>
-            <div class="alert alert-danger rounded-4 border-0">
-                <%= error %>
-            </div>
-            <% } %>
-
-                <div class="glass-card table-card">
-
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <form method="GET" action="/subscriptions" class="d-flex gap-3">
-
-                            <input type="hidden" name="page" value="0">
-
-                            <input type="hidden" name="size" value="<%= filters.size || 10 %>">
-
-                            <input name="search" value="<%= filters.search || '' %>" class="form-control search-box"
-                                placeholder="Tim subscription...">
-
-                            <button class="btn-gradient">
-                                <i class="bi bi-search"></i>
-                            </button>
-                        </form>
+                    <div class="text-secondary">
+                        Dashboard / Subscriptions
                     </div>
+                </div>
 
-                    <div class="table-responsive">
+                <a href="/subscriptions/create" class="btn-gradient text-decoration-none">
+                    <i class="bi bi-plus-lg"></i>
+                    Thêm subscription
+                </a>
+            </div>
 
-                        <table class="table align-middle">
+            <% if(typeof error !=='undefined' && error){ %>
+                <div class="alert alert-danger rounded-4 border-0">
+                    <%= error %>
+                </div>
+                <% } %>
 
-                            <thead>
-                                <tr class="text-secondary">
-                                    <th>User</th>
-                                    <th>Plan</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
-                                    <th>Status</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
+                    <div class="glass-card table-card">
 
-                            <tbody>
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <form method="GET" action="/subscriptions" class="d-flex gap-3">
 
-                                <% if(subscriptions && subscriptions.length> 0){ %>
+                                <input type="hidden" name="page" value="0">
 
-                                    <% subscriptions.forEach(sub=> { %>
+                                <input type="hidden" name="size" value="<%= filters.size || 10 %>">
 
-                                        <tr>
+                                <input name="search" value="<%= filters.search || '' %>" class="form-control search-box"
+                                    placeholder="Tim subscription...">
 
-                                            <td>
-                                                <div class="fw-semibold">
-                                                    <%= sub.user?.name || '-' %>
-                                                </div>
+                                <button class="btn-gradient">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </form>
+                        </div>
 
-                                                <small class="text-secondary d-block">
-                                                    <%= sub.user?.email || '-' %>
-                                                </small>
+                        <div class="table-responsive">
 
-                                                <small class="text-secondary">
-                                                    ID: <%= sub.user?.id || '-' %>
-                                                </small>
-                                            </td>
+                            <table class="table align-middle">
 
-                                            <td>
-                                                <%= sub.plan || '-' %>
-                                            </td>
+                                <thead>
+                                    <tr class="text-secondary">
+                                        <th>User</th>
+                                        <th>Plan</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>Status</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
 
-                                            <td>
-                                                <%= sub.startDate || '-' %>
-                                            </td>
+                                <tbody>
 
-                                            <td>
-                                                <%= sub.endDate || '-' %>
-                                            </td>
+                                    <% if(subscriptions && subscriptions.length> 0){ %>
 
-                                            <td>
-                                                <span class="badge-status
+                                        <% subscriptions.forEach(sub=> { %>
+
+                                            <tr>
+
+                                                <td>
+                                                    <div class="fw-semibold">
+                                                        <%= sub.user?.name || '-' %>
+                                                    </div>
+
+                                                    <small class="text-secondary d-block">
+                                                        <%= sub.user?.email || '-' %>
+                                                    </small>
+
+                                                    <small class="text-secondary">
+                                                        ID: <%= sub.user?.id || '-' %>
+                                                    </small>
+                                                </td>
+
+                                                <td>
+                                                    <%= sub.plan || '-' %>
+                                                </td>
+
+                                                <td>
+                                                    <%= sub.startDate || '-' %>
+                                                </td>
+
+                                                <td>
+                                                    <%= sub.endDate || '-' %>
+                                                </td>
+
+                                                <td>
+                                                    <span class="badge-status
                                     <%= sub.status === 'ACTIVE'
                                         ? 'active-status'
                                         : 'expired-status' %>">
 
-                                                    <%= sub.status || '-' %>
-                                                </span>
-                                            </td>
+                                                        <%= sub.status || '-' %>
+                                                    </span>
+                                                </td>
 
-                                            <td>
-                                                <div class="d-flex gap-2 justify-content-end">
+                                                <td>
+                                                    <div class="d-flex gap-2 justify-content-end">
 
-                                                    <a href="/subscriptions/<%= sub.id %>/edit" class="action-btn">
-                                                        <i class="bi bi-pencil"></i>
-                                                    </a>
+                                                        <a href="/subscriptions/<%= sub.id %>/edit" class="action-btn">
+                                                            <i class="bi bi-pencil"></i>
+                                                        </a>
 
-                                                    <form method="POST" action="/subscriptions/<%= sub.id %>/delete"
-                                                        onsubmit="return confirm('Xoa subscription nay?')">
+                                                        <form method="POST" action="/subscriptions/<%= sub.id %>/delete"
+                                                            onsubmit="return confirm('Xoa subscription nay?')">
 
-                                                        <button class="action-btn">
-                                                            <i class="bi bi-trash"></i>
-                                                        </button>
+                                                            <button class="action-btn">
+                                                                <i class="bi bi-trash"></i>
+                                                            </button>
 
-                                                    </form>
+                                                        </form>
 
-                                                </div>
-                                            </td>
+                                                    </div>
+                                                </td>
 
-                                        </tr>
+                                            </tr>
 
-                                        <% }) %>
+                                            <% }) %>
 
-                                            <% } else { %>
+                                                <% } else { %>
 
-                                                <tr>
-                                                    <td colspan="6" class="text-center py-5 text-secondary">
-                                                        Khong co du lieu subscription
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <td colspan="6" class="text-center py-5 text-secondary">
+                                                            Khong co du lieu subscription
+                                                        </td>
+                                                    </tr>
 
-                                                <% } %>
+                                                    <% } %>
 
-                            </tbody>
+                                </tbody>
 
-                        </table>
+                            </table>
+                        </div>
+
+                        <%- include('../partials/pagination', { baseUrl: '/subscriptions' , totalLabel: 'subscription'
+                            }) %>
                     </div>
-                </div>
-    </div>
+        </div>
 
 </body>
 

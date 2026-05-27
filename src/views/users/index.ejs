@@ -209,25 +209,9 @@
 </head>
 
 <body>
-    <div class="sidebar">
-        <div class="brand">
-            <div class="brand-icon"><i class="bi bi-soundwave"></i></div>
-            <div>
-                <div class="brand-title">SoundMind</div>
-                <small class="text-secondary">Admin Panel</small>
-            </div>
-        </div>
+    <%- include('../partials/sidebar', { active: 'users' }) %>
 
-        <a href="/books" class="menu-item"><i class="bi bi-book"></i> Sách</a>
-        <a href="/categories" class="menu-item"><i class="bi bi-tags"></i> Thể loại</a>
-        <a href="/authors" class="menu-item"><i class="bi bi-person-lines-fill"></i> Tác giả</a>
-        <a href="/users" class="menu-item active"><i class="bi bi-people"></i> Người dùng</a>
-        <a href="/chapters" class="menu-item"><i class="bi bi-music-note-list"></i> Chương sách</a>
-        <a href="/subscriptions" class="menu-item"><i class="bi bi-credit-card"></i> Hội viên</a>
-        <a href="/playlists" class="menu-item"><i class="bi bi-list-task"></i> Playlists</a>
-    </div>
-
-    <div class="content">
+  <div class="content">
         <div class="glass-card topbar d-flex justify-content-between align-items-center">
             <div>
                 <h3 class="fw-bold mb-1">Quản lý người dùng</h3>
@@ -326,35 +310,7 @@
                         </table>
                     </div>
 
-                    <% const currentPage=pagination.page || 0; const totalPages=pagination.totalPages || 1; %>
-                        <div class="d-flex justify-content-between align-items-center mt-4">
-                            <div class="text-secondary small">Tong: <strong>
-                                    <%= pagination.totalElements %>
-                                </strong> nguoi dung</div>
-                            <nav>
-                                <ul class="pagination pagination-glass mb-0">
-                                    <li class="page-item <%= currentPage === 0 ? 'disabled' : '' %>">
-                                        <a class="page-link"
-                                            href="/users?page=<%= currentPage - 1 %>&size=<%= filters.size %>&search=<%= filters.search || '' %>"><i
-                                                class="bi bi-chevron-left"></i></a>
-                                    </li>
-                                    <% for(let i=0; i < totalPages; i++){ %>
-                                        <li class="page-item <%= currentPage === i ? 'active' : '' %>">
-                                            <a class="page-link"
-                                                href="/users?page=<%= i %>&size=<%= filters.size %>&search=<%= filters.search || '' %>">
-                                                <%= i + 1 %>
-                                            </a>
-                                        </li>
-                                        <% } %>
-                                            <li
-                                                class="page-item <%= currentPage >= totalPages - 1 ? 'disabled' : '' %>">
-                                                <a class="page-link"
-                                                    href="/users?page=<%= currentPage + 1 %>&size=<%= filters.size %>&search=<%= filters.search || '' %>"><i
-                                                        class="bi bi-chevron-right"></i></a>
-                                            </li>
-                                </ul>
-                            </nav>
-                        </div>
+                    <%- include('../partials/pagination', { baseUrl: '/users', totalLabel: 'người dùng' }) %>
                 </div>
     </div>
 </body>

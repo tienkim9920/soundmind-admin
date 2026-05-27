@@ -201,45 +201,9 @@
 </head>
 
 <body>
-    <div class="sidebar">
+    <%- include('../partials/sidebar', { active: 'books' }) %>
 
-        <div class="brand">
-            <div class="brand-icon">
-                <i class="bi bi-soundwave"></i>
-            </div>
-
-            <div>
-                <div class="brand-title">SoundMind</div>
-                <small class="text-secondary">Admin Panel</small>
-            </div>
-        </div>
-
-        <a href="#" class="menu-item active">
-            <i class="bi bi-book"></i>
-            Sách
-        </a>
-
-        <a href="/categories" class="menu-item">
-            <i class="bi bi-tags"></i>
-            Thể loại
-        </a>
-        <a href="/authors" class="menu-item">
-            <i class="bi bi-person-lines-fill"></i>
-            Tác giả
-        </a>
-        <a href="/users" class="menu-item">
-            <i class="bi bi-people"></i>
-            Người dùng
-        </a>
-        <a href="/chapters" class="menu-item">
-            <i class="bi bi-music-note-list"></i>
-            Chương sách
-        </a>
-        <a href="/subscriptions" class="menu-item"><i class="bi bi-credit-card"></i> Hội viên</a>
-        <a href="/playlists" class="menu-item"><i class="bi bi-list-task"></i> Playlists</a>
-    </div>
-
-    <div class="content">
+  <div class="content">
         <div class="glass-card topbar d-flex justify-content-between align-items-center">
             <div>
                 <h3 class="fw-bold mb-1">Thêm sách</h3>

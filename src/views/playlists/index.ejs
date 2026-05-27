@@ -141,8 +141,27 @@
         }
 
         .pagination-glass .page-link {
+            min-width: 42px;
+            height: 42px;
             border: none;
             border-radius: 14px;
+            background: rgba(255, 255, 255, .72);
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            padding: 0 16px;
+        }
+
+        .pagination-glass .page-item.active .page-link {
+            background: linear-gradient(to right, #111827, #4f46e5);
+            color: white;
+        }
+
+        .pagination-glass .page-item.disabled .page-link {
+            opacity: .45;
+            pointer-events: none;
         }
 
         .table-card {
@@ -152,136 +171,123 @@
 </head>
 
 <body>
-    <div class="sidebar">
-        <div class="brand">
-            <div class="brand-icon"><i class="bi bi-soundwave"></i></div>
-            <div>
-                <div class="brand-title">SoundMind</div>
-                <small class="text-secondary">Admin Panel</small>
-            </div>
-        </div>
+    <%- include('../partials/sidebar', { active: 'playlists' }) %>
 
-        <a href="/books" class="menu-item"><i class="bi bi-book"></i> Sách</a>
-        <a href="/categories" class="menu-item"><i class="bi bi-tags"></i> Thể loại</a>
-        <a href="/authors" class="menu-item"><i class="bi bi-person-lines-fill"></i> Tác giả</a>
-        <a href="/users" class="menu-item"><i class="bi bi-people"></i> Người dùng</a>
-        <a href="/chapters" class="menu-item"><i class="bi bi-music-note-list"></i> Chương sách</a>
-        <a href="/subscriptions" class="menu-item"><i class="bi bi-credit-card"></i> Hội viên</a>
-        <a href="/playlists" class="menu-item active"><i class="bi bi-list-task"></i> Playlists</a>
-    </div>
+        <div class="content">
 
-    <div class="content">
+            <div class="glass-card topbar d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="fw-bold mb-1">
+                        Quản lý playlists
+                    </h3>
 
-        <div class="glass-card topbar d-flex justify-content-between align-items-center">
-            <div>
-                <h3 class="fw-bold mb-1">
-                    Quản lý playlists
-                </h3>
-
-                <div class="text-secondary">
-                    Dashboard / Playlists
-                </div>
-            </div>
-
-            <a href="/playlists/create" class="btn-gradient text-decoration-none">
-                <i class="bi bi-plus-lg"></i>
-                Thêm playlist
-            </a>
-        </div>
-
-        <% if(typeof error !=='undefined' && error){ %>
-            <div class="alert alert-danger rounded-4 border-0">
-                <%= error %>
-            </div>
-            <% } %>
-
-                <div class="glass-card table-card">
-
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <form method="GET" action="/playlists" class="d-flex gap-3">
-                            <input type="hidden" name="page" value="0">
-                            <input type="hidden" name="size" value="<%= filters.size || 10 %>">
-                            <input name="search" value="<%= filters.search || '' %>" class="form-control search-box"
-                                placeholder="Tìm playlist...">
-                            <button class="btn-gradient">
-                                <i class="bi bi-search"></i>
-                            </button>
-                        </form>
-                    </div>
-
-                    <div class="table-responsive">
-                        <table class="table align-middle">
-                            <thead>
-                                <tr class="text-secondary">
-                                    <th>Tên playlist</th>
-                                    <th>Ảnh</th>
-                                    <th>Mô tả</th>
-                                    <th>Nổi bật</th>
-                                    <th>Ngày tạo</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% if(playlists && playlists.length> 0){ %>
-                                    <% playlists.forEach(pl=> { %>
-                                        <tr>
-                                            <td>
-                                                <div class="fw-semibold">
-                                                    <%= pl.name || '-' %>
-                                                </div>
-                                                <small class="text-secondary d-block">
-                                                    ID: <%= pl.id || pl._id || '-' %>
-                                                </small>
-                                            </td>
-                                            <td>
-                                                <% if (pl.image) { %>
-                                                    <img src="<%= pl.image %>" alt="Playlist image"
-                                                        style="width:60px;height:40px;object-fit:cover;border-radius:8px;" />
-                                                    <% } else { %>
-                                                        <span class="text-secondary">-</span>
-                                                        <% } %>
-                                            </td>
-                                            <td>
-                                                <%= pl.description ? pl.description.substring(0, 80) : '-' %>
-                                            </td>
-                                            <td>
-                                                <span
-                                                    class="badge-status <%= pl.isFeatured ? 'public-status' : 'private-status' %>">
-                                                    <%= pl.isFeatured ? 'Có' : 'Không' %>
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <%= pl.createdAt ? pl.createdAt.split('T')[0] : '-' %>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex gap-2 justify-content-end">
-                                                    <a href="/playlists/<%= pl.id || pl._id %>/edit" class="action-btn">
-                                                        <i class="bi bi-pencil"></i>
-                                                    </a>
-                                                    <form method="POST"
-                                                        action="/playlists/<%= pl.id || pl._id %>/delete"
-                                                        onsubmit="return confirm('Xóa playlist này?')">
-                                                        <button class="action-btn">
-                                                            <i class="bi bi-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <% }) %>
-                                            <% } else { %>
-                                                <tr>
-                                                    <td colspan="6" class="text-center py-5 text-secondary">
-                                                        Không có dữ liệu playlist
-                                                    </td>
-                                                </tr>
-                                                <% } %>
-                            </tbody>
-                        </table>
+                    <div class="text-secondary">
+                        Dashboard / Playlists
                     </div>
                 </div>
 
-    </div>
+                <a href="/playlists/create" class="btn-gradient text-decoration-none">
+                    <i class="bi bi-plus-lg"></i>
+                    Thêm playlist
+                </a>
+            </div>
+
+            <% if(typeof error !=='undefined' && error){ %>
+                <div class="alert alert-danger rounded-4 border-0">
+                    <%= error %>
+                </div>
+                <% } %>
+
+                    <div class="glass-card table-card">
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <form method="GET" action="/playlists" class="d-flex gap-3">
+                                <input type="hidden" name="page" value="0">
+                                <input type="hidden" name="size" value="<%= filters.size || 10 %>">
+                                <input name="search" value="<%= filters.search || '' %>" class="form-control search-box"
+                                    placeholder="Tìm playlist...">
+                                <button class="btn-gradient">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table align-middle">
+                                <thead>
+                                    <tr class="text-secondary">
+                                        <th>Tên playlist</th>
+                                        <th>Ảnh</th>
+                                        <th>Mô tả</th>
+                                        <th>Nổi bật</th>
+                                        <th>Ngày tạo</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if(playlists && playlists.length> 0){ %>
+                                        <% playlists.forEach(pl=> { %>
+                                            <tr>
+                                                <td>
+                                                    <div class="fw-semibold">
+                                                        <%= pl.name || '-' %>
+                                                    </div>
+                                                    <small class="text-secondary d-block">
+                                                        ID: <%= pl.id || pl._id || '-' %>
+                                                    </small>
+                                                </td>
+                                                <td>
+                                                    <% if (pl.image) { %>
+                                                        <img src="<%= pl.image %>" alt="Playlist image"
+                                                            style="width:60px;height:40px;object-fit:cover;border-radius:8px;" />
+                                                        <% } else { %>
+                                                            <span class="text-secondary">-</span>
+                                                            <% } %>
+                                                </td>
+                                                <td>
+                                                    <%= pl.description ? pl.description.substring(0, 80) : '-' %>
+                                                </td>
+                                                <td>
+                                                    <span
+                                                        class="badge-status <%= pl.isFeatured ? 'public-status' : 'private-status' %>">
+                                                        <%= pl.isFeatured ? 'Có' : 'Không' %>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <%= pl.createdAt ? pl.createdAt.split('T')[0] : '-' %>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex gap-2 justify-content-end">
+                                                        <a href="/playlists/<%= pl.id || pl._id %>/edit"
+                                                            class="action-btn">
+                                                            <i class="bi bi-pencil"></i>
+                                                        </a>
+                                                        <form method="POST"
+                                                            action="/playlists/<%= pl.id || pl._id %>/delete"
+                                                            onsubmit="return confirm('Xóa playlist này?')">
+                                                            <button class="action-btn">
+                                                                <i class="bi bi-trash"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <% }) %>
+                                                <% } else { %>
+                                                    <tr>
+                                                        <td colspan="6" class="text-center py-5 text-secondary">
+                                                            Không có dữ liệu playlist
+                                                        </td>
+                                                    </tr>
+                                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <%- include('../partials/pagination', { baseUrl: '/playlists' , totalLabel: 'playlist' }) %>
+                    </div>
+
+        </div>
 
 </body>
 

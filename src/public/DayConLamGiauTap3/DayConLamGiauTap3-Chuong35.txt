@@ -1,0 +1,54 @@
+CHƯƠNG 35: Quản lý luật
+Yếu tố này của tam giác C-Đ – quản lý luật, là một trong những bài học đau đớn nhất của tôi. Người bố giàu đã chỉ cho tôi thấy một sai lầm nghiêm trọng trong doanh nghiệp của tôi: Tôi đã không đăng ký bảo hộ tác quyền cho các sản phẩm túi nylon có khóa Velcro do tôi thiết kế trước khi tôi tiến hành sản xuất. Quan trọng hơn, tôi đã không đăng ký bản quyền sản phẩm (sở dĩ tôi không chịu đăng ký bởi vì tôi cho rằng số tiền 10.000 đô cho phí bản quyền quá đắt và không cần thiết đối với tôi lúc ấy). Thế là lập tức một công ty khác nhảy vào và ăn cắp sản phẩm của tôi, tôi đành bó tay đứng nhìn.
+Ngày nay, nhất là trong thời đại Thông tin, các luật sư về bản quyền và hợp đồng là một trong số những chuyên viên tư vấn quan trọng mà bạn nên có, bởi vì họ có thể giúp bạn tạo ra những tài sản quan trọng nhất. Những luật sư này, nếu họ giỏi, sẽ bảo vệ những ý tưởng và sản phẩm của bạn chống lại những kẻ ăn cắp kinh doanh và lợi nhuận của bạn.
+Thế giới kinh doanh có vô vàn những câu chuyện về các doanh nhân thông minh với nhiều ý tưởng lớn, ra kinh doanh sản phẩm hay ý tưởng của mình trước khi thực hiện bảo hộ chúng. Trong việc sở hữu trí tuệ, một khi ý tưởng của bạn được mọi người biết đến, hầu như không có cách nào để bảo vệ. Cách đây không lâu, một công ty tung ra một chương trình tính toán cho các doanh nghiệp nhỏ. Tôi đã mua sản phẩm thông minh này sử dụng trong công ty của mình. Vài năm sau, công ty tuyên bố giải thể. Tại sao vậy? Bởi vì công ty đó đã không chịu đăng ký bảo hộ bản quyền, nên một công ty khác đã nhảy vào, ăn cắp sản phẩm và cạnh tranh gay gắt khiến cho công ty tác giả ban đầu của sản phẩm đó bị đẩy vào con đường phá sản. Ngày nay, chính công ty ăn cắp đó hiện đang chiếm lĩnh thị trường các sản phẩm phần mềm dùng cho doanh nghiệp.
+Người ta nói rằng Bill Gates đã trở thành người giàu nhất hành tinh chỉ bằng một ý tưởng. Nói cách khác, ông không làm giàu bằng cách đầu tư vào địa ốc hay sản xuất kinh doanh. Ông chỉ mua lại thông tin, bảo vệ thông tin đó và trở thành tỷ phú khi đang ở tuổi ba mươi. Điểm chính yếu là ông thậm chí không phải là người phát minh ra hệ thống vận hành Microsoft. Ông chỉ mua lại hệ thống đó từ các nhà lập trình khác, bán cho IBM và phần tiếp theo chắc các bạn đã biết.
+Aristotle Onassis trở thành một tập đoàn hàng hải khổng lồ chỉ bằng một văn bản pháp lý đơn giản. Đó là một hợp đồng ký kết với một tập đoàn sản xuất, bảo đảm ông ta được độc quyền vận tải hàng hóa của tập đoàn này đến khắp nơi trên thế giới. Những gì Onassis có chỉ là tài liệu hợp đồng đó trong tay. Ông không có một chiếc tàu nào cho mình. Thế nhưng, nhờ vào hợp đồng đó, ông đã thuyết phục được các ngân hàng đồng ý cho ông vay tiền để mua tàu. Ông mua tàu từ đâu? Ông mua chúng từ chính phủ Mỹ sau Thế chiến thứ 2. Khi đó, chính quyền Mỹ dư thừa các chiếc tàu cũ kỹ dùng để chuyên chở các vũ khí chiến tranh từ Mỹ đến châu Âu. Còn một khó khăn khác. Để mua được tàu, ông cần phải là công dân Mỹ trong khi Onassis còn mang quốc tịch Hy Lạp. Khó khăn đó có cản trở ông không? Dĩ nhiên là không. Với sự hiểu biết các luật lệ của nhóm C, Onassis đã mua tàu thông qua một công ty có tư cách pháp nhân ở Mỹ do ông kiểm soát. Đó cũng là một ví dụ về những hệ thống luật pháp khác nhau áp dụng cho những nhóm khác nhau.
+GHI CHÚ CỦA SHARON – ĐỒNG TÁC GIẢ
+Trong số những tài sản giá trị nhất mà bạn có thể sở hữu bao gồm các sản phẩm trí tuệ như nhãn hiệu, thương hiệu và quyền tác giả. Những văn bản pháp lý này chứng nhận quyền sở hữu của bạn và bảo vệ các tài sản đó cho bạn. Như Robert đã tâm sự về doanh nghiệp sản xuất túi Velcro của mình, không có sự bảo vệ này, bạn có nguy cơ bị mất trắng.
+Một khi bạn đã bảo vệ được các quyền tác giả của mình, bạn không những hạn chế được tình trạng ăn cắp, mà còn có thể sang nhượng hoặc cấp phép sử dụng các quyền tác giả này và đem lại cho mình khoản thu nhập từ các nguồn đó. Cấp phép sử dụng quyền tác giả của bạn cho một bên thứ ba chính là ví dụ hoàn hảo chứng minh tài sản đang làm việc cho bạn!
+Tuy nhiên, các vấn đề về luật pháp có thể phát sinh trên hầu hết các khía cạnh khác trong kinh doanh. Tìm một tư vấn luật giỏi là rất quan trọng khi bạn đang xây dựng kinh doanh, bởi vì nhà tư vấn đó sẽ đóng vai trò một thành viên trong đội ngũ tư vấn của bạn sau này. Lúc đầu, chi phí tư vấn về luật có vẻ khá đắt đối với bạn, thế nhưng, nếu bạn so sánh khoản chi phí đó với những chi phí thuê mướn luật sư sau này để tranh cãi cho những sản phẩm bị ăn cắp của mình, bạn sẽ thấy chúng vẫn rẻ hơn nhiều nếu như bạn có hành động thích hợp ngay từ đầu. Ngoài chi phí về tiền bạc, bạn cũng cần xem xét đến yếu tố thời gian bị mất, khi đó, thay vì tập trung vào doanh nghiệp, bạn buộc phải tốn thời gian cho những vụ kiện tụng đó.
+Đây cũng chính là một khía cạnh khác mà hình thức kinh doanh đặc quyền và tiếp thị mạng lưới có thể giúp bạn vượt hơn những người khác khi bạn bắt đầu ra kinh doanh. Cụ thể là khi bạn mua đặc quyền kinh doanh hoặc gia nhập tổ chức tiếp thị mạng lưới, hầu hết các tài liệu pháp lý cần thiết cho việc khởi sự và phát triển kinh doanh sẽ được cung cấp cho bạn sử dụng. Điều đó không những giúp bạn tiết kiệm nhiều tiền mà còn tiết kiệm vô số thời gian, cho phép bạn có thể tập trung ngay mọi nỗ lực của mình vào việc phát triển kinh doanh. Tuy nhiên, chúng tôi vẫn đề nghị các bạn nên có luật sư của mình thay mặt bạn rà soát lại những văn bản pháp lý đó.
+Dưới đây là những lĩnh vực cụ thể mà người tư vấn luật phù hợp có thể giúp bạn tránh rơi vào những khó khăn tiềm tàng về mặt pháp lý:
+1. Tổng quát về doanh nghiệp:
+•	Chọn lựa hình thức kinh doanh
+•	Hợp đồng mua bán
+•	Giấy phép kinh doanh
+•	Các quy định chấp hành về mặt pháp lý
+•	Hợp đồng thuê hay mua mặt bằng
+2. Luật khách hàng:
+•	Điều kiện bán hàng
+•	Tiếp thị bằng thư gửi trực tiếp
+•	Các quy định về trách nhiệm sản phẩm
+•	Các quy định về công bố thông tin đúng trong quảng cáo
+•	Luật môi trường
+3. Hợp đồng:
+•	Với nhà cung cấp
+•	Với các khách hàng mua sỉ
+•	Với người lao động
+•	Quy định về đồng phục nhân viên
+•	Bảo hành
+•	Phân xử tranh chấp
+4. Tài sản trí tuệ:
+•	Thỏa thuận làm việc để cho thuê
+•	Thỏa thuận không phổ biến thông tin
+•	Bản quyền tác giả
+•	Bằng phát minh, sáng chế
+•	Thương hiệu, nhãn hiệu
+•	Cấp phép sử dụng tài sản trí tuệ
+5. Luật lao động:
+•	Các vấn đề về nguồn nhân lực
+•	Thỏa thuận lao động
+•	Tranh chấp lao động
+•	An toàn lao động
+•	Bồi thường lao động
+6. Công cụ nợ và chứng khoán:
+•	Thuê mướn hay mua thiết bị
+•	Hợp đồng vay mượn
+•	Gọi vốn tư
+•	Phát hành cổ phiếu lần đầu ra công chúng
+7. Các vấn đề về cổ đông:
+•	Quy định chính sách của doanh nghiệp
+•	Quyền hạn của hội đồng quản trị
+•	Phát hành cổ phiếu
+•	Sang nhượng, sáp nhập

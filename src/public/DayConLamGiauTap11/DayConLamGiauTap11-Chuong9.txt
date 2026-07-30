@@ -1,5 +1,4 @@
-CHƯƠNG 9
-Giá trị thứ 7: Không làm việc vì tiền
+CHƯƠNG 9: Giá trị thứ 7 - Không làm việc vì tiền
 Trong một cuộc nói chuyện trên đài phát thanh năm 2002, một khán giả đã hỏi tôi câu hỏi sau:
 “Tôi là kỹ sư điện tử, hiện đang làm việc cho công ty máy tính nằm trong Thung lũng Silicon. Như ông đã biết, ngành công nghiệp kỹ thuật cao này hiện đang bị tàn phá, đặc biệt là tại bang California. Dù chưa bị đuổi việc nhưng tôi đã bị giảm lương và làm ít giờ hơn. Trong khi giá nhà đất ở khu này đang lên cao. Tiền trả góp nhà hàng tháng chiếm gần hết tiền lương đã bị giảm này. Cứ đà này chắc tôi sẽ bị mất nhà nếu lương lại tiếp tục bị cắt giảm. Tệ hơn nữa là kế hoạch nghỉ hưu của tôi cũng gần như tan tành. Xin ông khuyên tôi nên làm gì?”
 Câu hỏi đầu tiên của tôi là:

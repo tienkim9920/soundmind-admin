@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quản lý Storage - SoundMind Admin</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <style>
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left, #dbeafe, transparent 35%),
+                radial-gradient(circle at bottom right, #e9d5ff, transparent 35%),
+                #f8fafc;
+            font-family: Inter, sans-serif;
+            color: #0f172a;
+        }
+
+        .sidebar {
+            width: 280px;
+            min-height: 100vh;
+            background: rgba(255, 255, 255, .72);
+            backdrop-filter: blur(18px);
+            border-right: 1px solid rgba(255, 255, 255, .7);
+            padding: 28px;
+            position: fixed;
+            left: 0;
+            top: 0;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 35px;
+        }
+
+        .brand-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            background: #eef2ff;
+            color: #4f46e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .brand-title {
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            border-radius: 18px;
+            color: #64748b;
+            text-decoration: none;
+            margin-bottom: 10px;
+        }
+
+        .menu-item.active {
+            background: linear-gradient(to right, #111827, #4f46e5);
+            color: white;
+        }
+
+        .content {
+            margin-left: 280px;
+            padding: 32px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, .72);
+            backdrop-filter: blur(16px);
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, .8);
+            box-shadow: 0 15px 35px rgba(15, 23, 42, .06);
+        }
+
+        .topbar {
+            padding: 22px 28px;
+            margin-bottom: 28px;
+        }
+
+        .btn-gradient {
+            border: none;
+            border-radius: 18px;
+            padding: 12px 20px;
+            color: white;
+            font-weight: 600;
+            background: linear-gradient(to right, #111827, #4f46e5);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-box {
+            border: none;
+            border-radius: 18px;
+            padding: 14px 18px;
+            background: #f8fafc;
+        }
+
+        .file-input {
+            border: none;
+            border-radius: 18px;
+            padding: 10px 18px;
+            background: #f8fafc;
+        }
+
+        .action-btn {
+            width: 38px;
+            height: 38px;
+            border: none;
+            border-radius: 14px;
+            background: #f8fafc;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #0f172a;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover {
+            background: #e2e8f0;
+            color: #4f46e5;
+        }
+
+        .badge-bucket {
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-weight: 600;
+            background: #e0e7ff;
+            color: #4338ca;
+            font-size: 0.85rem;
+        }
+
+        .table-card {
+            padding: 28px;
+        }
+
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: #eef2ff;
+            color: #4f46e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        /* Container Topbar được tối ưu */
+        .topbar-container {
+            border-radius: 24px;
+        }
+
+        /* Custom Input Group cho Upload */
+        .upload-input-group {
+            background: #f8fafc;
+            border-radius: 18px;
+            padding: 4px;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            transition: all 0.2s ease;
+        }
+
+        .upload-input-group:focus-within {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+
+        /* Custom File Input */
+        .custom-file-input {
+            border: none !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            color: #475569;
+        }
+
+        .custom-file-input::file-selector-button {
+            border: none;
+            background: #e2e8f0;
+            color: #334155;
+            padding: 6px 12px;
+            border-radius: 12px;
+            margin-right: 12px;
+            font-weight: 600;
+            font-size: 0.825rem;
+            transition: background 0.2s ease;
+        }
+
+        .custom-file-input::file-selector-button:hover {
+            background: #cbd5e1;
+            cursor: pointer;
+        }
+
+        /* Button Upload đồng bộ chiều cao */
+        .btn-gradient-upload {
+            border: none;
+            border-radius: 14px !important;
+            padding: 10px 22px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            background: linear-gradient(to right, #111827, #4f46e5);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            transition: opacity 0.2s ease, transform 0.1s ease;
+        }
+
+        .btn-gradient-upload:hover {
+            opacity: 0.95;
+        }
+
+        .btn-gradient-upload:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('../partials/sidebar', { active: 'storages' }) %>
+
+        <div class="content">
+
+            <!-- Topbar -->
+            <div class="glass-card topbar-container mb-4 p-4">
+                <div class="row align-items-center g-3">
+                    <!-- Bên trái: Title & Bucket Status -->
+                    <div class="col-12 col-lg-5">
+                        <h3 class="fw-bold mb-1">Quản lý Storage</h3>
+                        <div class="text-secondary d-flex align-items-center gap-2 flex-wrap">
+                            <span class="small fw-medium">Bucket:</span>
+                            <span class="badge-bucket">
+                                <i class="bi bi-hdd-network me-1"></i>
+                                <%= bucketName %>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Bên phải: Form Upload (Đã bọc col và tối ưu Flexbox) -->
+                    <div class="col-12 col-lg-7">
+                        <form action="/storages/upload" method="POST" enctype="multipart/form-data"
+                            class="upload-form-wrapper w-100">
+                            <input type="hidden" name="prefix" value="<%= currentPrefix %>">
+
+                            <div class="input-group upload-input-group d-flex align-items-center">
+                                <input type="file" name="files" class="form-control custom-file-input" id="s3FileUpload"
+                                    multiple required>
+                                <button type="submit"
+                                    class="btn-gradient-upload d-inline-flex align-items-center justify-content-center">
+                                    <i class="bi bi-cloud-upload-fill me-1"></i>
+                                    <span>Upload ở đây</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <% if (typeof error !=='undefined' && error) { %>
+                <div class="alert alert-danger rounded-4 border-0 mb-4 shadow-sm">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <%= error %>
+                </div>
+                <% } %>
+
+                    <div class="glass-card table-card">
+
+                        <!-- Breadcrumb Navigation -->
+                        <div class="d-flex justify-content-between align-items-center mb-4 bg-light p-3 rounded-4">
+                            <!-- Breadcrumb Navigation -->
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-0 align-items-center">
+                                    <li class="breadcrumb-item">
+                                        <a href="/storages" class="text-decoration-none fw-bold text-primary">
+                                            <i class="bi bi-house-door-fill me-1"></i> Root
+                                        </a>
+                                    </li>
+                                    <% breadcrumbs.forEach((crumb, index)=> { %>
+                                        <% if (index===breadcrumbs.length - 1) { %>
+                                            <li class="breadcrumb-item active fw-bold text-dark" aria-current="page">
+                                                <%= crumb.name %>
+                                            </li>
+                                            <% } else { %>
+                                                <li class="breadcrumb-item">
+                                                    <a href="/storage?prefix=<%= encodeURIComponent(crumb.prefix) %>"
+                                                        class="text-decoration-none text-primary">
+                                                        <%= crumb.name %>
+                                                    </a>
+                                                </li>
+                                                <% } %>
+                                                    <% }) %>
+                                </ol>
+                            </nav>
+
+                            <!-- Khối Nút Thao Tác -->
+                            <div class="d-flex gap-2">
+                                <!-- Nút Lấy toàn bộ URL -->
+                                <% if (files && files.length> 0) { %>
+                                    <button type="button"
+                                        class="btn btn-outline-secondary btn-sm rounded-3 fw-semibold d-flex align-items-center gap-1"
+                                        data-bs-toggle="modal" data-bs-target="#copyUrlsModal">
+                                        <i class="bi bi-link-45deg fs-6"></i>
+                                        <span>Lấy toàn bộ URL (<%= files.length %>)</span>
+                                    </button>
+                                    <% } %>
+
+                                        <!-- Nút Tạo Folder -->
+                                        <button type="button"
+                                            class="btn btn-outline-primary btn-sm rounded-3 fw-semibold d-flex align-items-center gap-1"
+                                            data-bs-toggle="modal" data-bs-target="#createFolderModal">
+                                            <i class="bi bi-folder-plus fs-6"></i>
+                                            <span>Tạo thư mục</span>
+                                        </button>
+                            </div>
+                        </div>
+
+                        <!-- Table List (Folders & Files) -->
+                        <div class="table-responsive">
+                            <table class="table align-middle">
+                                <thead>
+                                    <tr class="text-secondary">
+                                        <th>Tên đối tượng</th>
+                                        <th>Kích thước</th>
+                                        <th>Cập nhật cuối</th>
+                                        <th class="text-end">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- 1. Danh sách Folder -->
+                                    <% if (folders && folders.length> 0) { %>
+                                        <% folders.forEach(folder=> { %>
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center gap-3">
+                                                        <div class="item-icon folder-icon">
+                                                            <i class="bi bi-folder-fill"></i>
+                                                        </div>
+                                                        <div>
+                                                            <a href="/storages?prefix=<%= encodeURIComponent(folder.prefix) %>"
+                                                                class="fw-bold text-decoration-none text-dark fs-6">
+                                                                <%= folder.name %>/
+                                                            </a>
+                                                            <small class="text-secondary d-block">Thư mục</small>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-secondary">-</td>
+                                                <td class="text-secondary">-</td>
+                                                <td class="text-end">
+                                                    <a href="/storages?prefix=<%= encodeURIComponent(folder.prefix) %>"
+                                                        class="btn btn-sm btn-light rounded-3">
+                                                        Mở folder <i class="bi bi-chevron-right ms-1"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <% }) %>
+                                                <% } %>
+
+                                                    <!-- 2. Danh sách File -->
+                                                    <% if (files && files.length> 0) { %>
+                                                        <% files.forEach(file=> { %>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="d-flex align-items-center gap-3">
+                                                                        <div class="item-icon file-icon">
+                                                                            <i class="bi bi-file-earmark-code"></i>
+                                                                        </div>
+                                                                        <div>
+                                                                            <a href="<%= file.url %>" target="_blank"
+                                                                                class="fw-semibold text-decoration-none text-dark">
+                                                                                <%= file.name %>
+                                                                            </a>
+                                                                            <small class="text-secondary d-block"
+                                                                                style="font-size: 0.75rem;">
+                                                                                Key: <%= file.key %>
+                                                                            </small>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="fw-medium text-secondary">
+                                                                    <%= file.size %>
+                                                                </td>
+                                                                <td class="text-secondary">
+                                                                    <%= new
+                                                                        Date(file.lastModified).toLocaleString('vi-VN')
+                                                                        %>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="d-flex gap-2 justify-content-end">
+                                                                        <a href="<%= file.url %>" target="_blank"
+                                                                            class="action-btn" title="Mở / Tải về">
+                                                                            <i class="bi bi-box-arrow-up-right"></i>
+                                                                        </a>
+
+                                                                        <form method="POST" action="/storages/delete"
+                                                                            onsubmit="return confirm('Xóa file này?')">
+                                                                            <input type="hidden" name="key"
+                                                                                value="<%= file.key %>">
+                                                                            <input type="hidden" name="prefix"
+                                                                                value="<%= currentPrefix %>">
+                                                                            <button type="submit"
+                                                                                class="action-btn text-danger"
+                                                                                title="Xóa file">
+                                                                                <i class="bi bi-trash"></i>
+                                                                            </button>
+                                                                        </form>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <% }) %>
+                                                                <% } %>
+
+                                                                    <!-- Trường hợp thư mục trống -->
+                                                                    <% if ((!folders || folders.length===0) && (!files
+                                                                        || files.length===0)) { %>
+                                                                        <tr>
+                                                                            <td colspan="4"
+                                                                                class="text-center py-5 text-secondary">
+                                                                                <i
+                                                                                    class="bi bi-folder2-open display-6 d-block mb-2 text-muted"></i>
+                                                                                Thư mục này hiện tại trống.
+                                                                            </td>
+                                                                        </tr>
+                                                                        <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+        </div>
+
+        <!-- Modal Tạo Thư Mục -->
+        <div class="modal fade" id="createFolderModal" tabindex="-1" aria-labelledby="createFolderModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0 glass-card p-2">
+                    <div class="modal-header border-0 pb-0">
+                        <h5 class="modal-title fw-bold" id="createFolderModalLabel">
+                            <i class="bi bi-folder-plus text-primary me-2"></i>Tạo thư mục mới
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" data-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <form action="/storages/create-folder" method="POST">
+                        <div class="modal-body py-3">
+                            <input type="hidden" name="prefix" value="<%= currentPrefix %>">
+                            <div class="mb-3">
+                                <label for="folderName" class="form-label text-secondary small fw-medium">Tên thư
+                                    mục</label>
+                                <input type="text" class="form-control border-0 bg-light rounded-3 p-2.5"
+                                    id="folderName" name="folderName" placeholder="Nhập tên thư mục..." required
+                                    pattern="[^/]+" title="Tên thư mục không được chứa ký tự /">
+                            </div>
+                        </div>
+                        <div class="modal-footer border-0 pt-0">
+                            <button type="button" class="btn btn-light rounded-3 fw-semibold" data-bs-dismiss="modal"
+                                data-dismiss="modal">Hủy</button>
+                            <button type="submit" class="btn-gradient px-4">Tạo ngay</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Danh Sách URLs -->
+        <div class="modal fade" id="copyUrlsModal" tabindex="-1" aria-labelledby="copyUrlsModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content border-0 glass-card p-2">
+                    <div class="modal-header border-0 pb-0">
+                        <h5 class="modal-title fw-bold" id="copyUrlsModalLabel">
+                            <i class="bi bi-link-45deg text-primary me-2"></i>Danh sách URL tập tin
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body py-3">
+                        <p class="text-secondary small mb-2">Dưới đây là tất cả đường dẫn công khai của các file trong
+                            thư mục này (Mỗi URL một dòng):</p>
+                        <textarea id="allUrlsTextarea"
+                            class="form-control border-0 bg-light rounded-3 p-3 font-monospace small" rows="10"
+                            readonly><% if (files && files.length > 0) { %><% files.forEach((file, index) => { %><%= file.url %><% if (index < files.length - 1) { %><%= '\n' %><% } %><% }) %><% } %></textarea>
+                    </div>
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="button" class="btn btn-light rounded-3 fw-semibold"
+                            data-bs-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn-gradient px-4" id="btnCopyAllUrls">
+                            <i class="bi bi-clipboard-check me-1"></i> Copy tất cả
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap 5 JavaScript Bundle (đã bao gồm Popper.js) -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const btnCopy = document.getElementById('btnCopyAllUrls');
+
+                if (btnCopy) {
+                    btnCopy.addEventListener('click', function () {
+                        const textarea = document.getElementById('allUrlsTextarea');
+                        if (!textarea || !textarea.value.trim()) {
+                            alert('Không có URL nào để sao chép!');
+                            return;
+                        }
+
+                        const textToCopy = textarea.value.trim();
+                        const lineCount = textToCopy.split('\n').length;
+
+                        // Tạm thời chọn nội dung trong textarea
+                        textarea.focus();
+                        textarea.select();
+                        textarea.setSelectionRange(0, 99999);
+
+                        // Dùng Clipboard API hoặc execCommand làm phương án dự phòng
+                        if (navigator.clipboard && window.isSecureContext) {
+                            navigator.clipboard.writeText(textToCopy)
+                                .then(() => {
+                                    alert(`Đã sao chép thành công ${lineCount} URL!`);
+                                })
+                                .catch(() => {
+                                    executeFallbackCopy(textToCopy, lineCount);
+                                });
+                        } else {
+                            executeFallbackCopy(textToCopy, lineCount);
+                        }
+                    });
+                }
+            });
+
+            function executeFallbackCopy(text, count) {
+                try {
+                    const successful = document.execCommand('copy');
+                    if (successful) {
+                        alert(`Đã sao chép thành công ${count} URL!`);
+                    } else {
+                        alert('Vui lòng bôi đen nội dung trong khung và nhấn Ctrl+C để copy!');
+                    }
+                } catch (err) {
+                    alert('Lỗi sao chép! Vui lòng tự bôi đen và nhấn Ctrl+C.');
+                }
+            }
+        </script>
+</body>
+
+</html>

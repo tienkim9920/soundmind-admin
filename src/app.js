@@ -45,7 +45,8 @@ app.use(
                 connectSrc: [
                     "'self'",
                     "http://localhost:8080",
-                    "https://cdn.jsdelivr.net"
+                    "https://cdn.jsdelivr.net",
+                    "https://s3.vn-hcm-1.vietnix.cloud"
                 ]
             }
         }
@@ -64,6 +65,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const webRoute = require('./routes/web.route');
 
-app.use('/', webRoute);
+app.use('', webRoute);
 
 module.exports = app;

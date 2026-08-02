@@ -10,6 +10,7 @@ const subscriptionRoute = require('./subscription.route');
 const playlistRoute = require('./playlist.route');
 const orderRoute = require('./order.route');
 const authRoute = require('./auth.route');
+const storageRoute = require('./storage.route');
 
 router.use('/', authRoute);
 router.use('/books', bookRoute);
@@ -20,5 +21,6 @@ router.use('/chapters', chapterRoute);
 router.use('/subscriptions', subscriptionRoute);
 router.use('/playlists', playlistRoute);
 router.use('/orders', orderRoute);
+router.use('/storages', storageRoute);
 
 module.exports = router;

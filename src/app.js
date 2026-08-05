@@ -18,30 +18,26 @@ app.use(
         },
         contentSecurityPolicy: {
             directives: {
-                defaultSrc: ["'self'"],
-
+                defaultSrc: ["'self'", "http://14.225.204.109:4000", "http://localhost:4000"],
+                formAction: ["'self'", "http://14.225.204.109:4000", "http://localhost:4000"],
                 scriptSrc: [
                     "'self'",
                     "'unsafe-inline'",
                     "https://cdn.jsdelivr.net"
                 ],
-
                 styleSrc: [
                     "'self'",
                     "'unsafe-inline'",
                     "https://cdn.jsdelivr.net"
                 ],
-
                 imgSrc: [
                     "'self'",
                     "data:"
                 ],
-
                 fontSrc: [
                     "'self'",
                     "https://cdn.jsdelivr.net"
                 ],
-
                 connectSrc: [
                     "'self'",
                     "http://localhost:8080",

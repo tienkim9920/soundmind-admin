@@ -42,7 +42,7 @@ document.addEventListener(
                 try {
                     const res =
                         await fetch(
-                            `${window.API_URL}/auth/signin`,
+                            `${window.API_URL}/api/auth/signin`,
                             {
                                 method: "POST",
                                 headers: {

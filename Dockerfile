@@ -1,24 +1,20 @@
-# Sử dụng Node.js v24.12.0 trên nền Alpine Linux để tối ưu dung lượng image
+# Sử dụng Node.js v24.12.0 trên nền Alpine Linux
 FROM node:24.12.0-alpine
 
-# Thiết lập thư mục làm việc trong container
+# Thiết lập thư mục làm việc
 WORKDIR /app
 
-# Sao chép package.json và package-lock.json (nếu có)
+# Sao chép các file quản lý package
 COPY package*.json ./
 
-# Cài đặt các phụ thuộc (production dependencies)
-RUN npm ci --only=production
+# Cài đặt chỉ các dependencies cho production (dùng --omit=dev thay cho --only=production)
+RUN npm ci --omit=dev
 
-# Sao chép toàn bộ mã nguồn ứng dụng (bao gồm các thư mục views chứa tệp .ejs)
+# Sao chép toàn bộ mã nguồn ứng dụng (bao gồm thư mục views, public,...)
 COPY . .
-
-# Thiết lập biến môi trường production và chuyển cổng thành 4000
-ENV NODE_ENV=production
-ENV PORT=4000
 
 # Mở cổng 4000
 EXPOSE 4000
 
-# Lệnh khởi chạy ứng dụng ExpressJS
+# Khởi chạy ứng dụng ExpressJS
 CMD ["node", "index.js"]

@@ -1,7 +1,8 @@
 class AuthController {
   loginPage(req, res) {
     res.render('auth/login', {
-      title: 'Đăng nhập'
+      title: 'Đăng nhập',
+      apiUrl: process.env.API_URL || 'http://localhost:8080'
     });
   }
 }

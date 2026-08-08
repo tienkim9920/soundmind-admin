@@ -9,39 +9,177 @@
     </div>
   </div>
 
-  <a href="<%= adminRoute %>/books" class="menu-item <%= locals.active === 'books' ? 'active' : '' %>">
-    <i class="bi bi-book"></i> Sách
-  </a>
+  <!-- 1. SUBMENU: QUẢN LÝ HỆ THỐNG -->
+  <% const contentMenus=['books', 'categories' , 'authors' , 'users' , 'chapters' , 'subscriptions' , 'orders'
+    , 'playlists' , 'storages' ]; const isContentOpen=contentMenus.includes(locals.active); %>
+    <div class="menu-has-sub <%= isContentOpen ? 'open' : '' %>">
+      <button type="button" class="menu-item menu-parent toggle-btn">
+        <span>
+          <i class="bi bi-kanban"></i> Quản lý hệ thống
+        </span>
+        <i class="bi bi-chevron-down submenu-arrow"></i>
+      </button>
 
-  <a href="<%= adminRoute %>/categories" class="menu-item <%= locals.active === 'categories' ? 'active' : '' %>">
-    <i class="bi bi-tags"></i> Thể loại
-  </a>
+      <div class="submenu">
+        <a href="<%= adminRoute %>/books" class="submenu-item <%= locals.active === 'books' ? 'active' : '' %>">
+          <i class="bi bi-book"></i> Sách
+        </a>
+        <a href="<%= adminRoute %>/categories"
+          class="submenu-item <%= locals.active === 'categories' ? 'active' : '' %>">
+          <i class="bi bi-tags"></i> Thể loại
+        </a>
+        <a href="<%= adminRoute %>/authors" class="submenu-item <%= locals.active === 'authors' ? 'active' : '' %>">
+          <i class="bi bi-person-lines-fill"></i> Tác giả
+        </a>
+        <a href="<%= adminRoute %>/users" class="submenu-item <%= locals.active === 'users' ? 'active' : '' %>">
+          <i class="bi bi-people"></i> Người dùng
+        </a>
+        <a href="<%= adminRoute %>/chapters" class="submenu-item <%= locals.active === 'chapters' ? 'active' : '' %>">
+          <i class="bi bi-music-note-list"></i> Chương sách
+        </a>
+        <a href="<%= adminRoute %>/subscriptions"
+          class="submenu-item <%= locals.active === 'subscriptions' ? 'active' : '' %>">
+          <i class="bi bi-credit-card"></i> Hội viên
+        </a>
+        <a href="<%= adminRoute %>/orders" class="submenu-item <%= locals.active === 'orders' ? 'active' : '' %>">
+          <i class="bi bi-bag-check"></i> Đơn hàng
+        </a>
+        <a href="<%= adminRoute %>/playlists" class="submenu-item <%= locals.active === 'playlists' ? 'active' : '' %>">
+          <i class="bi bi-music-note-beamed"></i> Playlists
+        </a>
+        <a href="<%= adminRoute %>/storages" class="submenu-item <%= locals.active === 'storages' ? 'active' : '' %>">
+          <i class="bi bi-box"></i> Lưu trữ
+        </a>
+      </div>
+    </div>
 
-  <a href="<%= adminRoute %>/authors" class="menu-item <%= locals.active === 'authors' ? 'active' : '' %>">
-    <i class="bi bi-person-lines-fill"></i> Tác giả
-  </a>
+    <!-- 2. SUBMENU: GIÁM SÁT SERVER -->
+    <% const isSystemOpen=['monitor', 'logs' ].includes(locals.active); %>
+      <div class="menu-has-sub <%= isSystemOpen ? 'open' : '' %>">
+        <button type="button" class="menu-item menu-parent toggle-btn">
+          <span>
+            <i class="bi bi-cpu"></i> Giám sát Server
+          </span>
+          <i class="bi bi-chevron-down submenu-arrow"></i>
+        </button>
 
-  <a href="<%= adminRoute %>/users" class="menu-item <%= locals.active === 'users' ? 'active' : '' %>">
-    <i class="bi bi-people"></i> Người dùng
-  </a>
+        <div class="submenu">
+          <a href="<%= adminRoute %>/system/monitor"
+            class="submenu-item <%= locals.active === 'monitor' ? 'active' : '' %>">
+            <i class="bi bi-activity"></i> Monitor Server
+          </a>
+          <a href="<%= adminRoute %>/system/logs" class="submenu-item <%= locals.active === 'logs' ? 'active' : '' %>">
+            <i class="bi bi-journal-text"></i> Check Logs
+          </a>
+        </div>
+      </div>
 
-  <a href="<%= adminRoute %>/chapters" class="menu-item <%= locals.active === 'chapters' ? 'active' : '' %>">
-    <i class="bi bi-music-note-list"></i> Chương sách
-  </a>
+      <hr class="sidebar-divider my-3" />
 
-  <a href="<%= adminRoute %>/subscriptions" class="menu-item <%= locals.active === 'subscriptions' ? 'active' : '' %>">
-    <i class="bi bi-credit-card"></i> Hội viên
-  </a>
-
-  <a href="<%= adminRoute %>/orders" class="menu-item <%= locals.active === 'orders' ? 'active' : '' %>">
-    <i class="bi bi-bag-check"></i> Orders
-  </a>
-
-  <a href="<%= adminRoute %>/playlists" class="menu-item <%= locals.active === 'playlists' ? 'active' : '' %>">
-    <i class="bi bi-music-note-beamed"></i> Playlists
-  </a>
-
-  <a href="<%= adminRoute %>/storages" class="menu-item <%= locals.active === 'storages' ? 'active' : '' %>">
-    <i class="bi bi-box"></i> Storage
-  </a>
+      <!-- 3. NÚT ĐĂNG XUẤT -->
+      <a href="<%= adminRoute %>/logout" class="menu-item text-danger">
+        <i class="bi bi-box-arrow-right"></i> Đăng xuất
+      </a>
 </div>
+
+<!-- SCRIPT BẮT SỰ KIỆN LẮNG NGHE CHUẨN XÁC -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const toggleBtns = document.querySelectorAll('.toggle-btn');
+
+    toggleBtns.forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const parent = this.parentElement;
+        const isOpen = parent.classList.contains('open');
+
+        // Đóng tất cả các menu khác
+        document.querySelectorAll('.menu-has-sub').forEach(item => {
+          if (item !== parent) {
+            item.classList.remove('open');
+          }
+        });
+
+        // Bật/tắt menu hiện tại
+        if (isOpen) {
+          parent.classList.remove('open');
+        } else {
+          parent.classList.add('open');
+        }
+      });
+    });
+  });
+</script>
+
+<!-- CSS BỔ SUNG ĐỂ BẢO ĐẢM BUTTON KHÔNG LỆCH GIAO DIỆN -->
+<style>
+  .sidebar-divider {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  /* Reset style cho nút toggle-btn */
+  .toggle-btn {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 15px;
+    color: #334155;
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+  }
+
+  .toggle-btn:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+
+  /* Hiệu ứng ẩn hiện Submenu */
+  .submenu {
+    display: none;
+    padding-left: 18px;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 4px;
+  }
+
+  /* Mở menu khi có class .open */
+  .menu-has-sub.open .submenu {
+    display: flex !important;
+  }
+
+  .menu-has-sub.open .submenu-arrow {
+    transform: rotate(180deg);
+  }
+
+  .submenu-arrow {
+    transition: transform 0.25s ease;
+    font-size: 12px;
+  }
+
+  .submenu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    color: #64748b;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .submenu-item:hover,
+  .submenu-item.active {
+    color: #4f46e5;
+    background-color: rgba(79, 70, 229, 0.08);
+    font-weight: 500;
+  }
+</style>

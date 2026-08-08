@@ -40,10 +40,6 @@ function getCategoryName(category) {
     return category.name ?? category.title ?? category.categoryName ?? category.slug ?? `#${getCategoryId(category)}`;
 }
 
-function getAuthorId(author) {
-    return author.id ?? author._id ?? author.authorId;
-}
-
 function getApiUrl() {
     return process.env.API_URL || 'http://localhost:8080';
 }

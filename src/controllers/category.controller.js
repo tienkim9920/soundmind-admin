@@ -81,7 +81,7 @@ class CategoryController {
     async index(req, res) {
         try {
             const response = await axios.get(
-                `${getApiUrl()}/api/categories`,
+                `${getApiUrl()}/categories`,
                 getAuthConfig(req)
             );
 
@@ -118,7 +118,7 @@ class CategoryController {
     async store(req, res) {
         try {
             await axios.post(
-                `${getApiUrl()}/api/categories`,
+                `${getApiUrl()}/categories`,
                 getCategoryPayload(req.body),
                 getAuthConfig(req)
             );
@@ -145,7 +145,7 @@ class CategoryController {
 
         try {
             const response = await axios.get(
-                `${getApiUrl()}/api/categories/${id}`,
+                `${getApiUrl()}/categories/${id}`,
                 getAuthConfig(req)
             );
 
@@ -169,7 +169,7 @@ class CategoryController {
 
         try {
             const response = await axios.get(
-                `${getApiUrl()}/api/categories/${id}`,
+                `${getApiUrl()}/categories/${id}`,
                 getAuthConfig(req)
             );
 
@@ -196,7 +196,7 @@ class CategoryController {
 
         try {
             await axios.put(
-                `${getApiUrl()}/api/categories/${id}`,
+                `${getApiUrl()}/categories/${id}`,
                 getCategoryPayload(req.body),
                 getAuthConfig(req)
             );
@@ -226,7 +226,7 @@ class CategoryController {
 
         try {
             await axios.delete(
-                `${getApiUrl()}/api/categories/${id}`,
+                `${getApiUrl()}/categories/${id}`,
                 getAuthConfig(req)
             );
 

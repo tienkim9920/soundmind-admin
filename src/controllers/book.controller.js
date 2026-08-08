@@ -82,7 +82,7 @@ function getAuthConfig(req, config = {}) {
 
 async function getCategories(req) {
     const response = await axios.get(
-        `${getApiUrl()}/api/categories`,
+        `${getApiUrl()}/categories`,
         getAuthConfig(req)
     );
 
@@ -91,7 +91,7 @@ async function getCategories(req) {
 
 async function getAuthors(req) {
     const response = await axios.get(
-        `${getApiUrl()}/api/authors`,
+        `${getApiUrl()}/authors`,
         getAuthConfig(req)
     );
 
@@ -137,7 +137,7 @@ class BookController {
                 await Promise.all([
 
                     axios.get(
-                        `${API_URL}/api/books`,
+                        `${API_URL}/books`,
                         getAuthConfig(req, {
                             params: {
                                 page,
@@ -149,7 +149,7 @@ class BookController {
                     ),
 
                     axios.get(
-                        `${API_URL}/api/categories`,
+                        `${API_URL}/categories`,
                         getAuthConfig(req)
                     )
                 ]);
@@ -292,7 +292,7 @@ class BookController {
 
         try {
             await axios.post(
-                `${getApiUrl()}/api/books`,
+                `${getApiUrl()}/books`,
                 getBookPayload(req.body),
                 getAuthConfig(req)
             );
@@ -332,7 +332,7 @@ class BookController {
             const [bookResponse, categories, authors] =
                 await Promise.all([
                     axios.get(
-                        `${getApiUrl()}/api/books/${id}`,
+                        `${getApiUrl()}/books/${id}`,
                         getAuthConfig(req)
                     ),
                     getCategories(req),
@@ -366,7 +366,7 @@ class BookController {
 
         try {
             await axios.put(
-                `${getApiUrl()}/api/books/${id}`,
+                `${getApiUrl()}/books/${id}`,
                 getBookPayload(req.body),
                 getAuthConfig(req)
             );
@@ -400,7 +400,7 @@ class BookController {
 
         try {
             await axios.delete(
-                `${getApiUrl()}/api/books/${id}`,
+                `${getApiUrl()}/books/${id}`,
                 getAuthConfig(req)
             );
 

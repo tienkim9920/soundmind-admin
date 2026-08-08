@@ -69,7 +69,7 @@ class SubscriptionController {
 
         try {
             const response = await axios.get(
-                `${getApiUrl()}/api/subscriptions/admin/list`,
+                `${getApiUrl()}/subscriptions/admin/list`,
                 getAuthConfig(req, {
                     params: {
                         page,
@@ -157,7 +157,7 @@ class SubscriptionController {
         try {
             console.log("Subscription payload: ", getSubscriptionPayload(req.body));
             await axios.post(
-                `${getApiUrl()}/api/subscriptions/admin`,
+                `${getApiUrl()}/subscriptions/admin`,
                 getSubscriptionPayload(req.body),
                 getAuthConfig(req)
             );
@@ -184,7 +184,7 @@ class SubscriptionController {
 
         try {
             const response = await axios.get(
-                `${getApiUrl()}/api/subscriptions/admin/${id}`,
+                `${getApiUrl()}/subscriptions/admin/${id}`,
                 getAuthConfig(req)
             );
 
@@ -212,7 +212,7 @@ class SubscriptionController {
 
         try {
             const response = await axios.get(
-                `${getApiUrl()}/api/subscriptions/admin/${id}`,
+                `${getApiUrl()}/subscriptions/admin/${id}`,
                 getAuthConfig(req)
             );
 
@@ -240,7 +240,7 @@ class SubscriptionController {
 
         try {
             await axios.put(
-                `${getApiUrl()}/api/subscriptions/admin/${id}`,
+                `${getApiUrl()}/subscriptions/admin/${id}`,
                 getSubscriptionPayload(req.body),
                 getAuthConfig(req)
             );
@@ -270,7 +270,7 @@ class SubscriptionController {
 
         try {
             await axios.delete(
-                `${getApiUrl()}/api/subscriptions/admin/${id}`,
+                `${getApiUrl()}/subscriptions/admin/${id}`,
                 getAuthConfig(req)
             );
 

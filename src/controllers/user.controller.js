@@ -99,7 +99,7 @@ class UserController {
 
         try {
             const response = await axios.get(
-                `${getApiUrl()}/api/users`,
+                `${getApiUrl()}/users`,
                 getAuthConfig(req, {
                     params: {
                         page,
@@ -171,7 +171,7 @@ class UserController {
     async store(req, res) {
         try {
             await axios.post(
-                `${getApiUrl()}/api/users`,
+                `${getApiUrl()}/users`,
                 getUserPayload(req.body, true),
                 getAuthConfig(req)
             );
@@ -198,7 +198,7 @@ class UserController {
 
         try {
             const response = await axios.get(
-                `${getApiUrl()}/api/users/${id}`,
+                `${getApiUrl()}/users/${id}`,
                 getAuthConfig(req)
             );
 
@@ -222,7 +222,7 @@ class UserController {
 
         try {
             const response = await axios.get(
-                `${getApiUrl()}/api/users/${id}`,
+                `${getApiUrl()}/users/${id}`,
                 getAuthConfig(req)
             );
 
@@ -249,7 +249,7 @@ class UserController {
 
         try {
             await axios.put(
-                `${getApiUrl()}/api/users/${id}`,
+                `${getApiUrl()}/users/${id}`,
                 getUserPayload(req.body),
                 getAuthConfig(req)
             );
@@ -279,7 +279,7 @@ class UserController {
 
         try {
             await axios.delete(
-                `${getApiUrl()}/api/users/${id}`,
+                `${getApiUrl()}/users/${id}`,
                 getAuthConfig(req)
             );
 

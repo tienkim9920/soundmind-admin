@@ -50,7 +50,7 @@ class OrderController {
 
         try {
             const response = await axios.get(
-                `${getApiUrl()}/api/admin/orders`,
+                `${getApiUrl()}/admin/orders`,
                 getAuthConfig(req, {
                     params: {
                         page,

@@ -89,7 +89,7 @@ function normalizeBookIds(bookIds) {
 
 async function getBooks(req) {
   const response = await axios.get(
-    `${getApiUrl()}/api/books`,
+    `${getApiUrl()}/books`,
     getAuthConfig(req, {
       params: {
         page: 0,
@@ -112,7 +112,7 @@ class PlaylistController {
 
     try {
       const response = await axios.get(
-        `${getApiUrl()}/api/playlists`,
+        `${getApiUrl()}/playlists`,
         getAuthConfig(req, {
           params: {
             page,
@@ -209,7 +209,7 @@ class PlaylistController {
   async store(req, res) {
     try {
       await axios.post(
-        `${getApiUrl()}/api/playlists`,
+        `${getApiUrl()}/playlists`,
         getPlaylistPayload(req.body),
         getAuthConfig(req)
       );
@@ -238,7 +238,7 @@ class PlaylistController {
 
     try {
       const response = await axios.get(
-        `${getApiUrl()}/api/playlists/${id}`,
+        `${getApiUrl()}/playlists/${id}`,
         getAuthConfig(req)
       );
 
@@ -266,7 +266,7 @@ class PlaylistController {
     try {
       const [playlistResponse, books] = await Promise.all([
         axios.get(
-          `${getApiUrl()}/api/playlists/${id}`,
+          `${getApiUrl()}/playlists/${id}`,
           getAuthConfig(req)
         ),
         getBooks(req)
@@ -295,7 +295,7 @@ class PlaylistController {
 
     try {
       await axios.put(
-        `${getApiUrl()}/api/playlists/${id}`,
+        `${getApiUrl()}/playlists/${id}`,
         getPlaylistPayload(req.body),
         getAuthConfig(req)
       );
@@ -327,7 +327,7 @@ class PlaylistController {
 
     try {
       await axios.delete(
-        `${getApiUrl()}/api/playlists/${id}`,
+        `${getApiUrl()}/playlists/${id}`,
         getAuthConfig(req)
       );
 

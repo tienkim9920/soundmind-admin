@@ -18,6 +18,35 @@ const s3Client = new S3Client({
 const BUCKET_NAME = process.env.S3_BUCKET_NAME;
 const ENDPOINT_URL = process.env.S3_ENDPOINT;
 
+// Helper chung cho logic upload S3
+const processS3Uploads = async (files, currentPrefix) => {
+    const uploadPromises = files.map(async (file) => {
+        const fileKey = `${currentPrefix}${Date.now()}-${file.originalname}`;
+
+        const uploadParams = {
+            Bucket: BUCKET_NAME,
+            Key: fileKey,
+            Body: file.buffer,
+            ContentType: file.mimetype,
+            ACL: 'public-read',
+        };
+
+        await s3Client.send(new PutObjectCommand(uploadParams));
+
+        // Trả về URL công khai của file sau khi upload thành công
+        const publicUrl = `https://s3.vn-hcm-1.vietnix.cloud/${BUCKET_NAME}/${fileKey}`;
+        return {
+            key: fileKey,
+            url: publicUrl,
+            filename: file.originalname,
+            size: file.size,
+            mimetype: file.mimetype,
+        };
+    });
+
+    return await Promise.all(uploadPromises);
+};
+
 const storageController = {
     // GET: Xem danh sách Folder và File theo Prefix
     index: async (req, res) => {
@@ -100,37 +129,55 @@ const storageController = {
         }
     },
 
-    // POST: Upload file vào đúng Prefix hiện tại
+    // ==========================================
+    // LUỒNG 1: API Route (Dành cho Next.js, React, App...)
+    // Response: JSON
+    // ==========================================
+    uploadApi: async (req, res) => {
+        try {
+            const currentPrefix = req.body.prefix || '';
+
+            if (!req.files || req.files.length === 0) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Không có file nào được tải lên',
+                });
+            }
+
+            const uploadedFiles = await processS3Uploads(req.files, currentPrefix);
+
+            return res.status(200).json({
+                success: true,
+                message: 'Upload file thành công',
+                data: uploadedFiles,
+            });
+        } catch (err) {
+            console.error('Lỗi API upload file:', err);
+            return res.status(500).json({
+                success: false,
+                message: 'Upload thất bại: ' + err.message,
+            });
+        }
+    },
+
+    // ==========================================
+    // LUỒNG 2: Form Web Route (Giữ nguyên luồng cũ)
+    // Response: Redirect
+    // ==========================================
     upload: async (req, res) => {
         try {
             const currentPrefix = req.body.prefix || '';
 
-            // Kiểm tra req.files (khi dùng upload.array, multer sẽ trả về mảng req.files)
             if (!req.files || req.files.length === 0) {
                 return res.redirect(`/storages?prefix=${encodeURIComponent(currentPrefix)}`);
             }
 
-            // Upload song song các file lên S3 bằng Promise.all
-            const uploadPromises = req.files.map((file) => {
-                const fileKey = `${currentPrefix}${Date.now()}-${file.originalname}`;
+            await processS3Uploads(req.files, currentPrefix);
 
-                const uploadParams = {
-                    Bucket: BUCKET_NAME,
-                    Key: fileKey,
-                    Body: file.buffer,
-                    ContentType: file.mimetype,
-                    ACL: 'public-read', // <--- Thêm dòng này để set quyền Public Read
-                };
-
-                return s3Client.send(new PutObjectCommand(uploadParams));
-            });
-
-            await Promise.all(uploadPromises);
-
-            res.redirect(`/storages?prefix=${encodeURIComponent(currentPrefix)}`);
+            return res.redirect(`/storages?prefix=${encodeURIComponent(currentPrefix)}`);
         } catch (err) {
             console.error('Lỗi upload file:', err);
-            res.status(500).send('Upload thất bại: ' + err.message);
+            return res.status(500).send('Upload thất bại: ' + err.message);
         }
     },
 

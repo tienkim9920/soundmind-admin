@@ -88,7 +88,7 @@ class AuthorController {
 
         try {
             const response = await axios.get(
-                `${getApiUrl()}/api/authors`,
+                `${getApiUrl()}/authors`,
                 getAuthConfig(req, {
                     params: {
                         page,
@@ -162,7 +162,7 @@ class AuthorController {
     async store(req, res) {
         try {
             await axios.post(
-                `${getApiUrl()}/api/authors`,
+                `${getApiUrl()}/authors`,
                 getAuthorPayload(req.body),
                 getAuthConfig(req)
             );
@@ -189,7 +189,7 @@ class AuthorController {
 
         try {
             const response = await axios.get(
-                `${getApiUrl()}/api/authors/${id}`,
+                `${getApiUrl()}/authors/${id}`,
                 getAuthConfig(req)
             );
 
@@ -213,7 +213,7 @@ class AuthorController {
 
         try {
             const response = await axios.get(
-                `${getApiUrl()}/api/authors/${id}`,
+                `${getApiUrl()}/authors/${id}`,
                 getAuthConfig(req)
             );
 
@@ -240,7 +240,7 @@ class AuthorController {
 
         try {
             await axios.put(
-                `${getApiUrl()}/api/authors/${id}`,
+                `${getApiUrl()}/authors/${id}`,
                 getAuthorPayload(req.body),
                 getAuthConfig(req)
             );
@@ -270,7 +270,7 @@ class AuthorController {
 
         try {
             await axios.delete(
-                `${getApiUrl()}/api/authors/${id}`,
+                `${getApiUrl()}/authors/${id}`,
                 getAuthConfig(req)
             );
 

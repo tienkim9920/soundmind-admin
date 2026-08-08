@@ -18,8 +18,8 @@ app.use(
         },
         contentSecurityPolicy: {
             directives: {
-                defaultSrc: ["'self'", "http://14.225.204.109:4000", "http://localhost:4000"],
-                formAction: ["'self'", "http://14.225.204.109:4000", "http://localhost:4000"],
+                defaultSrc: ["'self'", "http://14.225.204.109:4000", "http://localhost:4000", "http://localhost:3000", "https://soundmind.vn", "https://api-soundmind.vn"],
+                formAction: ["'self'", "http://14.225.204.109:4000", "http://localhost:4000", "http://localhost:3000", "https://soundmind.vn", "https://api-soundmind.vn"],
                 scriptSrc: [
                     "'self'",
                     "'unsafe-inline'",

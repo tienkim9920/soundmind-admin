@@ -70,7 +70,7 @@ function getAuthConfig(req, config = {}) {
 
 async function getBooks(req) {
     const response = await axios.get(
-        `${getApiUrl()}/api/books`,
+        `${getApiUrl()}/books`,
         getAuthConfig(req, {
             params: {
                 page: 0,
@@ -105,7 +105,7 @@ class ChapterController {
         try {
             const [chaptersResponse, books] = await Promise.all([
                 axios.get(
-                    `${getApiUrl()}/api/chapters`,
+                    `${getApiUrl()}/chapters`,
                     getAuthConfig(req, {
                         params: {
                             page,
@@ -190,7 +190,7 @@ class ChapterController {
     async store(req, res) {
         try {
             await axios.post(
-                `${getApiUrl()}/api/chapters`,
+                `${getApiUrl()}/chapters`,
                 getChapterPayload(req.body),
                 getAuthConfig(req)
             );
@@ -218,7 +218,7 @@ class ChapterController {
 
         try {
             const response = await axios.get(
-                `${getApiUrl()}/api/chapters/${id}`,
+                `${getApiUrl()}/chapters/${id}`,
                 getAuthConfig(req)
             );
 
@@ -243,7 +243,7 @@ class ChapterController {
         try {
             const [chapterResponse, books] = await Promise.all([
                 axios.get(
-                    `${getApiUrl()}/api/chapters/${id}`,
+                    `${getApiUrl()}/chapters/${id}`,
                     getAuthConfig(req)
                 ),
                 getBooks(req)
@@ -273,7 +273,7 @@ class ChapterController {
 
         try {
             await axios.put(
-                `${getApiUrl()}/api/chapters/${id}`,
+                `${getApiUrl()}/chapters/${id}`,
                 getChapterPayload(req.body),
                 getAuthConfig(req)
             );
@@ -304,7 +304,7 @@ class ChapterController {
 
         try {
             await axios.delete(
-                `${getApiUrl()}/api/chapters/${id}`,
+                `${getApiUrl()}/chapters/${id}`,
                 getAuthConfig(req)
             );
 

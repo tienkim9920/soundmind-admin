@@ -51,9 +51,7 @@ function getCookieValue(req, name) {
 }
 
 function getAuthConfig(req, config = {}) {
-    const token =
-        req.session?.token ||
-        getCookieValue(req, 'token');
+    const token = getCookieValue(req, 'token');
 
     if (!token) {
         return config;

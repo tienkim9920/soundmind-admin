@@ -32,7 +32,9 @@ app.use(
                 ],
                 imgSrc: [
                     "'self'",
-                    "data:"
+                    "data:",
+                    "blob:",
+                    "https://s3.vn-hcm-1.vietnix.cloud",
                 ],
                 fontSrc: [
                     "'self'",
@@ -58,6 +60,11 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use((req, res, next) => {
+    res.locals.adminPrefix = process.env.ADMIN_ROUTE || '/admin';
+    next();
+});
 
 const webRoute = require('./routes/web.route');
 

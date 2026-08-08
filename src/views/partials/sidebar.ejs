@@ -9,38 +9,39 @@
     </div>
   </div>
 
-  <a href="/books" class="menu-item <%= locals.active === 'books' ? 'active' : '' %>">
+  <a href="<%= adminPrefix %>/books" class="menu-item <%= locals.active === 'books' ? 'active' : '' %>">
     <i class="bi bi-book"></i> Sách
   </a>
 
-  <a href="/categories" class="menu-item <%= locals.active === 'categories' ? 'active' : '' %>">
+  <a href="<%= adminPrefix %>/categories" class="menu-item <%= locals.active === 'categories' ? 'active' : '' %>">
     <i class="bi bi-tags"></i> Thể loại
   </a>
 
-  <a href="/authors" class="menu-item <%= locals.active === 'authors' ? 'active' : '' %>">
+  <a href="<%= adminPrefix %>/authors" class="menu-item <%= locals.active === 'authors' ? 'active' : '' %>">
     <i class="bi bi-person-lines-fill"></i> Tác giả
   </a>
 
-  <a href="/users" class="menu-item <%= locals.active === 'users' ? 'active' : '' %>">
+  <a href="<%= adminPrefix %>/users" class="menu-item <%= locals.active === 'users' ? 'active' : '' %>">
     <i class="bi bi-people"></i> Người dùng
   </a>
 
-  <a href="/chapters" class="menu-item <%= locals.active === 'chapters' ? 'active' : '' %>">
+  <a href="<%= adminPrefix %>/chapters" class="menu-item <%= locals.active === 'chapters' ? 'active' : '' %>">
     <i class="bi bi-music-note-list"></i> Chương sách
   </a>
 
-  <a href="/subscriptions" class="menu-item <%= locals.active === 'subscriptions' ? 'active' : '' %>">
+  <a href="<%= adminPrefix %>/subscriptions" class="menu-item <%= locals.active === 'subscriptions' ? 'active' : '' %>">
     <i class="bi bi-credit-card"></i> Hội viên
   </a>
 
-  <a href="/orders" class="menu-item <%= locals.active === 'orders' ? 'active' : '' %>">
+  <a href="<%= adminPrefix %>/orders" class="menu-item <%= locals.active === 'orders' ? 'active' : '' %>">
     <i class="bi bi-bag-check"></i> Orders
   </a>
 
-  <a href="/playlists" class="menu-item <%= locals.active === 'playlists' ? 'active' : '' %>">
+  <a href="<%= adminPrefix %>/playlists" class="menu-item <%= locals.active === 'playlists' ? 'active' : '' %>">
     <i class="bi bi-music-note-beamed"></i> Playlists
   </a>
-  <a href="/storages" class="menu-item <%= locals.active === 'storages' ? 'active' : '' %>">
+
+  <a href="<%= adminPrefix %>/storages" class="menu-item <%= locals.active === 'storages' ? 'active' : '' %>">
     <i class="bi bi-box"></i> Storage
   </a>
 </div>

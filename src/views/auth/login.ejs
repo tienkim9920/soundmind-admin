@@ -380,7 +380,7 @@
 
                     // Global event & redirect
                     window.dispatchEvent(new Event("auth-changed"));
-                    window.location.href = "/books";
+                    window.location.href = `${window.API_URL}/books`;
 
                 } catch (err) {
                     errorBox.innerText = err.message || "Đăng nhập thất bại";

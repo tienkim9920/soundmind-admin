@@ -92,6 +92,8 @@ function getChapterPayload(body) {
     };
 }
 
+const adminRoute = process.env.ADMIN_ROUTE === '/' ? '' : (process.env.ADMIN_ROUTE || '/admin').replace(/\/$/, '');
+
 class ChapterController {
 
     // GET /chapters
@@ -195,7 +197,7 @@ class ChapterController {
                 getAuthConfig(req)
             );
 
-            return res.redirect('/chapters');
+            return res.redirect(adminRoute + '/chapters');
         } catch (error) {
             console.error(
                 'Create chapter error:',
@@ -263,7 +265,7 @@ class ChapterController {
                 error.message
             );
 
-            return res.redirect('/chapters');
+            return res.redirect(adminRoute + '/chapters');
         }
     }
 
@@ -278,7 +280,7 @@ class ChapterController {
                 getAuthConfig(req)
             );
 
-            return res.redirect('/chapters');
+            return res.redirect(adminRoute + '/chapters');
         } catch (error) {
             console.error(
                 'Update chapter error:',
@@ -308,7 +310,7 @@ class ChapterController {
                 getAuthConfig(req)
             );
 
-            return res.redirect('/chapters');
+            return res.redirect(adminRoute + '/chapters');
         } catch (error) {
             console.error(
                 'Delete chapter error:',
@@ -316,7 +318,7 @@ class ChapterController {
                 error.message
             );
 
-            return res.redirect('/chapters');
+            return res.redirect(adminRoute + '/chapters');
         }
     }
 }

@@ -1,3 +1,5 @@
+const adminRoute = process.env.ADMIN_ROUTE === '/' ? '' : (process.env.ADMIN_ROUTE || '/admin').replace(/\/$/, '');
+
 const {
     S3Client,
     ListObjectsV2Command,
@@ -169,12 +171,12 @@ const storageController = {
             const currentPrefix = req.body.prefix || '';
 
             if (!req.files || req.files.length === 0) {
-                return res.redirect(`/storages?prefix=${encodeURIComponent(currentPrefix)}`);
+                return res.redirect(`${adminRoute}/storages?prefix=${encodeURIComponent(currentPrefix)}`);
             }
 
             await processS3Uploads(req.files, currentPrefix);
 
-            return res.redirect(`/storages?prefix=${encodeURIComponent(currentPrefix)}`);
+            return res.redirect(`${adminRoute}/storages?prefix=${encodeURIComponent(currentPrefix)}`);
         } catch (err) {
             console.error('Lỗi upload file:', err);
             return res.status(500).send('Upload thất bại: ' + err.message);
@@ -185,10 +187,10 @@ const storageController = {
     delete: async (req, res) => {
         try {
             const { key, prefix } = req.body;
-            if (!key) return res.redirect('/storages');
+            if (!key) return res.redirect(adminRoute + '/storages');
 
             await s3Client.send(new DeleteObjectCommand({ Bucket: BUCKET_NAME, Key: key }));
-            res.redirect(`/storages?prefix=${encodeURIComponent(prefix || '')}`);
+            res.redirect(`${adminRoute}/storages?prefix=${encodeURIComponent(prefix || '')}`);
         } catch (err) {
             console.error('Lỗi xóa file:', err);
             res.status(500).send('Xóa thất bại: ' + err.message);
@@ -202,7 +204,7 @@ const storageController = {
             let folderName = (req.body.folderName || '').trim();
 
             if (!folderName) {
-                return res.redirect(`/storages?prefix=${encodeURIComponent(currentPrefix)}`);
+                return res.redirect(`${adminRoute}/storages?prefix=${encodeURIComponent(currentPrefix)}`);
             }
 
             // Làm sạch tên folder & bắt buộc kết thúc bằng dấu /
@@ -218,7 +220,7 @@ const storageController = {
 
             await s3Client.send(new PutObjectCommand(createFolderParams));
 
-            res.redirect(`/storages?prefix=${encodeURIComponent(currentPrefix)}`);
+            res.redirect(`${adminRoute}/storages?prefix=${encodeURIComponent(currentPrefix)}`);
         } catch (err) {
             console.error('Lỗi tạo thư mục:', err);
             res.status(500).send('Tạo thư mục thất bại: ' + err.message);

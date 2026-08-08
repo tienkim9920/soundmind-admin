@@ -87,6 +87,8 @@ function getUserPayload(body, includePassword = false) {
     return payload;
 }
 
+const adminRoute = process.env.ADMIN_ROUTE === '/' ? '' : (process.env.ADMIN_ROUTE || '/admin').replace(/\/$/, '');
+
 class UserController {
 
     // GET /users
@@ -176,7 +178,7 @@ class UserController {
                 getAuthConfig(req)
             );
 
-            return res.redirect('/users');
+            return res.redirect(adminRoute + '/users');
         } catch (error) {
             console.error(
                 'Create user error:',
@@ -239,7 +241,7 @@ class UserController {
                 error.message
             );
 
-            return res.redirect('/users');
+            return res.redirect(adminRoute + '/users');
         }
     }
 
@@ -254,7 +256,7 @@ class UserController {
                 getAuthConfig(req)
             );
 
-            return res.redirect('/users');
+            return res.redirect(adminRoute + '/users');
         } catch (error) {
             console.error(
                 'Update user error:',
@@ -283,7 +285,7 @@ class UserController {
                 getAuthConfig(req)
             );
 
-            return res.redirect('/users');
+            return res.redirect(adminRoute + '/users');
         } catch (error) {
             console.error(
                 'Delete user error:',
@@ -291,7 +293,7 @@ class UserController {
                 error.message
             );
 
-            return res.redirect('/users');
+            return res.redirect(adminRoute + '/users');
         }
     }
 }

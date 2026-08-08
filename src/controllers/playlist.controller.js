@@ -101,6 +101,8 @@ async function getBooks(req) {
   return getListFromResponse(response.data);
 }
 
+const adminRoute = process.env.ADMIN_ROUTE === '/' ? '' : (process.env.ADMIN_ROUTE || '/admin').replace(/\/$/, '');
+
 class PlaylistController {
 
   async index(req, res) {
@@ -214,7 +216,7 @@ class PlaylistController {
         getAuthConfig(req)
       );
 
-      return res.redirect('/playlists');
+      return res.redirect(adminRoute + '/playlists');
     } catch (error) {
       console.error(
         'Create playlist error:',
@@ -286,7 +288,7 @@ class PlaylistController {
         error.message
       );
 
-      return res.redirect('/playlists');
+      return res.redirect(adminRoute + '/playlists');
     }
   }
 
@@ -300,7 +302,7 @@ class PlaylistController {
         getAuthConfig(req)
       );
 
-      return res.redirect('/playlists');
+      return res.redirect(adminRoute + '/playlists');
     } catch (error) {
       console.error(
         'Update playlist error:',
@@ -331,7 +333,7 @@ class PlaylistController {
         getAuthConfig(req)
       );
 
-      return res.redirect('/playlists');
+      return res.redirect(adminRoute + '/playlists');
     } catch (error) {
       console.error(
         'Delete playlist error:',
@@ -339,7 +341,7 @@ class PlaylistController {
         error.message
       );
 
-      return res.redirect('/playlists');
+      return res.redirect(adminRoute + '/playlists');
     }
   }
 }

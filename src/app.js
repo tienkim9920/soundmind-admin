@@ -62,7 +62,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-    const adminRoute = process.env.ADMIN_ROUTE || '/admin';
+    let adminRoute = process.env.ADMIN_ROUTE || '/admin';
+    adminRoute = adminRoute === '/' ? '' : adminRoute.replace(/\/$/, '');
     res.locals.adminPrefix = adminRoute;
     res.locals.adminRoute = adminRoute;
     next();

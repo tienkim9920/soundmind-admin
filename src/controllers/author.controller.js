@@ -76,6 +76,8 @@ function getAuthorPayload(body) {
     };
 }
 
+const adminRoute = process.env.ADMIN_ROUTE === '/' ? '' : (process.env.ADMIN_ROUTE || '/admin').replace(/\/$/, '');
+
 class AuthorController {
 
     // GET /authors
@@ -167,7 +169,7 @@ class AuthorController {
                 getAuthConfig(req)
             );
 
-            return res.redirect('/authors');
+            return res.redirect(adminRoute + '/authors');
         } catch (error) {
             console.error(
                 'Create author error:',
@@ -230,7 +232,7 @@ class AuthorController {
                 error.message
             );
 
-            return res.redirect('/authors');
+            return res.redirect(adminRoute + '/authors');
         }
     }
 
@@ -245,7 +247,7 @@ class AuthorController {
                 getAuthConfig(req)
             );
 
-            return res.redirect('/authors');
+            return res.redirect(adminRoute + '/authors');
         } catch (error) {
             console.error(
                 'Update author error:',
@@ -274,7 +276,7 @@ class AuthorController {
                 getAuthConfig(req)
             );
 
-            return res.redirect('/authors');
+            return res.redirect(adminRoute + '/authors');
         } catch (error) {
             console.error(
                 'Delete author error:',
@@ -282,7 +284,7 @@ class AuthorController {
                 error.message
             );
 
-            return res.redirect('/authors');
+            return res.redirect(adminRoute + '/authors');
         }
     }
 }

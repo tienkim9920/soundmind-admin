@@ -57,6 +57,8 @@ function getSubscriptionPayload(body) {
     };
 }
 
+const adminRoute = process.env.ADMIN_ROUTE === '/' ? '' : (process.env.ADMIN_ROUTE || '/admin').replace(/\/$/, '');
+
 class SubscriptionController {
 
     // GET /subscriptions
@@ -162,7 +164,7 @@ class SubscriptionController {
                 getAuthConfig(req)
             );
 
-            return res.redirect('/subscriptions');
+            return res.redirect(adminRoute + '/subscriptions');
         } catch (error) {
             console.error(
                 'Create subscription error:',
@@ -230,7 +232,7 @@ class SubscriptionController {
                 error.message
             );
 
-            return res.redirect('/subscriptions');
+            return res.redirect(adminRoute + '/subscriptions');
         }
     }
 
@@ -245,7 +247,7 @@ class SubscriptionController {
                 getAuthConfig(req)
             );
 
-            return res.redirect('/subscriptions');
+            return res.redirect(adminRoute + '/subscriptions');
         } catch (error) {
             console.error(
                 'Update subscription error:',
@@ -274,7 +276,7 @@ class SubscriptionController {
                 getAuthConfig(req)
             );
 
-            return res.redirect('/subscriptions');
+            return res.redirect(adminRoute + '/subscriptions');
         } catch (error) {
             console.error(
                 'Delete subscription error:',
@@ -282,7 +284,7 @@ class SubscriptionController {
                 error.message
             );
 
-            return res.redirect('/subscriptions');
+            return res.redirect(adminRoute + '/subscriptions');
         }
     }
 }

@@ -75,6 +75,8 @@ function getCategoryPayload(body) {
     };
 }
 
+const adminRoute = process.env.ADMIN_ROUTE === '/' ? '' : (process.env.ADMIN_ROUTE || '/admin').replace(/\/$/, '');
+
 class CategoryController {
 
     // GET /categories
@@ -123,7 +125,7 @@ class CategoryController {
                 getAuthConfig(req)
             );
 
-            return res.redirect('/categories');
+            return res.redirect(adminRoute + '/categories');
         } catch (error) {
             console.error(
                 'Create category error:',
@@ -186,7 +188,7 @@ class CategoryController {
                 error.message
             );
 
-            return res.redirect('/categories');
+            return res.redirect(adminRoute + '/categories');
         }
     }
 
@@ -201,7 +203,7 @@ class CategoryController {
                 getAuthConfig(req)
             );
 
-            return res.redirect('/categories');
+            return res.redirect(adminRoute + '/categories');
         } catch (error) {
             console.error(
                 'Update category error:',
@@ -230,7 +232,7 @@ class CategoryController {
                 getAuthConfig(req)
             );
 
-            return res.redirect('/categories');
+            return res.redirect(adminRoute + '/categories');
         } catch (error) {
             console.error(
                 'Delete category error:',
@@ -238,7 +240,7 @@ class CategoryController {
                 error.message
             );
 
-            return res.redirect('/categories');
+            return res.redirect(adminRoute + '/categories');
         }
     }
 }

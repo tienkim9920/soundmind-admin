@@ -117,6 +117,8 @@ function getBookPayload(body) {
     };
 }
 
+const adminRoute = process.env.ADMIN_ROUTE === '/' ? '' : (process.env.ADMIN_ROUTE || '/admin').replace(/\/$/, '');
+
 class BookController {
 
     // GET /books
@@ -296,7 +298,7 @@ class BookController {
                 getBookPayload(req.body),
                 getAuthConfig(req)
             );
-            return res.redirect('/books');
+            return res.redirect(adminRoute + '/books');
         } catch (error) {
             console.error(
                 'Create book error:',
@@ -355,7 +357,7 @@ class BookController {
                 error.message
             );
 
-            return res.redirect('/books');
+            return res.redirect(adminRoute + '/books');
         }
     }
 
@@ -371,7 +373,7 @@ class BookController {
                 getAuthConfig(req)
             );
 
-            return res.redirect('/books');
+            return res.redirect(adminRoute + '/books');
         } catch (error) {
             console.error(
                 'Update book error:',
@@ -404,7 +406,7 @@ class BookController {
                 getAuthConfig(req)
             );
 
-            return res.redirect('/books');
+            return res.redirect(adminRoute + '/books');
         } catch (error) {
             console.error(
                 'Delete book error:',
@@ -412,7 +414,7 @@ class BookController {
                 error.message
             );
 
-            return res.redirect('/books');
+            return res.redirect(adminRoute + '/books');
         }
     }
 }

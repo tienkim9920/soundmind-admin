@@ -186,7 +186,7 @@
                     </div>
                 </div>
 
-                <a href="/playlists/create" class="btn-gradient text-decoration-none">
+                <a href="<%= adminRoute %>/playlists/create" class="btn-gradient text-decoration-none">
                     <i class="bi bi-plus-lg"></i>
                     Thêm playlist
                 </a>
@@ -201,7 +201,7 @@
                     <div class="glass-card table-card">
 
                         <div class="d-flex justify-content-between align-items-center mb-4">
-                            <form method="GET" action="/playlists" class="d-flex gap-3">
+                            <form method="GET" action="<%= adminRoute %>/playlists" class="d-flex gap-3">
                                 <input type="hidden" name="page" value="0">
                                 <input type="hidden" name="size" value="<%= filters.size || 10 %>">
                                 <input name="search" value="<%= filters.search || '' %>" class="form-control search-box"
@@ -258,12 +258,12 @@
                                                 </td>
                                                 <td>
                                                     <div class="d-flex gap-2 justify-content-end">
-                                                        <a href="/playlists/<%= pl.id || pl._id %>/edit"
+                                                        <a href="<%= adminRoute %>/playlists/<%= pl.id || pl._id %>/edit"
                                                             class="action-btn">
                                                             <i class="bi bi-pencil"></i>
                                                         </a>
                                                         <form method="POST"
-                                                            action="/playlists/<%= pl.id || pl._id %>/delete"
+                                                            action="<%= adminRoute %>/playlists/<%= pl.id || pl._id %>/delete"
                                                             onsubmit="return confirm('Xóa playlist này?')">
                                                             <button class="action-btn">
                                                                 <i class="bi bi-trash"></i>

@@ -210,7 +210,7 @@
                 <div class="text-secondary">Dashboard / Books / Edit</div>
             </div>
 
-            <a href="/books" class="btn-soft text-decoration-none">
+            <a href="<%= adminRoute %>/books" class="btn-soft text-decoration-none">
                 <i class="bi bi-arrow-left"></i>
                 Danh sách
             </a>
@@ -222,7 +222,7 @@
             </div>
             <% } %>
 
-                <%- include('_form', { action: `/books/${book.id ?? book._id}`, submitText: 'Lưu thay đổi' ,
+                <%- include('_form', { action: `${adminRoute}/books/${book.id ?? book._id}`, submitText: 'Lưu thay đổi' ,
                     submitIcon: 'bi-check-lg' , book, categories, authors }) %>
     </div>
 </body>

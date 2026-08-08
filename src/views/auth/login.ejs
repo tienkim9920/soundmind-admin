@@ -345,6 +345,7 @@
 
     <script>
         window.API_URL = "<%= apiUrl %>";
+        window.ROUTE = "<%= routeUrl %>";
         document.addEventListener("DOMContentLoaded", () => {
             const form = document.getElementById("loginForm");
             const btn = document.getElementById("loginBtn");
@@ -380,7 +381,7 @@
 
                     // Global event & redirect
                     window.dispatchEvent(new Event("auth-changed"));
-                    window.location.href = `${window.API_URL}/books`;
+                    window.location.href = `${window.ROUTE}/books`;
 
                 } catch (err) {
                     errorBox.innerText = err.message || "Đăng nhập thất bại";

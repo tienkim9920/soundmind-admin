@@ -62,7 +62,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-    res.locals.adminPrefix = process.env.ADMIN_ROUTE || '/admin';
+    const adminRoute = process.env.ADMIN_ROUTE || '/admin';
+    res.locals.adminPrefix = adminRoute;
+    res.locals.adminRoute = adminRoute;
     next();
 });
 

@@ -181,7 +181,7 @@
                     </div>
                 </div>
 
-                <a href="/subscriptions/create" class="btn-gradient text-decoration-none">
+                <a href="<%= adminRoute %>/subscriptions/create" class="btn-gradient text-decoration-none">
                     <i class="bi bi-plus-lg"></i>
                     Thêm subscription
                 </a>
@@ -196,7 +196,7 @@
                     <div class="glass-card table-card">
 
                         <div class="d-flex justify-content-between align-items-center mb-4">
-                            <form method="GET" action="/subscriptions" class="d-flex gap-3">
+                            <form method="GET" action="<%= adminRoute %>/subscriptions" class="d-flex gap-3">
 
                                 <input type="hidden" name="page" value="0">
 
@@ -273,11 +273,11 @@
                                                 <td>
                                                     <div class="d-flex gap-2 justify-content-end">
 
-                                                        <a href="/subscriptions/<%= sub.id %>/edit" class="action-btn">
+                                                        <a href="<%= adminRoute %>/subscriptions/<%= sub.id %>/edit" class="action-btn">
                                                             <i class="bi bi-pencil"></i>
                                                         </a>
 
-                                                        <form method="POST" action="/subscriptions/<%= sub.id %>/delete"
+                                                        <form method="POST" action="<%= adminRoute %>/subscriptions/<%= sub.id %>/delete"
                                                             onsubmit="return confirm('Xoa subscription nay?')">
 
                                                             <button class="action-btn">

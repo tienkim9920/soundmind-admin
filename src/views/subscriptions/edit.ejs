@@ -216,7 +216,7 @@
                 </div>
             </div>
 
-            <a href="/subscriptions" class="btn-soft text-decoration-none">
+            <a href="<%= adminRoute %>/subscriptions" class="btn-soft text-decoration-none">
 
                 <i class="bi bi-arrow-left"></i>
                 Danh sách
@@ -232,7 +232,7 @@
 
             <% } %>
 
-                <%- include('_form', { action: `/subscriptions/${subscription.id ?? subscription._id}`,
+                <%- include('_form', { action: `${adminRoute}/subscriptions/${subscription.id ?? subscription._id}`,
                     submitText: 'Lưu thay đổi' , submitIcon: 'bi-check-lg' , subscription }) %>
 
     </div>

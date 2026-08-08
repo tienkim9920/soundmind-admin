@@ -192,7 +192,7 @@
           <div class="glass-card table-card">
 
             <div class="d-flex justify-content-between align-items-center mb-4">
-              <form method="GET" action="/orders" class="d-flex gap-3">
+              <form method="GET" action="<%= adminRoute %>/orders" class="d-flex gap-3">
                 <input type="hidden" name="page" value="0">
                 <input type="hidden" name="size" value="<%= filters.size || 10 %>">
 
@@ -269,11 +269,11 @@
                           <td>
                             <div class="d-flex gap-2 justify-content-end">
 
-                              <a href="/orders/<%= order.id || order.orderId %>" class="action-btn">
+                              <a href="<%= adminRoute %>/orders/<%= order.id || order.orderId %>" class="action-btn">
                                 <i class="bi bi-eye"></i>
                               </a>
 
-                              <a href="/orders/<%= order.id || order.orderId %>/edit" class="action-btn">
+                              <a href="<%= adminRoute %>/orders/<%= order.id || order.orderId %>/edit" class="action-btn">
                                 <i class="bi bi-pencil"></i>
                               </a>
 

@@ -204,7 +204,7 @@
                     <h3 class="fw-bold mb-1">Quản lý chương sách</h3>
                     <div class="text-secondary">Dashboard / Chapters</div>
                 </div>
-                <a href="/chapters/create" class="btn-gradient text-decoration-none"><i class="bi bi-plus-lg"></i> Thêm
+                <a href="<%= adminRoute %>/chapters/create" class="btn-gradient text-decoration-none"><i class="bi bi-plus-lg"></i> Thêm
                     chương</a>
             </div>
 
@@ -216,7 +216,7 @@
 
                     <div class="glass-card table-card">
                         <div class="d-flex justify-content-between align-items-center mb-4">
-                            <form method="GET" action="/chapters" class="d-flex gap-3 align-items-center">
+                            <form method="GET" action="<%= adminRoute %>/chapters" class="d-flex gap-3 align-items-center">
                                 <input type="hidden" name="page" value="0">
                                 <input name="size" type="number" min="1" max="100" value="<%= filters.size || 10 %>"
                                     class="form-control search-box" style="width:110px" aria-label="Size">
@@ -282,9 +282,9 @@
                                                     </td>
                                                     <td>
                                                         <div class="d-flex gap-2 justify-content-end">
-                                                            <a href="/chapters/<%= id %>/edit" class="action-btn"><i
+                                                            <a href="<%= adminRoute %>/chapters/<%= id %>/edit" class="action-btn"><i
                                                                     class="bi bi-pencil"></i></a>
-                                                            <form method="POST" action="/chapters/<%= id %>/delete"
+                                                            <form method="POST" action="<%= adminRoute %>/chapters/<%= id %>/delete"
                                                                 class="delete-form"
                                                                 onsubmit="return confirm('Xoa chuong sach nay?')">
                                                                 <button type="submit" class="action-btn"><i

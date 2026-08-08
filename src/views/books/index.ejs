@@ -259,172 +259,172 @@
 <body>
     <%- include('../partials/sidebar', { active: 'books' }) %>
 
-  <div class="content">
+        <div class="content">
 
-        <div class="glass-card topbar d-flex justify-content-between align-items-center">
+            <div class="glass-card topbar d-flex justify-content-between align-items-center">
 
-            <div>
-                <h3 class="fw-bold mb-1">Quản lý sách</h3>
-                <div class="text-secondary">Dashboard / Books</div>
-            </div>
-
-            <a href="/books/create" class="btn-gradient text-decoration-none">
-                <i class="bi bi-plus-lg"></i>
-                Thêm sách
-            </a>
-        </div>
-
-        <div class="glass-card table-card">
-
-            <div class="d-flex justify-content-between align-items-center mb-4">
-
-                <div class="d-flex gap-3">
-
-                    <form method="GET" action="/books" class="d-flex gap-3 align-items-center">
-                        <input type="hidden" name="page" value="0">
-                        <input type="hidden" name="size" value="<%= filters.size || 10 %>">
-
-                        <input name="search" value="<%= filters.search || '' %>" class="form-control search-box"
-                            placeholder="Tìm sách ...">
-
-                        <select name="categoryId" class="form-select search-box" onchange="this.form.submit()">
-                            <option value="">Tất cả thể loại</option>
-
-                            <% categories.forEach(category=> { %>
-                                <% const id=category.id ?? category._id ?? category.categoryId; %>
-                                    <% const name=category.name ?? category.title ?? category.categoryName ??
-                                        category.slug ?? `#${id}`; %>
-
-                                        <option value="<%= id %>" <%=String(filters.categoryId || '' )===String(id)
-                                            ? 'selected' : '' %>>
-                                            <%= name %>
-                                        </option>
-                                        <% }) %>
-                        </select>
-
-                        <button type="submit" class="btn-gradient">
-                            <i class="bi bi-search"></i>
-                        </button>
-                    </form>
-
+                <div>
+                    <h3 class="fw-bold mb-1">Quản lý sách</h3>
+                    <div class="text-secondary">Dashboard / Books</div>
                 </div>
+
+                <a href="<%= adminRoute %>/books/create" class="btn-gradient text-decoration-none">
+                    <i class="bi bi-plus-lg"></i>
+                    Thêm sách
+                </a>
             </div>
 
-            <div class="table-responsive">
+            <div class="glass-card table-card">
 
-                <table class="table align-middle">
+                <div class="d-flex justify-content-between align-items-center mb-4">
 
-                    <thead>
-                        <tr class="text-secondary">
-                            <th>Sách</th>
-                            <th>Tác giả</th>
-                            <th>Thể loại</th>
-                            <th>Trạng thái</th>
-                            <th>Ngày tạo</th>
-                            <th></th>
-                        </tr>
-                    </thead>
+                    <div class="d-flex gap-3">
 
-                    <tbody>
+                        <form method="GET" action="<%= adminRoute %>/books" class="d-flex gap-3 align-items-center">
+                            <input type="hidden" name="page" value="0">
+                            <input type="hidden" name="size" value="<%= filters.size || 10 %>">
 
-                        <% if (books && books.length> 0) { %>
+                            <input name="search" value="<%= filters.search || '' %>" class="form-control search-box"
+                                placeholder="Tìm sách ...">
 
-                            <% books.forEach(book=> { %>
+                            <select name="categoryId" class="form-select search-box" onchange="this.form.submit()">
+                                <option value="">Tất cả thể loại</option>
 
-                                <tr>
+                                <% categories.forEach(category=> { %>
+                                    <% const id=category.id ?? category._id ?? category.categoryId; %>
+                                        <% const name=category.name ?? category.title ?? category.categoryName ??
+                                            category.slug ?? `#${id}`; %>
 
-                                    <td>
-                                        <div class="d-flex gap-3 align-items-center">
+                                            <option value="<%= id %>" <%=String(filters.categoryId || '' )===String(id)
+                                                ? 'selected' : '' %>>
+                                                <%= name %>
+                                            </option>
+                                            <% }) %>
+                            </select>
 
-                                            <img class="book-cover" src="<%= book.coverImage %>"
-                                                alt="<%= book.title %>">
+                            <button type="submit" class="btn-gradient">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </form>
 
-                                            <div>
-                                                <div class="fw-semibold">
-                                                    <%= book.title %>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+
+                    <table class="table align-middle">
+
+                        <thead>
+                            <tr class="text-secondary">
+                                <th>Sách</th>
+                                <th>Tác giả</th>
+                                <th>Thể loại</th>
+                                <th>Trạng thái</th>
+                                <th>Ngày tạo</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <% if (books && books.length> 0) { %>
+
+                                <% books.forEach(book=> { %>
+
+                                    <tr>
+
+                                        <td>
+                                            <div class="d-flex gap-3 align-items-center">
+
+                                                <img class="book-cover" src="<%= book.coverImage %>"
+                                                    alt="<%= book.title %>">
+
+                                                <div>
+                                                    <div class="fw-semibold">
+                                                        <%= book.title %>
+                                                    </div>
+
+                                                    <small class="text-secondary">
+                                                        <%= book.totalDuration %> phút
+                                                    </small>
                                                 </div>
 
-                                                <small class="text-secondary">
-                                                    <%= book.totalDuration %> phút
-                                                </small>
                                             </div>
+                                        </td>
 
-                                        </div>
-                                    </td>
+                                        <td>
+                                            <%= book.authorName %>
+                                        </td>
 
-                                    <td>
-                                        <%= book.authorName %>
-                                    </td>
+                                        <td>
+                                            <%= categoryMap[book.categoryId] || book.categoryName ||
+                                                `#${book.categoryId}` %>
+                                        </td>
 
-                                    <td>
-                                        <%= categoryMap[book.categoryId] || book.categoryName || `#${book.categoryId}`
-                                            %>
-                                    </td>
+                                        <td>
 
-                                    <td>
+                                            <% if(book.isPremium){ %>
 
-                                        <% if(book.isPremium){ %>
-
-                                            <span class="badge-status published">
-                                                Premium
-                                            </span>
-
-                                            <% } else { %>
-
-                                                <span class="badge-status draft">
-                                                    Free
+                                                <span class="badge-status published">
+                                                    Premium
                                                 </span>
 
-                                                <% } %>
+                                                <% } else { %>
 
-                                    </td>
+                                                    <span class="badge-status draft">
+                                                        Free
+                                                    </span>
 
-                                    <td>
-                                        <%= new Date(book.createdAt) .toLocaleDateString('vi-VN') %>
-                                    </td>
+                                                    <% } %>
 
-                                    <td>
+                                        </td>
 
-                                        <div class="d-flex gap-2">
-                                            <a href="/books/<%= book.id %>/edit"
-                                                class="action-btn d-flex align-items-center justify-content-center text-dark text-decoration-none">
-                                                <i class="bi bi-pencil"></i>
-                                            </a>
+                                        <td>
+                                            <%= new Date(book.createdAt) .toLocaleDateString('vi-VN') %>
+                                        </td>
 
-                                            <button class="action-btn">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
+                                        <td>
 
-                                        </div>
+                                            <div class="d-flex gap-2">
+                                                <a href="<%= adminRoute %>/books/<%= book.id %>/edit"
+                                                    class="action-btn d-flex align-items-center justify-content-center text-dark text-decoration-none">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
 
-                                    </td>
+                                                <button class="action-btn">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
 
-                                </tr>
+                                            </div>
 
-                                <% }) %>
+                                        </td>
 
-                                    <% } else { %>
+                                    </tr>
 
-                                        <tr>
-                                            <td colspan="6" class="text-center py-5 text-secondary">
-                                                Không có dữ liệu sách
-                                            </td>
-                                        </tr>
+                                    <% }) %>
 
-                                        <% } %>
+                                        <% } else { %>
 
-                    </tbody>
+                                            <tr>
+                                                <td colspan="6" class="text-center py-5 text-secondary">
+                                                    Không có dữ liệu sách
+                                                </td>
+                                            </tr>
 
-                </table>
+                                            <% } %>
 
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <%- include('../partials/pagination', { baseUrl: '/books' , totalLabel: 'sách' }) %>
             </div>
 
-            <%- include('../partials/pagination', { baseUrl: '/books', totalLabel: 'sách' }) %>
+
+
         </div>
-
-
-
-    </div>
 
 </body>
 

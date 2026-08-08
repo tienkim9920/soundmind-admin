@@ -132,7 +132,7 @@
                 </div>
             </div>
 
-            <a href="/playlists" class="btn-soft text-decoration-none">
+            <a href="<%= adminRoute %>/playlists" class="btn-soft text-decoration-none">
 
                 <i class="bi bi-arrow-left"></i>
                 Danh sách
@@ -148,7 +148,7 @@
 
         <% } %>
 
-        <%- include('_form', { action: '/playlists' , submitText: 'Tạo playlist' ,
+        <%- include('_form', { action: adminRoute + '/playlists' , submitText: 'Tạo playlist' ,
             submitIcon: 'bi-plus-lg' , playlist }) %>
 
     </div>

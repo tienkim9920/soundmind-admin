@@ -163,7 +163,7 @@
                 <div class="text-secondary">Dashboard / Categories</div>
             </div>
 
-            <a href="/categories/create" class="btn-gradient text-decoration-none">
+            <a href="<%= adminRoute %>/categories/create" class="btn-gradient text-decoration-none">
                 <i class="bi bi-plus-lg"></i>
                 Thêm thể loại
             </a>
@@ -219,11 +219,11 @@
 
                                                 <td>
                                                     <div class="d-flex gap-2 justify-content-end">
-                                                        <a href="/categories/<%= id %>/edit" class="action-btn">
+                                                        <a href="<%= adminRoute %>/categories/<%= id %>/edit" class="action-btn">
                                                             <i class="bi bi-pencil"></i>
                                                         </a>
 
-                                                        <form method="POST" action="/categories/<%= id %>/delete"
+                                                        <form method="POST" action="<%= adminRoute %>/categories/<%= id %>/delete"
                                                             class="delete-form"
                                                             onsubmit="return confirm('Xoa the loai nay?')">
                                                             <button type="submit" class="action-btn">

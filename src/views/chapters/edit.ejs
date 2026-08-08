@@ -171,7 +171,7 @@
                 <h3 class="fw-bold mb-1">Chinh sua chuong sach</h3>
                 <div class="text-secondary">Dashboard / Chapters / Edit</div>
             </div>
-            <a href="/chapters" class="btn-soft text-decoration-none"><i class="bi bi-arrow-left"></i> Danh sach</a>
+            <a href="<%= adminRoute %>/chapters" class="btn-soft text-decoration-none"><i class="bi bi-arrow-left"></i> Danh sach</a>
         </div>
 
         <% if (typeof error !=='undefined' && error) { %>
@@ -180,7 +180,7 @@
             </div>
             <% } %>
 
-                <%- include('_form', { action: `/chapters/${chapter.id ?? chapter._id}`, submitText: 'Luu thay doi' ,
+                <%- include('_form', { action: `${adminRoute}/chapters/${chapter.id ?? chapter._id}`, submitText: 'Luu thay doi' ,
                     submitIcon: 'bi-check-lg' , chapter, books }) %>
     </div>
 </body>

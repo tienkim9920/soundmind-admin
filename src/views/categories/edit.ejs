@@ -177,7 +177,7 @@
                 <div class="text-secondary">Dashboard / Categories / Edit</div>
             </div>
 
-            <a href="/categories" class="btn-soft text-decoration-none"><i class="bi bi-arrow-left"></i> Danh sach</a>
+            <a href="<%= adminRoute %>/categories" class="btn-soft text-decoration-none"><i class="bi bi-arrow-left"></i> Danh sach</a>
         </div>
 
         <% if (typeof error !=='undefined' && error) { %>
@@ -186,7 +186,7 @@
             </div>
             <% } %>
 
-                <%- include('_form', { action: `/categories/${category.id ?? category._id}`, submitText: 'Luu thay doi'
+                <%- include('_form', { action: `${adminRoute}/categories/${category.id ?? category._id}`, submitText: 'Luu thay doi'
                     , submitIcon: 'bi-check-lg' , category }) %>
     </div>
 </body>

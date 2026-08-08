@@ -3,7 +3,7 @@
     const hasNext = typeof pagination.hasNext !== 'undefined' ? pagination.hasNext : (pagination.totalPages ?
     currentPage < pagination.totalPages - 1 : false); const size=typeof filters !=='undefined' && filters.size ?
         filters.size : (pagination.size || 10); const search=typeof filters !=='undefined' && filters.search ?
-        filters.search : '' ; const prefix=typeof adminPrefix !=='undefined' ? adminPrefix : '' ; %>
+        filters.search : '' ; const prefix=typeof adminRoute !=='undefined' ? adminRoute : (typeof adminPrefix !=='undefined' ? adminPrefix : '') ; %>
 
         <div class="d-flex justify-content-between align-items-center mt-4">
             <div class="text-secondary small">

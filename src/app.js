@@ -61,6 +61,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Tạo biến adminRoute global cho 2 môi trường (dev, prod)
 app.use((req, res, next) => {
     let adminRoute = process.env.ADMIN_ROUTE || '/admin';
     adminRoute = adminRoute === '/' ? '' : adminRoute.replace(/\/$/, '');

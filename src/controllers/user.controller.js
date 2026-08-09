@@ -296,4 +296,5 @@ class UserController {
     }
 }
 
-module.exports = new UserController();
+const { wrapController } = require('../utils/logger');
+module.exports = wrapController(new UserController(), 'UserController');

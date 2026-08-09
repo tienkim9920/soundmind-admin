@@ -11,6 +11,8 @@ const subscriptionRoute = require('./subscription.route');
 const playlistRoute = require('./playlist.route');
 const orderRoute = require('./order.route');
 const storageRoute = require('./storage.route');
+const logRoute = require('./log.route');
+const metricRoute = require('./metric.route');
 
 const authMiddleware = require('../middlewares/auth.middleware');
 
@@ -46,5 +48,7 @@ router.use('/subscriptions', subscriptionRoute);
 router.use('/playlists', playlistRoute);
 router.use('/orders', orderRoute);
 router.use('/storages', storageRoute);
+router.use('/logs', logRoute);
+router.use('/metrics', metricRoute);
 
 module.exports = router;

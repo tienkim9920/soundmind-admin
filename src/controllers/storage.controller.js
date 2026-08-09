@@ -230,4 +230,5 @@ const storageController = {
 
 
 
-module.exports = storageController;
+const { wrapController } = require('../utils/logger');
+module.exports = wrapController(storageController, 'StorageController');

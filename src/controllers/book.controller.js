@@ -129,6 +129,8 @@ class BookController {
 
             const API_URL = getApiUrl();
 
+            console.log('adminRoute', adminRoute)
+
             const [booksResponse, categoriesResponse] =
                 await Promise.all([
 
@@ -413,4 +415,5 @@ class BookController {
     }
 }
 
-module.exports = new BookController();
+const { wrapController } = require('../utils/logger');
+module.exports = wrapController(new BookController(), 'BookController');

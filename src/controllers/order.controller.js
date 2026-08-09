@@ -119,4 +119,5 @@ class OrderController {
     }
 }
 
-module.exports = new OrderController();
+const { wrapController } = require('../utils/logger');
+module.exports = wrapController(new OrderController(), 'OrderController');

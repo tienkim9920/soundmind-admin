@@ -321,4 +321,5 @@ class ChapterController {
     }
 }
 
-module.exports = new ChapterController();
+const { wrapController } = require('../utils/logger');
+module.exports = wrapController(new ChapterController(), 'ChapterController');

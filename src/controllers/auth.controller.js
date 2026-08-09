@@ -69,4 +69,5 @@ class AuthController {
   }
 }
 
-module.exports = new AuthController();
+const { wrapController } = require('../utils/logger');
+module.exports = wrapController(new AuthController(), 'AuthController');

@@ -413,4 +413,5 @@ class BookController {
     }
 }
 
-module.exports = new BookController();
+const { wrapController } = require('../utils/logger');
+module.exports = wrapController(new BookController(), 'BookController');

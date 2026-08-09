@@ -287,4 +287,5 @@ class SubscriptionController {
     }
 }
 
-module.exports = new SubscriptionController();
+const { wrapController } = require('../utils/logger');
+module.exports = wrapController(new SubscriptionController(), 'SubscriptionController');

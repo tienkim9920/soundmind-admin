@@ -287,4 +287,5 @@ class AuthorController {
     }
 }
 
-module.exports = new AuthorController();
+const { wrapController } = require('../utils/logger');
+module.exports = wrapController(new AuthorController(), 'AuthorController');

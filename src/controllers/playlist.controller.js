@@ -344,4 +344,5 @@ class PlaylistController {
   }
 }
 
-module.exports = new PlaylistController();
+const { wrapController } = require('../utils/logger');
+module.exports = wrapController(new PlaylistController(), 'PlaylistController');

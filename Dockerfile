@@ -7,8 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Sử dụng cache của BuildKit để tránh tải lại npm packages mỗi lần build
-RUN --mount=type=cache,target=/root/.npm \
-    npm ci --omit=dev
+RUN npm ci --omit=dev
 
 # Stage 2: Production image cực nhẹ
 FROM node:24.12.0-alpine AS runner

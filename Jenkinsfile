@@ -26,7 +26,7 @@ pipeline {
             steps {
                 echo "=== [STEP 2] Build Image: ${FULL_IMAGE} ==="
                 // Build với Tag chỉ định trực tiếp đến Local Registry
-                sh "DOCKER_BUILDKIT=1 docker build -t ${FULL_IMAGE} ."
+                sh "docker build -t ${FULL_IMAGE} ."
                 
                 echo "=== [STEP 2.1] Push Image lên Local Registry (localhost:5000) ==="
                 sh "docker push ${FULL_IMAGE}"

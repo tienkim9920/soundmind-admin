@@ -19,11 +19,11 @@ class MetricController {
 
     async getSystemMetricsApi(req, res) {
         try {
-            // 1. Lấy dung lượng Heap Memory đang sử dụng (Chuyển Byte -> MB)
-            const heapPromql = 'nodejs_heap_size_used_bytes / 1024 / 1024';
+            // 1. Heap Memory của soundmind-admin
+            const heapPromql = 'nodejs_heap_size_used_bytes{job="soundmind-admin"} / 1024 / 1024';
 
-            // 2. Lấy độ trễ Event Loop (Chuyển Giây -> ms)
-            const eventLoopPromql = 'nodejs_eventloop_lag_seconds * 1000';
+            // 2. Event Loop Lag của soundmind-admin (Đổi từ giây sang ms)
+            const eventLoopPromql = 'nodejs_eventloop_lag_seconds{job="soundmind-admin"} * 1000';
 
             // 3. Lấy % CPU tiêu thụ của riêng process Node.js
             const processCpuPromql = 'rate(process_cpu_seconds_total[1m]) * 100';

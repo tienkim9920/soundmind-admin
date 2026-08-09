@@ -11,7 +11,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const app = express();
 const axios = require('axios');
-
+const client = require('prom-client');
 
 // Ghi nhận và trace logs toàn bộ request Axios gửi ra Backend API
 axios.interceptors.request.use(config => {
@@ -93,6 +93,20 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Khởi tạo thu thập các metrics mặc định của Node.js runtime
+const collectDefaultMetrics = client.collectDefaultMetrics;
+collectDefaultMetrics({ timeout: 5000 });
+
+// Tạo endpoint /metrics cho Prometheus gọi tới
+app.get('/metrics', async (req, res) => {
+    try {
+        res.set('Content-Type', client.register.contentType);
+        res.end(await client.register.metrics());
+    } catch (ex) {
+        res.status(500).end(ex);
+    }
+});
 
 // Tạo biến adminRoute global cho 2 môi trường (dev, prod)
 app.use((req, res, next) => {

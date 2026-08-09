@@ -129,6 +129,8 @@ class BookController {
 
             const API_URL = getApiUrl();
 
+            console.log('adminRoute', adminRoute)
+
             const [booksResponse, categoriesResponse] =
                 await Promise.all([
 

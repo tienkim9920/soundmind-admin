@@ -105,7 +105,7 @@ class ChapterController {
         try {
             const [chaptersResponse, books] = await Promise.all([
                 axios.get(
-                    `${getApiUrl()}/chapters`,
+                    `${getApiUrl()}/chapters/admin`,
                     getAuthConfig(req, {
                         params: {
                             page,
@@ -218,7 +218,7 @@ class ChapterController {
 
         try {
             const response = await axios.get(
-                `${getApiUrl()}/chapters/${id}`,
+                `${getApiUrl()}/chapters/admin/${id}`,
                 getAuthConfig(req)
             );
 
@@ -243,7 +243,7 @@ class ChapterController {
         try {
             const [chapterResponse, books] = await Promise.all([
                 axios.get(
-                    `${getApiUrl()}/chapters/${id}`,
+                    `${getApiUrl()}/chapters/admin/${id}`,
                     getAuthConfig(req)
                 ),
                 getBooks(req)

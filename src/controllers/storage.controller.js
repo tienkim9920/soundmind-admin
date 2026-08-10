@@ -30,7 +30,7 @@ const processS3Uploads = async (files, currentPrefix) => {
             Key: fileKey,
             Body: file.buffer,
             ContentType: file.mimetype,
-            ACL: 'public-read',
+            // ACL: 'public-read',
         };
 
         await s3Client.send(new PutObjectCommand(uploadParams));

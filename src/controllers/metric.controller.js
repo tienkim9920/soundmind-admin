@@ -19,44 +19,55 @@ class MetricController {
 
     async getSystemMetricsApi(req, res) {
         try {
-            // 1. Heap Memory của soundmind-admin
-            const heapPromql = 'nodejs_heap_size_used_bytes{job="soundmind-admin"} / 1024 / 1024';
+            // --- 1. Metrics cho soundmind-admin (Node.js) ---
+            const adminHeapPromql = 'nodejs_heap_size_used_bytes{job="soundmind-admin"} / 1024 / 1024';
+            const adminEventLoopPromql = 'nodejs_eventloop_lag_seconds{job="soundmind-admin"} * 1000';
+            const adminCpuPromql = 'rate(process_cpu_seconds_total{job="soundmind-admin"}[1m]) * 100';
 
-            // 2. Event Loop Lag của soundmind-admin (Đổi từ giây sang ms)
-            const eventLoopPromql = 'nodejs_eventloop_lag_seconds{job="soundmind-admin"} * 1000';
+            // --- 2. Metrics cho soundmind-api (Java / Spring Boot Micrometer) ---
+            // Java Heap RAM (Lọc area="heap")
+            const apiHeapPromql = 'sum(jvm_memory_used_bytes{job="soundmind-api", area="heap"}) / 1024 / 1024';
 
-            // 3. Lấy % CPU tiêu thụ của riêng process Node.js
-            const processCpuPromql = 'rate(process_cpu_seconds_total[1m]) * 100';
+            // Java Process CPU (% CPU mà JVM tiêu thụ, nhân 100)
+            const apiCpuPromql = 'process_cpu_usage{job="soundmind-api"} * 100';
 
-            // 4. Lấy % CPU & RAM phần cứng của toàn VPS (từ Node Exporter)
+            // --- 3. Metrics hệ thống (VPS) ---
             const sysCpuPromql = '100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[1m])) * 100)';
             const sysRamPromql = '(1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100';
 
             // Thực thi đồng thời các truy vấn
-            const [heapRes, loopRes, processCpuRes, sysCpuRes, sysRamRes] = await Promise.all([
-                this.#queryPrometheus(heapPromql),
-                this.#queryPrometheus(eventLoopPromql),
-                this.#queryPrometheus(processCpuPromql),
+            const [
+                adminHeapRes, adminLoopRes, adminCpuRes,
+                apiHeapRes, apiCpuRes,
+                sysCpuRes, sysRamRes
+            ] = await Promise.all([
+                this.#queryPrometheus(adminHeapPromql),
+                this.#queryPrometheus(adminEventLoopPromql),
+                this.#queryPrometheus(adminCpuPromql),
+                this.#queryPrometheus(apiHeapPromql),
+                this.#queryPrometheus(apiCpuPromql),
                 this.#queryPrometheus(sysCpuPromql),
                 this.#queryPrometheus(sysRamPromql)
             ]);
-
-            // Trích xuất kết quả trả về
-            const nodeHeapUsed = parseFloat(heapRes[0]?.value[1] || 0).toFixed(2);
-            const eventLoopLag = parseFloat(loopRes[0]?.value[1] || 0).toFixed(2);
-            const processCpu = parseFloat(processCpuRes[0]?.value[1] || 0).toFixed(1);
-            const sysCpu = parseFloat(sysCpuRes[0]?.value[1] || 0).toFixed(1);
-            const sysRam = parseFloat(sysRamRes[0]?.value[1] || 0).toFixed(1);
 
             return res.json({
                 success: true,
                 timestamp: new Date().toLocaleTimeString('vi-VN'),
                 data: {
-                    nodeHeapUsedMb: nodeHeapUsed,
-                    eventLoopLagMs: eventLoopLag,
-                    processCpuPercent: processCpu,
-                    cpuUsagePercent: sysCpu,
-                    ramUsagePercent: sysRam
+                    admin: {
+                        nodeHeapUsedMb: parseFloat(adminHeapRes[0]?.value[1] || 0).toFixed(2),
+                        eventLoopLagMs: parseFloat(adminLoopRes[0]?.value[1] || 0).toFixed(2),
+                        processCpuPercent: parseFloat(adminCpuRes[0]?.value[1] || 0).toFixed(1)
+                    },
+                    api: {
+                        nodeHeapUsedMb: parseFloat(apiHeapRes[0]?.value[1] || 0).toFixed(2),
+                        eventLoopLagMs: 0, // Java không sử dụng Event Loop Lag, trả về 0 hoặc bỏ qua trên UI
+                        processCpuPercent: parseFloat(apiCpuRes[0]?.value[1] || 0).toFixed(1)
+                    },
+                    system: {
+                        cpuUsagePercent: parseFloat(sysCpuRes[0]?.value[1] || 0).toFixed(1),
+                        ramUsagePercent: parseFloat(sysRamPromql ? sysRamRes[0]?.value[1] : 0).toFixed(1)
+                    }
                 }
             });
         } catch (error) {

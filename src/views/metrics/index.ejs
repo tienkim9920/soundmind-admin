@@ -127,52 +127,104 @@
                 </div>
             </div>
 
-            <!-- 4 Thẻ KPI Chỉ số chính -->
+            <!-- Thẻ KPI Chỉ số chính (Tách biệt Admin & API) -->
             <div class="row g-3 mb-4">
-                <!-- CPU -->
+                <!-- 1. CPU & RAM VPS -->
                 <div class="col-md-3">
-                    <div class="card-custom">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="kpi-title"><i class="bi bi-cpu me-1"></i> CPU Server</span>
-                            <span class="badge-status" id="badgeCpu"><span class="status-dot bg-safe"></span> An
-                                toàn</span>
+                    <div class="card-custom h-100 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="kpi-title"><i class="bi bi-cpu me-1"></i> CPU Server</span>
+                                <span class="badge-status" id="badgeCpu"><span class="status-dot bg-safe"></span> An
+                                    toàn</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-baseline mb-2">
+                                <span class="kpi-value fs-4 fw-bold" id="valCpu">0%</span>
+                            </div>
+
+                            <hr class="my-2 opacity-25">
+
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="kpi-title"><i class="bi bi-memory me-1"></i> RAM Server</span>
+                                <span class="badge-status" id="badgeRam"><span class="status-dot bg-safe"></span> Bình
+                                    thường</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-baseline">
+                                <span class="kpi-value fs-4 fw-bold" id="valRam">0%</span>
+                            </div>
                         </div>
-                        <div class="kpi-value" id="valCpu">0%</div>
                     </div>
                 </div>
 
-                <!-- RAM -->
+                <!-- 2. Admin App KPI (Node.js) -->
                 <div class="col-md-3">
-                    <div class="card-custom">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="kpi-title"><i class="bi bi-memory me-1"></i> RAM Server</span>
-                            <span class="badge-status" id="badgeRam"><span class="status-dot bg-safe"></span> Bình
-                                thường</span>
+                    <div class="card-custom h-100 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="kpi-title fw-bold text-primary"><i class="bi bi-shield-lock me-1"></i>
+                                    Admin App</span>
+                                <span
+                                    class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill">Node.js</span>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="small text-muted">RAM Heap:</span>
+                                <strong id="valAdminHeap" class="text-dark">0 MB</strong>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="small text-muted">Event Loop Lag:</span>
+                                <strong id="valAdminLoop" class="text-dark">0 ms</strong>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="small text-muted">CPU Process:</span>
+                                <strong id="valAdminCpu" class="text-dark">0%</strong>
+                            </div>
                         </div>
-                        <div class="kpi-value" id="valRam">0%</div>
                     </div>
                 </div>
 
-                <!-- Node Heap Memory -->
+                <!-- 3. API App KPI (Java) -->
                 <div class="col-md-3">
-                    <div class="card-custom">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="kpi-title"><i class="bi bi-box-seam me-1"></i> RAM App (Heap)</span>
-                            <span class="badge-status"><span class="status-dot bg-safe"></span> Node.js</span>
+                    <div class="card-custom h-100 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="kpi-title fw-bold text-success"><i
+                                        class="bi bi-gear-wide-connected me-1"></i> API App</span>
+                                <span
+                                    class="badge bg-success-subtle text-success border border-success-subtle rounded-pill">Java
+                                    Spring</span>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="small text-muted">JVM Heap:</span>
+                                <strong id="valApiHeap" class="text-dark">0 MB</strong>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="small text-muted">HTTP Latency:</span>
+                                <strong id="valApiLoop" class="text-dark">0 ms</strong>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="small text-muted">CPU Process:</span>
+                                <strong id="valApiCpu" class="text-dark">0%</strong>
+                            </div>
                         </div>
-                        <div class="kpi-value" id="valHeap">0 <small class="fs-6 text-muted">MB</small></div>
                     </div>
                 </div>
 
-                <!-- Event Loop Lag -->
+                <!-- 4. Trạng thái Hệ thống -->
                 <div class="col-md-3">
-                    <div class="card-custom">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="kpi-title"><i class="bi bi-hourglass-split me-1"></i> Độ trễ App (Lag)</span>
-                            <span class="badge-status" id="badgeLoop"><span class="status-dot bg-safe"></span>
-                                Mượt</span>
+                    <div class="card-custom h-100 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="kpi-title"><i class="bi bi-activity me-1"></i> Độ trễ hệ thống</span>
+                                <span class="badge-status" id="badgeLoop"><span class="status-dot bg-safe"></span>
+                                    Mượt</span>
+                            </div>
+                            <p class="small text-muted mb-0">
+                                Theo dõi phản hồi ứng dụng real-time. Đảm bảo độ trễ Admin Loop &lt; 100ms và HTTP API
+                                &lt; 200ms để hệ thống hoạt động ổn định.
+                            </p>
                         </div>
-                        <div class="kpi-value" id="valEventLoop">0 <small class="fs-6 text-muted">ms</small></div>
                     </div>
                 </div>
             </div>
@@ -194,13 +246,13 @@
                     </div>
                 </div>
 
-                <!-- Biểu đồ 2: Heap Memory -->
+                <!-- Biểu đồ 2: Heap Memory Comparison -->
                 <div class="col-md-6">
                     <div class="card-custom">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <div>
-                                <div class="chart-title">Bộ nhớ RAM Ứng dụng (MB)</div>
-                                <div class="chart-subtitle">Dung lượng V8 Heap thực tế ứng dụng đang chạy</div>
+                                <div class="chart-title">Bộ nhớ RAM Ứng dụng (Heap MB)</div>
+                                <div class="chart-subtitle">So sánh Heap RAM giữa Admin vs API</div>
                             </div>
                         </div>
                         <div style="height: 220px;">
@@ -215,8 +267,7 @@
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <div>
                                 <div class="chart-title">Độ trễ xử lý Event Loop (ms)</div>
-                                <div class="chart-subtitle">Độ trễ phản hồi tác vụ. Nếu chỉ số > 100ms nghĩa là hệ thống
-                                    đang xử lý tác vụ nặng/nghẽn</div>
+                                <div class="chart-subtitle">Độ trễ phản hồi tác vụ của Admin vs API</div>
                             </div>
                         </div>
                         <div style="height: 180px;">
@@ -244,77 +295,87 @@
                 }
             };
 
-            // 1. Sys Chart (CPU/RAM)
+            // 1. Sys Chart (CPU/RAM VPS)
             const sysChart = new Chart(document.getElementById('sysChart'), {
                 type: 'line',
                 data: {
                     labels: [],
                     datasets: [
-                        { label: 'CPU %', data: [], borderColor: '#4f46e5', backgroundColor: '#4f46e510', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 2 },
-                        { label: 'RAM %', data: [], borderColor: '#0284c7', backgroundColor: '#0284c710', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 2 }
+                        { label: 'CPU Server %', data: [], borderColor: '#4f46e5', backgroundColor: '#4f46e510', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 2 },
+                        { label: 'RAM Server %', data: [], borderColor: '#0284c7', backgroundColor: '#0284c710', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 2 }
                     ]
                 },
                 options: { ...commonOptions, scales: { ...commonOptions.scales, y: { min: 0, max: 100, ticks: { callback: v => v + '%' } } } }
             });
 
-            // 2. Node Heap Chart
+            // 2. Node Heap Chart (Admin vs API)
             const nodeChart = new Chart(document.getElementById('nodeChart'), {
                 type: 'line',
                 data: {
                     labels: [],
-                    datasets: [{ label: 'Heap (MB)', data: [], borderColor: '#10b981', backgroundColor: '#10b98110', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 2 }]
+                    datasets: [
+                        { label: 'Admin Heap (MB)', data: [], borderColor: '#4f46e5', backgroundColor: '#4f46e510', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 2 },
+                        { label: 'API Heap (MB)', data: [], borderColor: '#10b981', backgroundColor: '#10b98110', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 2 }
+                    ]
                 },
                 options: { ...commonOptions, scales: { ...commonOptions.scales, y: { ticks: { callback: v => v + ' MB' } } } }
             });
 
-            // 3. Event Loop Lag Chart
+            // 3. Event Loop Lag Chart (Admin vs API)
             const loopChart = new Chart(document.getElementById('loopChart'), {
                 type: 'line',
                 data: {
                     labels: [],
-                    datasets: [{ label: 'Lag (ms)', data: [], borderColor: '#f59e0b', backgroundColor: '#f59e0b10', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 2 }]
+                    datasets: [
+                        { label: 'Admin Lag (ms)', data: [], borderColor: '#f59e0b', backgroundColor: '#f59e0b10', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 2 },
+                        { label: 'API Lag (ms)', data: [], borderColor: '#ec4899', backgroundColor: '#ec489910', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 2 }
+                    ]
                 },
                 options: { ...commonOptions, scales: { ...commonOptions.scales, y: { ticks: { callback: v => v + ' ms' } } } }
             });
 
             async function fetchMetrics() {
                 try {
-                    // Gọi API backend của Admin
                     const res = await fetch('<%= adminRoute %>/metrics/api');
                     const result = await res.json();
 
                     if (result.success) {
-                        const data = result.data;
+                        const { admin, api, system } = result.data;
 
-                        // 1. Cập nhật các thẻ KPI
-                        document.getElementById('valCpu').innerText = `${data.cpuUsagePercent}%`;
-                        document.getElementById('valRam').innerText = `${data.ramUsagePercent}%`;
-                        document.getElementById('valHeap').innerHTML = `${data.nodeHeapUsedMb} <small class="fs-6 text-muted">MB</small>`;
-                        document.getElementById('valEventLoop').innerHTML = `${data.eventLoopLagMs} <small class="fs-6 text-muted">ms</small>`;
+                        // 1. Cập nhật thẻ KPI VPS
+                        document.getElementById('valCpu').innerText = `${system.cpuUsagePercent}%`;
+                        document.getElementById('valRam').innerText = `${system.ramUsagePercent}%`;
 
-                        // 2. Cập nhật dữ liệu vào Biểu đồ Realtime
+                        // Cập nhật thẻ KPI Admin
+                        document.getElementById('valAdminHeap').innerText = `${admin.nodeHeapUsedMb} MB`;
+                        document.getElementById('valAdminLoop').innerText = `${admin.eventLoopLagMs} ms`;
+                        document.getElementById('valAdminCpu').innerText = `${admin.processCpuPercent}%`;
+
+                        // Cập nhật thẻ KPI API
+                        document.getElementById('valApiHeap').innerText = `${api.nodeHeapUsedMb} MB`;
+                        document.getElementById('valApiLoop').innerText = `${api.eventLoopLagMs} ms`;
+                        document.getElementById('valApiCpu').innerText = `${api.processCpuPercent}%`;
+
+                        // 2. Cập nhật dữ liệu vào Biểu đồ
                         const timeLabel = result.timestamp;
 
-                        // Biểu đồ phần cứng VPS (CPU & RAM)
-                        pushData(sysChart, timeLabel, [data.cpuUsagePercent, data.ramUsagePercent]);
+                        // VPS Hardware Chart
+                        pushData(sysChart, timeLabel, [system.cpuUsagePercent, system.ramUsagePercent]);
 
-                        // Biểu đồ RAM Heap của Node.js App
-                        pushData(nodeChart, timeLabel, [data.nodeHeapUsedMb]);
+                        // Heap RAM Chart (Admin vs API)
+                        pushData(nodeChart, timeLabel, [admin.nodeHeapUsedMb, api.nodeHeapUsedMb]);
 
-                        // Biểu đồ Độ trễ Event Loop
-                        pushData(loopChart, timeLabel, [data.eventLoopLagMs]);
+                        // Event Loop Lag Chart (Admin vs API)
+                        pushData(loopChart, timeLabel, [admin.eventLoopLagMs, api.eventLoopLagMs]);
+
+                        // Cập nhật cảnh báo Lag
+                        const maxLag = Math.max(parseFloat(admin.eventLoopLagMs), parseFloat(api.eventLoopLagMs));
+                        updateBadge('badgeLoop', maxLag, 50, 100, 'Mượt', 'Chậm nhẹ', 'Quá tải');
                     }
                 } catch (err) {
                     console.error('Lỗi khi cập nhật metrics:', err);
                 }
             }
-
-            // Khởi chạy fetch mỗi 5 giây
-            document.addEventListener('DOMContentLoaded', () => {
-                fetchMetrics();
-                setInterval(fetchMetrics, 5000);
-            });
-
 
             function updateBadge(id, val, warn, danger, textOk, textWarn, textDanger) {
                 const el = document.getElementById(id);

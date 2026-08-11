@@ -4,7 +4,8 @@ const {
     S3Client,
     ListObjectsV2Command,
     PutObjectCommand,
-    DeleteObjectCommand
+    DeleteObjectCommand,
+    PutObjectAclCommand // 1. Import thêm PutObjectAclCommand
 } = require('@aws-sdk/client-s3');
 
 const s3Client = new S3Client({
@@ -35,7 +36,6 @@ const processS3Uploads = async (files, currentPrefix) => {
 
         await s3Client.send(new PutObjectCommand(uploadParams));
 
-        // Trả về URL công khai của file sau khi upload thành công
         const publicUrl = `https://s3.vn-hcm-1.vietnix.cloud/${BUCKET_NAME}/${fileKey}`;
         return {
             key: fileKey,
@@ -49,14 +49,29 @@ const processS3Uploads = async (files, currentPrefix) => {
     return await Promise.all(uploadPromises);
 };
 
+// 2. Helper xử lý cập nhật ACL hàng loạt
+const processBulkAclUpdate = async (keys, acl) => {
+    // Đảm bảo keys luôn là danh sách mảng
+    const fileKeys = Array.isArray(keys) ? keys : [keys];
+
+    const aclPromises = fileKeys.map(async (key) => {
+        const aclParams = {
+            Bucket: BUCKET_NAME,
+            Key: key,
+            ACL: acl, // 'public-read' | 'private'
+        };
+        return await s3Client.send(new PutObjectAclCommand(aclParams));
+    });
+
+    return await Promise.all(aclPromises);
+};
+
 const storageController = {
     // GET: Xem danh sách Folder và File theo Prefix
     index: async (req, res) => {
         try {
             let currentPrefix = req.query.prefix || '';
 
-            // TỰ ĐỘNG CHUẨN HÓA PREFIX:
-            // Nếu prefix có giá trị và không kết thúc bằng '/', tự động thêm '/' vào cuối
             if (currentPrefix && !currentPrefix.endsWith('/')) {
                 currentPrefix += '/';
             }
@@ -64,28 +79,25 @@ const storageController = {
             const command = new ListObjectsV2Command({
                 Bucket: BUCKET_NAME,
                 Prefix: currentPrefix,
-                Delimiter: '/', // Phân chia folder theo dấu '/'
+                Delimiter: '/',
             });
 
             const data = await s3Client.send(command);
 
-            // 1. Trích xuất danh sách Thư mục (CommonPrefixes)
             const folders = (data.CommonPrefixes || []).map((item) => {
-                // Tách lấy tên hiển thị ngắn gọn của folder
                 const parts = item.Prefix.replace(/\/$/, '').split('/');
                 const folderName = parts[parts.length - 1];
 
                 return {
                     name: folderName,
-                    prefix: item.Prefix, // VD: "DayConLamGiauTap1/"
+                    prefix: item.Prefix,
                 };
             });
 
-            // 2. Trích xuất danh sách File
             const files = (data.Contents || [])
-                .filter((file) => file.Key !== currentPrefix) // Bỏ qua chính folder hiện tại
+                .filter((file) => file.Key !== currentPrefix)
                 .map((file) => {
-                    const fileName = file.Key.substring(currentPrefix.length); // Lấy tên file
+                    const fileName = file.Key.substring(currentPrefix.length);
                     return {
                         key: file.Key,
                         name: fileName,
@@ -95,7 +107,6 @@ const storageController = {
                     };
                 });
 
-            // 3. Xử lý điều hướng Breadcrumbs
             const breadcrumbs = [];
             if (currentPrefix) {
                 const parts = currentPrefix.split('/').filter(Boolean);
@@ -131,10 +142,7 @@ const storageController = {
         }
     },
 
-    // ==========================================
-    // LUỒNG 1: API Route (Dành cho Next.js, React, App...)
-    // Response: JSON
-    // ==========================================
+    // LUỒNG 1: API Route Upload (JSON)
     uploadApi: async (req, res) => {
         try {
             const currentPrefix = req.body.prefix || '';
@@ -162,10 +170,7 @@ const storageController = {
         }
     },
 
-    // ==========================================
-    // LUỒNG 2: Form Web Route (Giữ nguyên luồng cũ)
-    // Response: Redirect
-    // ==========================================
+    // LUỒNG 2: Form Web Route Upload (Redirect)
     upload: async (req, res) => {
         try {
             const currentPrefix = req.body.prefix || '';
@@ -207,11 +212,9 @@ const storageController = {
                 return res.redirect(`${adminRoute}/storages?prefix=${encodeURIComponent(currentPrefix)}`);
             }
 
-            // Làm sạch tên folder & bắt buộc kết thúc bằng dấu /
-            folderName = folderName.replace(/\/+/g, ''); // Xóa gạch chéo dư thừa
+            folderName = folderName.replace(/\/+/g, '');
             const folderKey = `${currentPrefix}${folderName}/`;
 
-            // Tạo 1 object rỗng có key kết thúc bằng '/' để S3 nhận diện là Folder
             const createFolderParams = {
                 Bucket: BUCKET_NAME,
                 Key: folderKey,
@@ -226,9 +229,64 @@ const storageController = {
             res.status(500).send('Tạo thư mục thất bại: ' + err.message);
         }
     },
+
+    // ==========================================
+    // BỔ SUNG 1: API Cập nhật ACL hàng loạt (JSON Response)
+    // Body truyền lên: { keys: ['path/file1.jpg', 'path/file2.jpg'], acl: 'public-read' | 'private' }
+    // ==========================================
+    updateAclApi: async (req, res) => {
+        try {
+            const { keys, acl } = req.body;
+
+            if (!keys || (Array.isArray(keys) && keys.length === 0)) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Danh sách file (keys) không được để trống',
+                });
+            }
+
+            if (!['public-read', 'private'].includes(acl)) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Quyền riêng tư không hợp lệ. Chỉ chấp nhận "public-read" hoặc "private"',
+                });
+            }
+
+            await processBulkAclUpdate(keys, acl);
+
+            return res.status(200).json({
+                success: true,
+                message: `Cập nhật quyền ${acl} thành công cho ${Array.isArray(keys) ? keys.length : 1} file.`,
+            });
+        } catch (err) {
+            console.error('Lỗi API cập nhật ACL:', err);
+            return res.status(500).json({
+                success: false,
+                message: 'Cập nhật quyền thất bại: ' + err.message,
+            });
+        }
+    },
+
+    // ==========================================
+    // BỔ SUNG 2: Form Web Route Cập nhật ACL hàng loạt (Redirect)
+    // Body truyền lên: { keys: 'file1.jpg' | ['file1.jpg', 'file2.jpg'], acl: 'public-read' | 'private', prefix: '' }
+    // ==========================================
+    updateAcl: async (req, res) => {
+        try {
+            const { keys, acl, prefix } = req.body;
+            const currentPrefix = prefix || '';
+
+            if (keys && ['public-read', 'private'].includes(acl)) {
+                await processBulkAclUpdate(keys, acl);
+            }
+
+            return res.redirect(`${adminRoute}/storages?prefix=${encodeURIComponent(currentPrefix)}`);
+        } catch (err) {
+            console.error('Lỗi cập nhật ACL:', err);
+            return res.status(500).send('Cập nhật quyền thất bại: ' + err.message);
+        }
+    },
 };
-
-
 
 const { wrapController } = require('../utils/logger');
 module.exports = wrapController(storageController, 'StorageController');

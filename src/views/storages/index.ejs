@@ -240,7 +240,6 @@
             <!-- Topbar -->
             <div class="glass-card topbar-container mb-4 p-4">
                 <div class="row align-items-center g-3">
-                    <!-- Bên trái: Title & Bucket Status -->
                     <div class="col-12 col-lg-5">
                         <h3 class="fw-bold mb-1">Quản lý Storage</h3>
                         <div class="text-secondary d-flex align-items-center gap-2 flex-wrap">
@@ -252,7 +251,6 @@
                         </div>
                     </div>
 
-                    <!-- Bên phải: Form Upload (Đã bọc col và tối ưu Flexbox) -->
                     <div class="col-12 col-lg-7">
                         <form action="<%= adminRoute %>/storages/upload" method="POST" enctype="multipart/form-data"
                             class="upload-form-wrapper w-100">
@@ -281,13 +279,14 @@
 
                     <div class="glass-card table-card">
 
-                        <!-- Breadcrumb Navigation -->
-                        <div class="d-flex justify-content-between align-items-center mb-4 bg-light p-3 rounded-4">
-                            <!-- Breadcrumb Navigation -->
+                        <!-- Breadcrumb & Top Buttons -->
+                        <div
+                            class="d-flex justify-content-between align-items-center mb-4 bg-light p-3 rounded-4 flex-wrap gap-2">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb mb-0 align-items-center">
                                     <li class="breadcrumb-item">
-                                        <a href="<%= adminRoute %>/storages" class="text-decoration-none fw-bold text-primary">
+                                        <a href="<%= adminRoute %>/storages"
+                                            class="text-decoration-none fw-bold text-primary">
                                             <i class="bi bi-house-door-fill me-1"></i> Root
                                         </a>
                                     </li>
@@ -308,9 +307,7 @@
                                 </ol>
                             </nav>
 
-                            <!-- Khối Nút Thao Tác -->
                             <div class="d-flex gap-2">
-                                <!-- Nút Lấy toàn bộ URL -->
                                 <% if (files && files.length> 0) { %>
                                     <button type="button"
                                         class="btn btn-outline-secondary btn-sm rounded-3 fw-semibold d-flex align-items-center gap-1"
@@ -320,7 +317,6 @@
                                     </button>
                                     <% } %>
 
-                                        <!-- Nút Tạo Folder -->
                                         <button type="button"
                                             class="btn btn-outline-primary btn-sm rounded-3 fw-semibold d-flex align-items-center gap-1"
                                             data-bs-toggle="modal" data-bs-target="#createFolderModal">
@@ -330,11 +326,47 @@
                             </div>
                         </div>
 
+                        <!-- BỔ SUNG: Thanh công cụ thao tác hàng loạt (Batch Actions Bar) -->
+                        <div id="batchActionBar"
+                            class="alert alert-primary rounded-4 d-none align-items-center justify-content-between p-3 mb-3 border-0 shadow-sm">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-check-square-fill fs-5"></i>
+                                <span class="fw-bold" id="selectedCountText">Đã chọn 0 file</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2 flex-wrap">
+                                <!-- Form cập nhật ACL hàng loạt -->
+                                <form action="<%= adminRoute %>/storages/update-acl" method="POST" id="batchAclForm"
+                                    class="d-inline-flex gap-2">
+                                    <input type="hidden" name="prefix" value="<%= currentPrefix %>">
+                                    <div id="batchHiddenInputs"></div>
+
+                                    <button type="submit" name="acl" value="public-read"
+                                        class="btn btn-sm btn-success rounded-3 fw-semibold">
+                                        <i class="bi bi-unlock-fill me-1"></i> Đặt Public
+                                    </button>
+                                    <button type="submit" name="acl" value="private"
+                                        class="btn btn-sm btn-warning rounded-3 fw-semibold text-dark">
+                                        <i class="bi bi-lock-fill me-1"></i> Đặt Private
+                                    </button>
+                                </form>
+
+                                <button type="button" class="btn btn-sm btn-secondary rounded-3 fw-semibold"
+                                    id="btnCopySelectedUrls">
+                                    <i class="bi bi-clipboard me-1"></i> Copy URL đã chọn
+                                </button>
+                            </div>
+                        </div>
+
                         <!-- Table List (Folders & Files) -->
                         <div class="table-responsive">
                             <table class="table align-middle">
                                 <thead>
                                     <tr class="text-secondary">
+                                        <th style="width: 40px;">
+                                            <!-- Checkbox Chọn Tất Cả -->
+                                            <input type="checkbox" class="form-check-input" id="selectAllCheckbox" <% if
+                                                (!files || files.length===0) { %>disabled<% } %>>
+                                        </th>
                                         <th>Tên đối tượng</th>
                                         <th>Kích thước</th>
                                         <th>Cập nhật cuối</th>
@@ -346,6 +378,7 @@
                                     <% if (folders && folders.length> 0) { %>
                                         <% folders.forEach(folder=> { %>
                                             <tr>
+                                                <td></td>
                                                 <td>
                                                     <div class="d-flex align-items-center gap-3">
                                                         <div class="item-icon folder-icon">
@@ -376,6 +409,13 @@
                                                     <% if (files && files.length> 0) { %>
                                                         <% files.forEach(file=> { %>
                                                             <tr>
+                                                                <td>
+                                                                    <!-- Checkbox từng file -->
+                                                                    <input type="checkbox"
+                                                                        class="form-check-input file-checkbox"
+                                                                        data-key="<%= file.key %>"
+                                                                        data-url="<%= file.url %>">
+                                                                </td>
                                                                 <td>
                                                                     <div class="d-flex align-items-center gap-3">
                                                                         <div class="item-icon file-icon">
@@ -408,7 +448,8 @@
                                                                             <i class="bi bi-box-arrow-up-right"></i>
                                                                         </a>
 
-                                                                        <form method="POST" action="<%= adminRoute %>/storages/delete"
+                                                                        <form method="POST"
+                                                                            action="<%= adminRoute %>/storages/delete"
                                                                             onsubmit="return confirm('Xóa file này?')">
                                                                             <input type="hidden" name="key"
                                                                                 value="<%= file.key %>">
@@ -430,7 +471,7 @@
                                                                     <% if ((!folders || folders.length===0) && (!files
                                                                         || files.length===0)) { %>
                                                                         <tr>
-                                                                            <td colspan="4"
+                                                                            <td colspan="5"
                                                                                 class="text-center py-5 text-secondary">
                                                                                 <i
                                                                                     class="bi bi-folder2-open display-6 d-block mb-2 text-muted"></i>
@@ -508,57 +549,108 @@
             </div>
         </div>
 
-        <!-- Bootstrap 5 JavaScript Bundle (đã bao gồm Popper.js) -->
+        <!-- Bootstrap 5 JavaScript Bundle -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                const btnCopy = document.getElementById('btnCopyAllUrls');
+                const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+                const fileCheckboxes = document.querySelectorAll('.file-checkbox');
+                const batchActionBar = document.getElementById('batchActionBar');
+                const selectedCountText = document.getElementById('selectedCountText');
+                const batchHiddenInputs = document.getElementById('batchHiddenInputs');
+                const btnCopySelectedUrls = document.getElementById('btnCopySelectedUrls');
+                const btnCopyAll = document.getElementById('btnCopyAllUrls');
 
-                if (btnCopy) {
-                    btnCopy.addEventListener('click', function () {
+                // 1. Quản lý sự kiện Checkbox
+                function updateBatchUI() {
+                    const selectedCheckboxes = Array.from(fileCheckboxes).filter(cb => cb.checked);
+                    const count = selectedCheckboxes.length;
+
+                    if (count > 0) {
+                        batchActionBar.classList.remove('d-none');
+                        batchActionBar.classList.add('d-flex');
+                        selectedCountText.textContent = `Đã chọn ${count} file`;
+
+                        // Render danh sách hidden inputs chứa các `keys`
+                        batchHiddenInputs.innerHTML = selectedCheckboxes
+                            .map(cb => `<input type="hidden" name="keys" value="${cb.dataset.key}">`)
+                            .join('');
+                    } else {
+                        batchActionBar.classList.add('d-none');
+                        batchActionBar.classList.remove('d-flex');
+                        batchHiddenInputs.innerHTML = '';
+                    }
+
+                    // Cập nhật trạng thái checkbox "Chọn tất cả"
+                    if (selectAllCheckbox) {
+                        selectAllCheckbox.checked = fileCheckboxes.length > 0 && selectedCheckboxes.length === fileCheckboxes.length;
+                        selectAllCheckbox.indeterminate = count > 0 && count < fileCheckboxes.length;
+                    }
+                }
+
+                if (selectAllCheckbox) {
+                    selectAllCheckbox.addEventListener('change', function () {
+                        fileCheckboxes.forEach(cb => cb.checked = this.checked);
+                        updateBatchUI();
+                    });
+                }
+
+                fileCheckboxes.forEach(cb => {
+                    cb.addEventListener('change', updateBatchUI);
+                });
+
+                // 2. Thao tác Copy các URL được chọn
+                if (btnCopySelectedUrls) {
+                    btnCopySelectedUrls.addEventListener('click', function () {
+                        const selectedUrls = Array.from(fileCheckboxes)
+                            .filter(cb => cb.checked)
+                            .map(cb => cb.dataset.url);
+
+                        if (selectedUrls.length === 0) return;
+
+                        copyToClipboard(selectedUrls.join('\n'), selectedUrls.length);
+                    });
+                }
+
+                // 3. Thao tác Copy toàn bộ URL (Modal)
+                if (btnCopyAll) {
+                    btnCopyAll.addEventListener('click', function () {
                         const textarea = document.getElementById('allUrlsTextarea');
                         if (!textarea || !textarea.value.trim()) {
                             alert('Không có URL nào để sao chép!');
                             return;
                         }
-
-                        const textToCopy = textarea.value.trim();
-                        const lineCount = textToCopy.split('\n').length;
-
-                        // Tạm thời chọn nội dung trong textarea
-                        textarea.focus();
-                        textarea.select();
-                        textarea.setSelectionRange(0, 99999);
-
-                        // Dùng Clipboard API hoặc execCommand làm phương án dự phòng
-                        if (navigator.clipboard && window.isSecureContext) {
-                            navigator.clipboard.writeText(textToCopy)
-                                .then(() => {
-                                    alert(`Đã sao chép thành công ${lineCount} URL!`);
-                                })
-                                .catch(() => {
-                                    executeFallbackCopy(textToCopy, lineCount);
-                                });
-                        } else {
-                            executeFallbackCopy(textToCopy, lineCount);
-                        }
+                        const text = textarea.value.trim();
+                        copyToClipboard(text, text.split('\n').length);
                     });
                 }
-            });
 
-            function executeFallbackCopy(text, count) {
-                try {
-                    const successful = document.execCommand('copy');
-                    if (successful) {
-                        alert(`Đã sao chép thành công ${count} URL!`);
+                // Helper hỗ trợ Sao chép
+                function copyToClipboard(text, count) {
+                    if (navigator.clipboard && window.isSecureContext) {
+                        navigator.clipboard.writeText(text)
+                            .then(() => alert(`Đã sao chép thành công ${count} URL!`))
+                            .catch(() => fallbackCopy(text, count));
                     } else {
-                        alert('Vui lòng bôi đen nội dung trong khung và nhấn Ctrl+C để copy!');
+                        fallbackCopy(text, count);
                     }
-                } catch (err) {
-                    alert('Lỗi sao chép! Vui lòng tự bôi đen và nhấn Ctrl+C.');
                 }
-            }
+
+                function fallbackCopy(text, count) {
+                    const tempTextarea = document.createElement('textarea');
+                    tempTextarea.value = text;
+                    document.body.appendChild(tempTextarea);
+                    tempTextarea.select();
+                    try {
+                        document.execCommand('copy');
+                        alert(`Đã sao chép thành công ${count} URL!`);
+                    } catch (err) {
+                        alert('Lỗi sao chép! Vui lòng tự chọn và copy.');
+                    }
+                    document.body.removeChild(tempTextarea);
+                }
+            });
         </script>
 </body>
 

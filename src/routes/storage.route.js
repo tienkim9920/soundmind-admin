@@ -19,4 +19,10 @@ router.post('/upload', upload.array('files', 50), storageController.upload);
 router.post('/delete', storageController.delete);
 router.post('/create-folder', storageController.createFolder);
 
+// Route cho Web Form Redirect
+router.post('/update-acl', storageController.updateAcl);
+
+// Route cho Client/Frontend gọi API JSON
+router.post('/update-acl-api', storageController.updateAclApi);
+
 module.exports = router;
